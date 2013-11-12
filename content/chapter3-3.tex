@@ -1,0 +1,74 @@
+\section{Die starke Markoveigenschaft}
+
+In diesem Abschnitt wollen wir weitere Untersuchungen der Zukunft im Vergleich zur Gegenwart oder Vergangenheit anstellen. 
+
+\begin{lemma}\label{Nummer3.3.1}
+Es seien $A, B, C_i \subset \Omega$ messbar für $i \in I$, wobei $I$ eine abzählbare Indexmenge ist. Ferner seien die $(C_i)_{i \in I}$ paarweise disjunkt und es existiere ein $p \in (0,1]$ mit $P(A \mid B \cap C_i) = p$ für alle $i \in I$. Dann gilt für $C := \bigcup_{i \in I} C_i$ 
+\begin{align*}
+P(A \mid B \cap C) &= p\text{.}
+\end{align*}
+\end{lemma}
+
+\begin{beweis}
+Es gilt
+\begin{align*}
+p P(B \cap C) &= \sum_{i \in I} pP(B \cap C_i) = \sum_{i \in I} P(A \mid B \cap C_i)P(B \cap C_i) = \sum_{i \in I} P(A \cap B \cap C_i) = P(A \cap B \cap C)\\
+\quad &= P(A \mid B \cap C) P(B \cap C)\text{.} \qedhere
+\end{align*}
+\end{beweis}
+
+\begin{satz}[Markoveigenschaft]\label{Nummer3.3.2}
+Sei $(X_n)_{n \geq 0}$ eine (homogene) Markovkette, dann gilt für $0 < n < m$, $i_n \in S$, $V \subset S^n$ und $Z \subset S^{m-n}$ die Identität
+\begin{align*}
+P((X_{n+1}, \ldots, X_m) \in Z \mid X_n = i_n, (X_0, \ldots, X_{n-1}) \in V) &= P((X_{n+1}, \ldots, X_m) \in Z \mid X_n = i_n)\text{.}
+\end{align*}
+\end{satz}
+
+Eine beliebige Zukunft $Z$ hängt also nur von der Gegenwart $i_n$ ab, nicht jedoch von der Vergangenheit $V$. Es ist jedoch essentiell, dass die Gegenwart nur durch einen einzigen Zustand beschrieben wird -- "`$X_n = i_n$"' darf also nicht durch "`$X_n \in \tilde{G}$"' ersetzt werden.
+
+\begin{beweis}
+Wegen der $\sigma$-Additivität genügt es, $Z = \{(i_{n+1}, \ldots, i_n)\}$ zu betrachten. Seien nun $i_0, \ldots, i_{n-1} \in S$, dann gilt
+\begin{align*}
+P((X_{n+1}, \ldots, X_m) \in Z \mid X_n = i_n, \ldots, X_0 = i_0) &= \frac{P(X_0 = i_0, \ldots, X_m = i_m)}{P(X_0 = i_0, \ldots, X_n = i_n)} \stackrel{\text{\ref{Nummer3.1.3}}}{=} \frac{\alpha_{i_0} \prod_{j=0}^{m-1} p_{ij}i_{j+1}}{\alpha_{i_0} \prod_{j=0}^{n-1} p_{ij}i_{j+1}}\\
+\quad &= \prod_{j=n}^{m-1} p_{ij}i_{j+1}\text{,}
+\end{align*}
+also ist dieser Ausdruck von $i_0, \ldots, i_{n-1}$ unabhängig. Da sich $\{(X_0, \ldots, X_{n-1}) \in V\}$ disjunkt in $\{X_0 = i_0, \ldots, X_{n-1} = i_{n-1}\}$ und analog auch $\{(X_0, \ldots, X_{n-1}) \in S^n\}$ zerlegen lassen, folgt die Behauptung mit Lemma \ref{Nummer3.3.1}.
+\end{beweis}
+
+\begin{korollar}\label{Nummer3.3.3}
+Sei $(X_n)_{n \geq 0}$ eine homogene Markovkette und $Z \subset \bigotimes_{n=0}^\infty \Pot(S)$. Für $i \in S$ und $V \in S^{n+1}$ gilt dann
+\begin{align*}
+P((X_{n+1}, X_{n+2}, \ldots) \in Z \mid X_n = i_n, (X_0, \ldots, X_n) \in V) &= P((X_1, X_2, \ldots) \in Z \mid X_0 = i_0)\text{.}
+\end{align*}
+\end{korollar}
+
+\begin{beweis}
+Der Beweis verwendet Homogenität und wird wie im Beweis von Satz \ref{Nummer3.3.2} auf einem $\cap$-stabilen Erzeugendensystem durchgeführt.
+\end{beweis}
+
+Die bedingte Zukunft einer homogenen Markovkette unterscheidet sich also nicht von der bedingten Zukunft einer neu gestarteten homogenen Markovkette.
+
+\begin{satz}[Starke Markoveigenschaft]\label{Nummer3.3.4}
+Es sei $(X_n)_{n \geq 0}$ eine homogene Markovkette und $\tau\colon \Omega \to \overline{\N_0}$ eine Stoppzeit mit $P(\tau < \infty) = 1$. Dann gilt für jedes $V \in \sF_\tau$, $Z \in \bigotimes_{n=0}^\infty \Pot(S)$ und $i \in S$ die Eigenschaft
+\begin{align*}
+P((X_{\tau + 1}, X_{\tau + 2}, \ldots) \in Z \mid X_\tau = i, V) &= P((X_1, X_2, \ldots) \in Z \mid X_0 = i)\text{.}
+\end{align*}
+\end{satz}
+
+Satz \ref{Nummer3.3.4} sagt also, dass die Zukunft $X_\tau = i$ das selbe wie das Verhalten nach der Zeit $0$ ist. Man spricht an dieser Stelle auch von einer "`Wiedergeburt"'.
+
+\begin{beweis}
+Es genügt, eine Zukunft der Form $Z = \{i_1\} \times \ldots \times \{i_n\} \times S \times \ldots$ zu betrachten, da diese ein $\cap$-stabiles Erzeugendensystem von $\bigotimes_{n=0}^\infty \Pot(S)$ bilden. Ferner überlegen wir uns für disjunkte $C_i$
+\begin{align*}
+P(A \cap C \mid B) &= \sum_i P(A \cap C_i \mid B) = \sum_i \frac{P(A \cap C_i \cap B)}{P(B)} = \sum_i \frac{P(C_i \cap B)}{P(B)}\frac{P(A \cap C_i \cap B)}{P(C_i \cap B)}\\
+\quad &= \sum_i P(C_i \mid B)P(A \mid B \cap C_i)\text{.}
+\end{align*}
+Mit $C = \bigcup C_i$ für $C_i = \{\tau = i\}$ gilt dann $C = \Omega$ und wir erhalten
+\begin{multline*}
+P(\underbrace{X_{\tau+1} = i_1, \ldots, X_{\tau+m} = i_m}_{=: A \cap C} \mid \underbrace{X_\tau = i, V}_{=: B})\\
+= \sum_{l=0}^\infty P(\tau = l \mid X_\tau = i, V)P(X_{\tau+1} = i_1, \ldots, X_{\tau + m} = i_m \mid X_\tau = i, V, \tau=l)\\
+= \sum_{l=0}^\infty P(\tau = l \mid X_\tau = i, V)P(X_{l+1} = i_1, \ldots, X_{l+m} = i_m \mid X_l = i, V, \tau=l)\\
+\stackrel{\text{\ref{Nummer3.3.3}}}{=} \underbrace{\sum_{l=0}^\infty P(\tau = l \mid X_\tau = i, V)}_{= P(\Omega \mid X_\tau = i, V) = 1}\underbrace{P(X_1 = i_1, \ldots, X_m = i_m \mid X_0 = i)}_{\text{von $l$ unabhängig}}\text{.}
+\end{multline*}
+Dies ist aber gerade die Behauptung.
+\end{beweis}

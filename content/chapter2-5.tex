@@ -1,0 +1,100 @@
+\section{Konvergenzsätze für Martingale I}
+
+In diesem Abschnitt wollen wir untersuchen, ob ein $X$ existiert, so dass $X_n \to X$ gilt, falls $X_n$ ein (Super-/Sub-)Martingal ist.
+
+Wir wollen für das kommende Lemma \ref{Nummer2.5.1} einen Ansatz diskutieren. Dazu sei $(x_n) \subset \R$ eine Folge, die weder eigentlich noch uneigentlich konvergiert. Dann ist $\liminf x_n < \limsup x_n$ und es seien $a < b$ mit $\liminf x_n < a < b < \limsup x_n$. Das Intervall $[a,b]$ wird von der Folge dann unendlich oft überquert. Um Konvergenz zu zeigen, genügt es daher, die Anzahl der Überquerungen abzuschätzen. In unserem Fall haben wir es natürlich mit Prozessen und nicht mit einfachen Zahlenfolgen zu tun.
+
+Sei nun $X$ ein $\sF$-adaptierter stochastischer Prozess und $a < b$. Dann definieren wir $\sigma_0 := 0$, $\tau_k = \inf\{n \geq \sigma_{k-1} : X_n \leq a\}$ und $\sigma_k = \inf\{n \geq \tau_k : X_n \geq b\}$. Der Nachweis, dass dies tatsächlich Stoppzeiten definiert, wird zur Übung überlassen. Ferner gilt $\tau_k \leq \sigma_k \leq \tau_{k+1}$. Nun gibt $\tau_1$ an, wann das erste Mal $X_n \leq a$ gilt, während $\sigma_1$ den ersten Zeitpunkt angibt, zu welchem $X_n \geq b$ gilt, nachdem $X_n \leq a$ war. Dann gibt $\tau_2$ den zweiten Zeitpunkt mit $X_n \leq a$ an, nachdem $X_n \geq b$ eingetreten ist et cetera. In Abbildung \ref{uebquerstopp} wird dies veranschaulicht.
+
+\begin{figure}[!htb]
+\centering
+\begin{tikzpicture}[domain=-5:5, scale=1]
+\draw[semithick, ->] (-0.5,0) -- (14,0);
+\draw[semithick, ->] (0,-0.5) -- (0,6);
+\draw[semithick] (-0.1, 1.7) node[left] {$a$} -- (0.1, 1.7);
+\draw[semithick] (-0.1, 4.3) node[left] {$b$} -- (0.1, 4.3);
+\draw[dashed] (0.1, 1.7) -- (14, 1.7);
+\draw[dashed] (0.1, 4.3) -- (14, 4.3);
+\begin{scope}[shift={(7,0.5)}]
+\draw[color=red]   plot file{tikz/uebquer.table};
+\draw[dashed] (-5.53, 1.2) -- (-5.53, -0.6) node[below] {$\tau_1$};
+\draw[dashed] (-2.68, 3.8) -- (-2.68, -0.6) node[below] {$\sigma_1$};
+\draw[dashed] (0.31, 1.2) -- (0.31, -0.6) node[below] {$\tau_2$};
+\draw[dashed] (4.6, 3.8) -- (4.6, -0.6) node[below] {$\sigma_2$};
+\end{scope}
+\end{tikzpicture}
+\caption[Darstellung der Überquerungsstoppzeiten]{Darstellung der Überquerungsstoppzeiten.}\label{uebquerstopp}
+\end{figure}
+
+Für $N \in \N_0$ betrachten wir ferner $U_{a,b}^N(\omega) := \sup\{k \in \N_0 : \sigma_k(\omega) \leq N\}$, was die Anzahl der \deftxt{Aufwärtsüberquerungen}\index{Aufwärtsüberquerung}, die wir auch \deftxt{Upcrossings}\index{Upcrossing} nennen, darstellt. Nach obigem Plan wollen wir nun $U_{a,b}^N$ abschätzen.
+
+\begin{lemma}\label{Nummer2.5.1}
+Sei $X = (X_n)_{n \geq 0}$ ein Sub-Martingal, $N \in \N_0$ und $a < b$. Dann gilt
+\begin{align*}
+\E U_{a,b}^N &\leq \frac{\E(X_N - a)^+}{b-a}\text{.}
+\end{align*}
+\end{lemma}
+
+\begin{beweis}
+Wir betrachten $Y_n := (X_n - a)^+$, dann ist $(Y_n)_n$ ein Sub-Martingal nach Satz \ref{Nummer2.2.1} und es gilt $Y_n \geq 0$. Ohne Einschränkung können wir daher $X_n \geq 0$ und $a = 0$ annehmen. Nun setzen wir
+\begin{align*}
+H_n &:= \sum_{k=1}^\infty \ind_{\underbrace{\{\tau_k < n \leq \sigma_k\}}_{\in \sF_{n-1}}} \qquad \text{für } n \geq 1\text{,}
+\end{align*}
+dann ist $(H_n)_n$ ein vorhersagbares Martingal mit $H_n \geq 0$ für alle $n \geq 1$. Ferner gilt $H_n \leq 1$, denn für $\omega \in \{\tau_k < n \leq \sigma_k\}$ gilt wegen $\sigma_k \leq \tau_{k+1}$, dass $\tau_{k+1}(\omega) \geq n$ ist, also ist $\omega \notin \{\tau_{k+1} < n \leq \sigma_{k+1}\}$. Mit Lemma \ref{Nummer2.1.9} folgt nun, dass $(1-H).X$ ein Sub-Martingal ist und wir erhalten $\E((1-H).X)_N \geq \E((1-H).X)_0 = \E X_0$. Ferner gilt
+\begin{align*}
+((1-H).X)_N &= X_0 + \sum_{m=1}^N (1-H_m)(X_m - X_{m-1}) = X_N - \sum_{m=1}^N H_m(X_m - X_{m-1})\\
+					  &= X_N + X_0 - (H.X)_N\text{.}
+\end{align*}
+Daraus folgt $\E(H.X)_N \leq \E X_N$. Weiter gilt nun
+\begin{align*}
+H_k &= \begin{cases}1 & \text{falls } k \in \{\tau_i + 1, \ldots, \sigma_i\} \text{ für ein } i \in \N\\ 0 & \text{sonst}\end{cases}\text{.}
+\end{align*}
+Für $m \geq 1$ und $\sigma_m < \infty$ gilt dann unter Verwendung dieser Eigenschaft
+\begin{align*}
+(H.X)_{\sigma_m} &= X_0 + \sum_{k=1}^{\sigma_m} H_k(X_k - X_{k-1}) = X_0 + \sum_{i=1}^m \sum_{k = \tau_i+1}^{\sigma_i} (X_k - X_{k-1})\\
+								 &= X_0 + \sum_{i=1}^m (X_{\sigma_i} - X_{\tau_i})\\
+								 &\geq bm\text{,}
+\end{align*}
+wobei die letzte Abschötzung wegen $X_{\sigma_i} \geq b$ und $X_{\tau_i} \leq a = 0$ gilt. Sei nun $N \in \N_0$, dann betrachten wir zwei Fälle. Im ersten Fall ist $N \in \{\sigma_m, \ldots, \tau_{m+1}\}$  für ein $m \in \N$. Dann gilt $U_{a,b} = m$ und damit folgt
+\begin{align*}
+(H.X)_N &= X_0 + \sum_{k=1}^N H_k(X_k - X_{k-1}) = X_0 + \sum_{k=1}^{\sigma_m} H_k(X_k - X_{k-1}) \geq bm = b U_{a,b}^N\text{.}
+\end{align*}
+Im zweiten Fall sei $N \in \{\tau_m+1, \ldots, \sigma_m\}$ für ein $m \in \N$. Dann ist $U_{a,b}^N = m-1$ und wir erhalten
+\begin{align*}
+(H.X)_N &= X_0 + \sum_{k=1}^N H_k(X_k - X_{k-1}) = X_0 + \sum_{k=1}^{\tau_m} H_k(X_k - X_{k-1}) + \sum_{k=\tau_m+1}^N H_k(X_k - X_{k-1})\\
+			  &= X_0 + \sum_{k=1}^{\sigma_{m-1}} H_k(X_k - X_{k-1}) + X_N - X_{\tau_m} = (H.X)_{\sigma_{m-1}} + X_N - X_{\tau_m}\\
+				&\geq (H.X)_{\sigma_{m-1}} = b(m-1) = bU_{a,b}^N\text{.}
+\end{align*}
+Nehmen wir beide Fälle zusammen, so erhalten wir also $(H.X)_N \geq bU_{a,b}^N$ und damit
+\begin{align*}
+b\E U_{a,b}^N &\leq \E (H.X)_N \leq \E X_N\text{.} \qedhere
+\end{align*}
+\end{beweis}
+
+\begin{satz}[Martingalkonvergenz I]\label{Nummer2.5.2}\index{Martingalkonvergenzsatz}
+Es sei $(X_n)_{n \geq 0}$ ein Sub-Martingal mit $\sup_{n \geq 0} \E X_n^+ < \infty$. Wir setzen $\sF_\infty := \sigma\left(\bigcup_{n = 0}^\infty \sF_n\right)$. Dann existiert eine $\sF_\infty$-messbare Zufallsvariable $X_\infty \in \sL_1$ mit $X_n \to X_\infty$ $P$-fast sicher.
+\end{satz}
+
+\begin{beweis}
+Sei $a < b$. Dann gilt $\E (X_n - a)^+ \leq |a| + \E X_n^+ < c < \infty$ für ein $c > 0$ und alle $n \geq 0$. Mit Lemma \ref{Nummer2.5.1} folgt nun
+\begin{align*}
+\E U_{a,b}^n &\leq \frac{|a| + \E X_n^+}{b-a} < \frac{c}{b-a} < \infty\text{.}
+\end{align*}
+Für $n \to \infty$ gilt ferner $U_{a,b}^n \nearrow U_{a,b} := \lim U_{a,b}^n$ $P$-fast sicher. Mit dem Satz von Beppo Levi\footnote{Dieser findet sich im Anhang als Satz \ref{appendix:beppolevi1}.} folgt dann
+\begin{align*}
+\E U_{a,b} &= \lim_{n \to \infty} \E U_{a,b}^n \leq \frac{c}{b-a} < \infty\text{.}
+\end{align*}
+Damit erhalten wir $P(U_{a,b} < \infty) = 1$. Sei nun $C^{a,b} := \{\liminf X_n < a\} \cap \{\limsup X_n > b\}$. Es ist klar, dass $X_n(\omega)$ für $\omega \in C^{a,b}$ nicht konvergiert. Ferner gilt offenbar $C^{a,b} \subset \{U_{a,b} = \infty\}$, was aber eine Nullmenge ist. Für $C := \bigcup_{a < b \in \Q} C^{a,b}$ gilt also $P(C) = 0$. Nach Konstruktion ist jedoch $X_n$ auf $\Omega\setminus C$ konvergent. Daher existiert $X_\infty$, so dass $P$-fast sicher $X_n \to X_\infty$ gilt. 
+
+Da $X_n$ wegen $\sF_n \subset \sF_\infty$ auch $\sF_\infty$-messbar ist, folgt, dass $X_\infty$ auch $\sF_\infty$-messbar ist. Da $X$ ein Sub-Martingal ist, folgt zudem $\E X_0 \leq \E X_n = \E X_n^+ - \E X_n^-$. Dann ist $\E |X_n| = \E X_n^+ + \E X_n^- \leq \E X_n^+ + \E X_n^+ - \E X_0 < c'$ für ein $c' < \infty$. Mit dem Lemma von Fatou\footnote{Dieses findet sich im Anhang als Lemma \ref{appendix:fatou}.} gilt dann $\E |X|_\infty \leq \liminf \E |X_n| \leq c' < \infty$. 
+\end{beweis}
+
+\begin{korollar}\label{Nummer2.5.3}
+Ist $X$ ein nicht-negatives Super-Martingal, so existiert eine $\sF_\infty$-messbare Zufallsvariable $0 \leq X_\infty \in \sL_1$ mit $\E X_\infty \leq \E X_0$ und $X_n \to X_\infty$ $P$-fast sicher.
+\end{korollar}
+
+\begin{beweis}
+Offenbar ist $-X \leq 0$ ein Sub-Martingal. Dann ist $\E (-X_n)^+ \leq 0$ für alle $n \geq 1$. Mit Satz \ref{Nummer2.5.2} existiert dann ein $0 \geq -X_\infty \in \sL_1$, das $\sF_\infty$-messbar ist, mit $-X_n \to -X_\infty$ $P$-fast sicher. Mit dem Lemma von Fatou\footnote{Dieses findet sich im Anhang als Lemma \ref{appendix:fatou}.} gilt zudem $\E X_\infty \leq \liminf \E X_n \leq \E X_0$.
+\end{beweis}
+
+Aus der Wahrscheinlichkeitstheorie kennen wir verschiedene Konvergenzbegriffe. Da wir nun immer integrierbare Zufallsvariablen vorliegen haben, wollen wir untersuchen, wann $X_n \to X_\infty$ in $\sL_1$ gilt. Dazu müssen wir im nächsten Abschnitt jedoch einige Vorbereitungen treffen.

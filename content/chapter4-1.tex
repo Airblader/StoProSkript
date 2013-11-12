@@ -1,0 +1,135 @@
+\chapter{Poissonprozesse}
+
+\begin{beschreibung}
+Poissonprozesse sind spezielle Zählprozesse mit poissonverteilten Zuwächsen, die zum Beispiel das wiederholte Eintreten eines Ereignisses modellieren.
+\end{beschreibung}
+
+\section{Definition und Eigenschaften}
+
+Im Folgenden betrachten wir einen $\N_0$-wertigen stochastischen Prozess $(X_t)_{t \geq 0}$ mit kontinuierlicher Zeit. Satz \ref{Nummer1.2.7} besagte, dass $X$ genau dann rechtsstetig ist, wenn für alle $\omega \in \Omega$ und alle $t > 0$ ein $\e > 0$ mit $X_s(\omega) = X_t(\omega)$ für alle $s \in [t, t+\e)$ existiert. Der Prozess ist rechts von Stetigkeitsstellen also in einer gewissen Umgebung konstant. Insbesondere gibt es für jede Trajektorie genau drei Möglichkeiten:
+\begin{enumerate}
+	\item Die Trajektorie besitzt endlich viele Sprünge.
+	\item Die Trajektorie hat unendlich viele Sprünge, aber nur endlich viele in jedem beschränkten Intervall.
+	\item Es gibt ein Zeitintervall, in welchem unendlich viele Sprünge auftreten. Man spricht in diesem Fall von \emph{Explosionen}.
+\end{enumerate}
+Wir werden sehen, dass bei Poissonprozessen $P$-fast sicher nur der zweite Fall eintritt. Daher wollen wir diese Eigenschaft näher untersuchen. In der Abbildung \ref{poisson1} sehen wir einen solchen Prozess und die Bezeichnungen für die entsprechenden Zeiten, die wir in diesem Kapitel verwenden wollen. Wir sehen bereits, dass eine solche Nummerierung der $T_i$ im dritten Fall nicht ohne Weiteres möglich wäre und dass wir im ersten Fall nur endlich viele $T_i$ haben.
+
+\begin{figure}[!htbp]
+\centering
+\begin{tikzpicture}
+\draw[semithick, ->] (-0.5,0) -- (10,0);
+\draw[semithick, ->] (0,-0.5) -- (0,6);
+\draw[red, thick, o-)] (0, 1) -- node[above] {$S_0$} (2, 1);
+\draw[red, thick, o-)] (2, 3.5) -- node[above] {$S_1$} (6, 3.5);
+\draw[red, thick, o-)] (6, 5) -- node[above] {$S_2$} (7.5, 5);
+\draw[red, thick, o-)] (7.5, 2) -- node[above] {$S_3$} (8.5, 2);
+\draw[red, thick, o-)] (8.5, 1) -- node[above] {$S_4$} (10, 1);
+\draw (2, -0.15) -- (2, 0.15);
+\draw (6, -0.15) -- (6, 0.15);
+\draw (7.5, -0.15) -- (7.5, 0.15);
+\draw (8.5, -0.15) -- (8.5, 0.15);
+\draw (0, -0.5) node[below] {\small $T_0$};
+\draw (2, -0.5) node[below] {\small $T_1$};
+\draw (6, -0.5) node[below] {\small $T_2$};
+\draw (7.5, -0.5) node[below] {\small $T_3$};
+\draw (8.5, -0.5) node[below] {\small $T_4$};
+\draw (1, 0) node[below] {\small $W_1$};
+\draw (4, 0) node[below] {\small $W_2$};
+\draw (6.75, 0) node[below] {\small $W_3$};
+\draw (8, 0) node[below] {\small $W_4$};
+\draw (9.25, 0) node[below] {\small $W_5$};
+\end{tikzpicture}
+\caption[Darstellung eines rechtsstetigen, zeitkontinuierlichen Prozesses]{Die Abbildung zeigt eine typische Trajektorie eines rechtsstetigen, zeitkontinuierlichen stochastischen Prozesses, sowie die Bezeichnungen für dieses Kapitel.}\label{poisson1}
+\end{figure}
+
+Im zweiten Fall lässt sich $(X_t)_{t \geq 0}$ vollständig durch die Angabe der Werte $(S_n)_{n \geq 1}$ und der Sprungzeiten $(T_n)_{n \geq 0}$ bzw. durch Angabe der Werte $(S_n)_{n \geq 0}$ und der Wartezeiten $(W_n)_{n \geq 1}$ beschreiben. Die Rechtsstetigkeit und der diskrete Zustandsraum erlaubt es uns also, einen zeitkontinuierlichen Prozess durch zwei zeitdiskrete Prozesse zu beschreiben. Dies wollen wir nun formalisieren.
+
+\begin{definition}[Sprungprozesse]\label{Nummer4.1.1}
+Sei $(X_t)_{t \geq 0}$ ein zeitkontinuierliches, rechtsstetiger und $\N_0$-wertiger stochastischer Prozess. 
+\begin{enumerate}
+	\item Die \deftxt{Sprungzeiten}\index{Sprungzeit} $(T_n)_{n \geq 0}$ sind definiert durch $T_0 := 0$ und $\displaystyle T_{n+1} := \inf\{t \geq T_n : X_t \neq X_{T_n}\}$ für $n > 0$ mit $\inf \emptyset := \infty$.
+	\item Der Prozess $(X_t)$ heißt \deftxt{explosionsfrei}\index{Stochastischer Prozess!explosionsfreier}, wenn $P$-fast sicher $\displaystyle\lim_{n \to \infty} T_n = \infty$ gilt.
+	\item Die \deftxt{Wartezeiten}\index{Wartezeit} $(W_n)_{n \geq 1}$ sind definiert durch
+	\begin{align*}
+	W_n &:= \begin{cases}T_n - T_{n-1} & \text{falls } T_{n-1} < \infty\\\infty & \text{sonst}\end{cases}\text{.}
+	\end{align*}
+	\item Der \deftxt{Sprungprozess}\index{Sprungprozess} $(S_n)_{n \geq 0}$ ist definiert durch
+	\begin{align*}
+	S_n &:= \begin{cases} X_{T_n} & \text{falls } T_n < \infty\\ X_{T_m} & \text{sonst}\end{cases}\text{,}
+	\end{align*}
+	wobei $m := \max\{r \in \N_0 : T_r < \infty\}$ die letzte endliche Sprungzeit beschreibt.
+\end{enumerate}
+\end{definition}
+
+Besitzt ein Pfad nur endlich viele Sprünge, so sind sowohl Warte- als auch Sprungzeit nach dem letzten Sprung unendlich. Ist $T_{n-1} < \infty$, so besagt Satz \ref{Nummer1.2.7}, dass $T_{n-1} < T_n$ gilt. Der Satz besagt außerdem $W_n > 0$. 
+
+Ist $(X_t)$ explosionsfrei, so bestimmen $(S_n)$ und $(W_n)$ bzw. $(S_n)$ und $(T_n)$ den Prozess $(X_t)_{t \geq 0}$ durch $X_n = S_n$ für $T_n \leq t < T_{n+1}$.
+
+\begin{satz}\label{Nummer4.1.2}
+Sei $(W_n)_{n \geq 1}$ i.\,i.\,d. mit $W_i \in \sL_1$ und $P(W_n \in (0, \infty)) = 1$. Für $n \geq 0$ und $t \geq 0$ setzen wir $T_n := \sum_{i=1}^n W_i$ und $X_t := \sum_{i=1}^\infty \ind_{(0, t]}(T_i)$ als die Anzahl der Sprünge bis zur Zeit $t$. Dann ist $(X_t)_{t \geq 0}$ ein $\N_0$-wertiger, rechtsstetiger, monoton wachsender und explosionsfreier stochastischer Prozess, dessen Wartezeiten die $(W_n)_{n \geq 1}$ sind und dessen Sprungprozess $(S_n)$ durch $S_n = n$ für $n \geq 0$ gegeben ist. Für alle $n \geq 0$ gilt ferner $P$-fast sicher $T_n < \infty$ und $T_n < T_{n+1}$.
+\end{satz}
+
+\begin{beweis}
+Es gilt $P(T_{n+1} - T_n > 0) = P(W_{n+1} > 0) = 1$. Für $n \geq 0$ und $t \geq 0$ folgt damit $\{X_t = n\} = \{T_n \leq t < T_{n+1}\}$. Wir wollen zeigen, dass $P$-fast sicher $X_t \in \N_0$ für alle $t \geq 0$ gilt. Dazu betrachten wir
+\begin{align*}
+\{X_t = \infty\} &= \{\lim T_n \leq t\} = \left\{\sum_{i=1}^\infty W_i \leq t\right\} = \left\{\sum_{i=1}^n W_i \leq t \quad \forall_{n \geq 0}\right\} = \left\{0 \leq \frac{1}{n}\sum_{i=1}^n W_i \leq \frac{t}{n} \quad \forall_{n \geq 0}\right\}\\
+\quad &\subset \left\{\lim \frac{1}{n} \sum_{i=1}^n W_i = 0\right\}\text{.}
+\end{align*}
+Das starke Gesetz der großen Zahlen impliziert nun $P$-fast sicher $\frac{1}{n} \sum_{i=1}^n W_i \to \E W_1 > 0$ und wir erhalten $P(X_t = \infty) = 0$. 
+
+Wir wollen nun zeigen, dass $(X_t)$ explosionsfrei ist. Da $(X_t)$ offenbar monoton wachsend und $\N_0$-wertig ist, ist keine Explosion möglich, denn wäre bei $t_0$ eine Explosion, so hätten wir $\lim_{t \nearrow t_0} X_t = \infty$ und damit gäbe es $t < t_0$ mit $X_t > X_{t_0} \in \N_0$, was im Widerspruch zur Monotonie steht.
+
+Wir zeigen nun, dass $(X_t)$ rechtsstetig ist. Dazu sei $t \geq 0$, $\omega \in \Omega$ und $n := X_t(\omega)$. Wegen $T_n < T_{n+1}$ existiert dann $\e > 0$ mit $T_n(\omega) \leq t+\e < T_{n+1}(\omega)$ $P$-fast sicher. Dann gilt $X_s(\omega) = n$ für alle $s \in [t, t+\e)$ und mit Satz \ref{Nummer1.2.7} folgt dann die Rechtsstetigkeit.
+
+Ferner gilt wegen der Monotonie der $T_n$
+\begin{align*}
+X_{T_n} &= \sum_{i=0}^\infty \ind_{(0, T_n]}(T_i) = \sum_{i=1}^n \ind_{(0, T_n]}(T_i) = n \tag{*}\text{.}
+\end{align*} 
+Nun wollen wir zeigen, dass die $T_n$ die Sprungzeiten von $(X_t)$ sind. Dazu seien $(\tilde{T}_n)$ die Sprungzeiten von $(X_t)$ und wir zeigen mit vollständiger Induktion, dass $T_n = \tilde{T}_n$ gilt. Für den Induktionsanfang betrachte einfach $T_0 = 0 = \tilde{T}_0$. Für den Induktionsschritt gilt
+\begin{align*}
+\tilde{T}_{n+1} &= \inf\{t \geq \tilde{T}_n : X_t \neq X_{\tilde{T}_n}\} = \inf\{t \geq T_n : X_t \neq X_{T_n}\} \stackrel{\text{(*)}}{=} \inf\left\{t \geq T_n : \sum_{i=0}^\infty \ind_{(0, t]}(T_i) \neq n\right\}\text{.}
+\intertext{Wir können nun die Summe in $\sum_{i=0}^n \ind_{(0, t]}(T_i) + \sum_{i=n+1}^\infty \ind_{(0, t]}(T_i)$ aufspalten, wobei die erste dieser Teilsummen gerade $n$ ergibt. Wir erhalten daher aus der Nicht-Negativität}
+\quad &= \inf\left\{t \geq T_n : \sum_{i=n+1}^\infty \ind_{(0, t]}(T_i) > 0\right\} = \inf\{t \geq T_n : t \geq T_{n+1}\}\\
+\quad &= T_{n+1}\text{.}
+\end{align*}
+
+Wir zeigen nun noch, dass $P$-fast sicher $T_n < \infty$ gilt. Es ist $T_n = \sum_{i=1}^n W_i$ und wegen $P(W_i < \infty) = 1$ ist dann auch $P(T_n < \infty) = 1$. Damit sind die $W_n$ die Wartezeiten von $(X_t)$. Schließlich gilt mit (**) noch $S_n = X_{T_n} = n$.
+\end{beweis}
+
+Sind $(W_n)$, $(T_n)$ und $(X_t)$ wie im Satz \ref{Nummer4.1.2} gegeben, so heißt $(X_t)_{t \geq 0}$ \deftxt{Zählprozess}\index{Zählprozess}, da dieser Prozess zählt, wie viele der konsekutiven Ereignisse, die zu den Zeiten $T_i$ eintreten, bereits zur Zeit $t$ eingetreten sind. Satz \ref{Nummer4.1.2} ermöglicht recht allgemein die Konstruktion solcher Zählprozesse.
+
+Wir werden als nächstes Poissonprozesse einführen, die Zählprozesse mit exponentialverteilten Wartezeiten sind. Daher wollen wir zunächst die Exponentialverteilung\index{Exponentialverteilung} $\Exp(\lambda)$ für $\lambda > 0$ in Erinnerung rufen. Dies ist eine Lebesgue-absolut stetige Verteilung auf $\R$, welche durch die Dichte
+\begin{align*}
+h(t) &:= \begin{cases} \lambda\exp(-\lambda t) & \text{falls } t \geq 0\\ 0 & \text{sonst}\end{cases}
+\end{align*}
+gegeben ist. Ist $Y \sim \Exp(\lambda)$, so gelten die folgenden Eigenschaften:
+\begin{enumerate}
+	\item Es ist $P(Y \in (0, \infty)) = 1$.
+	\item Es gilt $\E Y = \lambda^{-1}$ und $\Var Y = \lambda^{-2}$.
+	\item Die Verteilungsfunktion von $Y$ ist gegeben durch
+	\begin{align*}
+	F_Y(t) &:= \begin{cases}1 - \exp(-\lambda t) & \text{falls } t \geq 0\\ 0 & \text{sonst}\end{cases}\text{.}
+	\end{align*}
+	\item Die Zufallsvariable $Y$ ist gedächtnislos, für alle $t, s \geq 0$ gilt also
+	\begin{align*}
+	P(Y > t + s \mid Y > s) &= P(Y > t)\text{.}
+	\end{align*}
+	\item Sind $Y_1, \ldots, Y_n \sim \Exp(\lambda)$ unabhängig, so gilt $\sum_{i=1}^n Y_i \sim \Gamma(n, \lambda)$, wobei dies die Gammaverteilung\index{Gammaverteilung} ist, welche durch die Lebesgue-Dichte 
+	\begin{align*}
+	h_n(t) &:= \begin{cases}\lambda\frac{(\lambda t)^{n-1}}{(n-1)!}\exp(-\lambda t) & \text{falls } t > 0\\ 0 & \text{sonst}\end{cases}
+	\end{align*}
+	gegeben ist.
+\end{enumerate}
+
+Mit diesen elementaren Eigenschaften können wir nun zur Definition des Poissonprozesses, der ein Spezialfall von Satz \ref{Nummer4.1.2} darstellt. Dieser sichert die Existenz, die Explosionsfreiheit und das Vorhandensein unendlich vieler Sprünge, insbesondere also auch $P$-fast sicher $T_n < \infty$ und $W_n < \infty$.
+
+\begin{definition}[Poissonprozess]\label{Nummer4.1.3}
+Ein rechtsstetiger und $\N_0$-wertiger stochastischer Prozess $(N_t)_{t \geq 0}$ heißt \deftxt{homogener Poissonprozess}\index{Poissonprozess}\index{Poissonprozess!homogener} mit \deftxt{Rate}\index{Rate} $\lambda > 0$, wenn die folgenden Eigenschaften erfüllt sind:
+\begin{enumerate}
+	\item Es gilt $P$-fast sicher $N_0 = 0$.
+	\item Die Wartezeiten $(W_n)_{n \geq 1}$ sind i.\,i.\,d. mit $W_n \sim \Exp(\lambda)$.
+	\item Der Sprungprozess $(S_n)$ erfüllt $S_n = n$ für alle $n \geq 0$.
+\end{enumerate}
+\end{definition}
+
+Poissonprozesse sind durch den Parameter $\lambda$ bereits eindeutig beschrieben, da Wartezeiten und Sprungprozess den stochastischen Prozess bereits festlegen.

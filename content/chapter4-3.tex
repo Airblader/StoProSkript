@@ -1,0 +1,161 @@
+\section{Weitere Eigenschaften}
+
+In diesem Abschnitt wollen wir weitere Eigenschaften von Poissonprozessen untersuchen, die für praktische Anwendungen von Interesse sind.
+
+\begin{satz}[Summenbildung]\label{Nummer4.3.1}
+Seien $(N_t)_{t \geq 0}$ und $(M_t)_{t \geq 0}$ unabhängige, homogene Markovprozesse mit der Rate $\lambda$ bzw. $\mu$. Dann ist $(N_t + M_t)_{t \geq 0}$ ein homogener Poissonprozess mit Rate $\lambda + \mu$.
+\end{satz}
+
+\begin{beweis}
+Wir verwenden für den Beweis die Charakterisierung aus Satz \ref{Nummer4.2.1}. Klar ist, dass \ref{N421A1} erfüllt ist. Für \ref{N421A2} gilt, dass $(N_t)$ und $(M_t)$ unabhängige Zuwächse haben und voneinander unabhängig sind. Daher besitzt auch die Summe unabhängige Zuwächse. 
+
+Wir wollen nun noch \ref{N421A3} zeigen, dass die Zuwächse $N_{s+t} + M_{s+t} - N_s - M_s$ also poissonverteilt mit Rate $\lambda + \mu$ sind. Dazu betrachten wir
+\begin{align*}
+P(N_{s+t} + M_{s+t} - N_s - M_s = k) &= \sum_{m=0}^k P(N_{s+t} - N_s = m \text{ und } M_{s+t} - M_s = k-m)\\
+\quad &= \sum_{m=0}^k P(N_{s+t} - N_s = m)P(M_{s+t} - M_s = k-m)\\
+\quad &= \sum_{m=0}^k e^{-\lambda t} \frac{(\lambda t)^m}{m!} e^{-\mu t} \frac{(\mu t)^{k-m}}{(k-m)!}\text{.}
+\end{align*}
+Wir können die Exponentialfunktionen aus der Summe ziehen und müssen nur noch die verbleibende Summe betrachten. Wir erhalten mit dem binomischen Lehrsatz
+\begin{align*}
+\sum_{m=0}^k \frac{(\lambda t)^m}{m!} \frac{(\mu t)^{k-m}}{(k-m)!} &= \frac{t^k}{k!} \sum_{m=0}^k \frac{k!}{m!(k-m)!} \lambda^m \mu^{k-m}\\
+\quad &= \frac{(\lambda + \mu)^k t^k}{k!} \sum_{m=0}^k \binom{k}{m} \left(\frac{\lambda}{\lambda + \mu}\right)^m \left(\frac{\mu}{\lambda + \mu}\right)^{k-m}\\
+\quad &= \frac{(\lambda + \mu)^k t^k}{k!}\text{.}
+\end{align*}
+Dann folgt also
+\begin{align*}
+P(N_{s+t} + M_{s+t} - N_s - M_s = k) &= e^{-(\lambda + \mu)t} \frac{((\lambda + \mu)t)^k}{k!}\text{.} \qedhere
+\end{align*}
+\end{beweis}
+
+Es seien nun $(N_t^{(1)}), \ldots, (N_t^{(m)})$ unabhängige, homogene Poissonprozesse, jeweils mit den Raten $\lambda_1, \ldots, \lambda_m$ und den Wartezeiten $(W_n^{(1)}), \ldots, (W_n^{(m)})$. Wir betrachten dann $N_t := N_t^{(1)} + \ldots + N_t^{(m)}$ und wollen untersuchen, was für die Wartezeiten von $(N_t)$ gilt.
+
+Zunächst ist klar, dass $W_1 := \min\{W_1^{(1)}, \ldots, W_1^{(m)}\}$ die erste Wartezeit von $(N_t)$ ist. Es sei $J := \argmin_{j = 1, \ldots, m} W_1^{(j)}$ der Index des Prozesses, der das erste Ereignis von $N_t$ verursacht. Ferner gilt $W_1 \sim \Exp(\lambda)$ und $W_1^{(J)} = W_1$, wobei $\lambda := \lambda_1 + \ldots + \lambda_m$ ist.
+
+\begin{satz}\label{Nummer4.3.2}
+Mit den obigen Bezeichnungen gelten die folgenden Aussagen:
+\begin{enumerate}
+	\item\label{N432A1} $J$ und $W_1$ sind unabhängig.
+	\item\label{N432A2} Es gilt $\displaystyle P(J = i) = \frac{\lambda_j}{\lambda}$ für alle $i = 1, \ldots, m$.
+\end{enumerate}
+\end{satz}
+
+Für den Beweis des Satzes benötigen wir ein Lemma, das wir dem Beweis voranstellen.
+
+\begin{lemma}\label{Nummer4.3.3}
+Es seien $X_1$ und $X_2$ unabhängige Zufallsvariablen, deren Verteilungen die Lebesgue-Dichten $f_1$ und $f_2$ besitzen. Ferner sei $g\colon \R^2 \to \R$ mit $g(X_1, X_2) \in \sL_1$. Dann gelten die folgenden Aussagen:
+\begin{enumerate}
+	\item Es ist $\displaystyle\E g(X_1, X_2) = \int_{-\infty}^\infty \E g(x, X_2)f_1(x)~\dd x$.
+	\item Es gilt $\displaystyle P(t \leq X_1 \leq X_2) = \int_t^\infty P(X_2 \geq x)f_1(x)~\dd x$ für alle $t \in \R$.
+\end{enumerate}
+\end{lemma}
+
+\begin{beweis}
+Für die erste Eigenschaft betrachten wir
+\begin{align*}
+\E g(X_1, X_2) &= \E_{P_{X_1, X_2}} g = \E_{P_{X_1} \otimes P_{X_2}} g = \int_{-\infty}^\infty \int_{-\infty}^\infty g(x_1, x_2)f_1(x_1)f_2(x_2)~\dd x_2~\dd x_1\\
+\quad &= \int_{-\infty}^\infty f_1(x_1)\int_{-\infty}^\infty g(x_1, x_2)f_2(x_2)~\dd x_2~\dd x_1\\
+\quad &= \int_{-\infty}^\infty \E g(x_1, X_2)f_1(x_1)~\dd x_1\text{.}
+\end{align*}
+
+Für den Beweis der zweiten Eigenschaft betrachten wir $g(X_1, X_2) := \ind_{[t, \infty)}(x_1)\ind_{[x_1, \infty)}(x_2)$. Dann gilt $\E g(X_1, X_2) = P(t \leq X_1 \leq X_2)$ und $\E g(x, X_2) = \ind_{[t, \infty)}(x)P(X_2 \geq x)$. Dann folgt die Aussage mit der ersten Eigenschaft.
+\end{beweis}
+
+\begin{beweis}[Beweis von Satz \ref{Nummer4.3.2}]
+Für $j = 1, \ldots, m$ und $t \geq 0$ zeigen wir zunächst
+\begin{align*}
+P(J = i, W_1 \geq t) &= \frac{\lambda_j}{\lambda}e^{-\lambda t}\text{.} \tag{*}
+\end{align*}
+Dazu sei o.\,B.\,d.\,A. $j = 1$. Dann ist $V := \min\{W_1^{(2)}, \ldots, W_1^{(m)}\}$ die erste Wartezeit von $(N_t^{(2)} + \ldots + N_t^{(m)})$ und es gilt $V \sim \Exp(\lambda_2 + \ldots + \lambda_m)$. Wir erhalten
+\begin{align*}
+P(J = 1, W_1 \geq t) &= P(t \leq W_1^{(1)} \leq V) \stackrel{\text{\ref{Nummer4.3.3}}}{=} \int_t^\infty P(V \geq x)\lambda_1e^{-\lambda_1 x}~\dd x\\
+\quad &= \int_t^\infty \exp\left(-x \sum_{i=2}^m \lambda_i\right)\lambda_1 e^{-\lambda_1 x}~\dd x\\
+\quad &= \lambda_1 \int_t^\infty e^{-\lambda x}~\dd x\\
+\quad &= \frac{\lambda_1}{\lambda}e^{-\lambda t}\text{.}
+\end{align*}
+Damit ist (*) gezeigt. Für $t \searrow 0$ folgt nun $P(J = j, W_1 \geq t) \to P(J = j)$, aber auch $P(J = j, W_1 \geq t) \to \frac{\lambda_j}{\lambda}$, es gilt also $P(J = j) = \frac{\lambda_j}{\lambda}$. Dies beweist \ref{N432A2}. Für \ref{N432A1} gilt
+\begin{align*}
+P(J = j, W_1 \geq t) &\stackrel{\text{(*)}}{=} \frac{\lambda_j}{\lambda} e^{-\lambda t} = P(J = j)P(W_1 \geq t)\text{,}
+\end{align*}
+also erhalten wir die Unabhängigkeit auf einem $\cap$-stabilem Erzeugendensystem und sind fertig.
+\end{beweis}
+
+\begin{beispiel}[Bank]\label{Nummer4.3.4}
+Wir betrachten eine Bank mit drei Eingängen. Wir nehmen an, dass die Kunden durch diese Eingänge poissonverteilt mit den Raten $\lambda_1, \lambda_2, \lambda_3$ kommen. Mit den Bezeichnungen des Satzes \ref{Nummer4.3.2} folgt, dass die Wahrscheinlichkeit dafür, dass der erste Kunde durch den Eingang $j$ kommt, gerade $\frac{\lambda_j}{\lambda_1 + \lambda_2 + \lambda_3}$ beträgt. Für die durchschnittliche Wartezeit auf den ersten Kunden gilt ferner
+\begin{align*}
+\E W_1 &= \frac{1}{\lambda_1 + \lambda_2 + \lambda_3}\text{.}
+\end{align*}
+Die starke Markoveigenschaft aus Korollar \ref{Nummer4.2.4} sichert hierbei, dass diese Formeln auch für alle weiteren Kunden gelten.
+\end{beispiel}
+
+Wir wollen uns auch noch mit der Frage beschäftigen, was passiert, wenn die Kunden in Beispiel \ref{Nummer4.3.4} auch Ein- oder Auszahlungen vornehmen.
+
+\begin{definition}[Compound Process]\label{Nummer4.3.5}
+Sei $(N_t)$ ein homogener Poissonprozess mit Rate $\lambda$. Ferner sei $(Y_n)$ eine Folge von i.\,i.\,d. Zufallsvariablen auf $\R$, die von $(N_t)$ unabhängig ist. Dann heißt der Prozess $(C_t)_{t \geq 0}$, der durch
+\begin{align*}
+C_t &:= \sum_{i=1}^{N_t} Y_i
+\end{align*}
+definiert ist, der \deftxt{Compound Process}\index{Compound Process} von $(N_t)$ und $(Y_n)$.
+\end{definition}
+
+Jedes von $(N_t)$ gezählte Ereignis löst eine "`Aktion $X_i$"' aus $C_t$ aus. Nun beschreibt $C_t$ die Summe dieser Aktionen bis zur Zeit $t$. Im Beispiel \ref{Nummer4.3.4} kann man $Y_i$ als Einzahlung des $i$-ten Kunden betrachten, wobei $Y_i(\omega) < 0$ einer Auszahlung entspricht. Dann beschreibt $C_t$ die Bilanz dieser Vorgänge bis zur Zeit $t$ aus Sicht der Bank.
+
+\begin{satz}\label{Nummer4.3.6}
+Sei $N$ eine $\N_0$-wertige Zufallsvariable und $(Y_n)$ eine Folge von i.\,i.\,d. Zufallsvariablen, die von $N$ unabhängig ist. Wir setzen
+\begin{align*}
+C &:= \sum_{i=1}^N Y_i\text{.}
+\end{align*}
+Dann gelten die folgenden Aussagen:
+\begin{enumerate}
+	\item\label{N436A1} \deftxt{Waldsche Identität}\index{Waldsche Identität}: Sind $N, Y_1 \in \sL_1$, so gilt $C \in \sL_1$ und $\E C = \E N \E Y_1$.
+	\item\label{N436A2} \deftxt{Blackwell-Girshick}\index{Blackwell-Girshick}: Sind $N, Y_1 \in \sL_2$, so gilt $C \in \sL_2$ und
+	\begin{align*}
+	\Var C &= \E N \Var Y_1 + \Var N (\E Y_1)^2\text{.}
+	\end{align*}
+	\item\label{N436A3} Ist $N \sim \Pois(\lambda)$ und $N, Y_1 \in \sL_2$, so ist $C \in \sL_2$ und es gilt $\E C = \lambda \E Y_1$ und $\Var C = \lambda \E Y_1^2$.
+\end{enumerate}
+\end{satz}
+
+\begin{beweis}
+Der Beweis wird zur Übung überlassen. 
+\end{beweis}
+
+\begin{beispiel*}[Fortsetzung von Beispiel \ref{Nummer4.3.4}]
+Wir hatten uns bereits gefragt, was passiert, wenn man in Beispiel \ref{Nummer4.3.4} auch Ein- und Auszahlungen erlaubt. Wir nehmen daher an, dass Kunde $i$ die Einzahlung $Y_i$ durchführt. Wir fragen uns nun, wie die Bilanz der Bank zur Zeit $t$ aussieht. 
+
+Dazu sei $N_t \sim \Pois(\lambda t)$ mit $\lambda = \lambda_1 + \lambda_2 + \lambda_3$, die $Y_i$ seien i.\,i.\,d. und es sei $C_t := \sum_{i=1}^{N_t} Y_i$. Aus Satz \ref{Nummer4.3.3} folgt dann $\E C_t = \lambda t \E Y_1$ und $\Var C_t = \lambda t \E Y_1^2$, sowohl Erwartungswert als auch Varianz verändern sich also linear mit der Zeit. Für $a \geq 0$ gilt dann mit der Markov-Ungleichung
+\begin{align*}
+P(\vert C_t \vert \geq a) &\leq \frac{\E C_t^2}{a^2} = \frac{\lambda t \E Y_1^2 + \lambda^2 t^2 (\E Y_1)^2}{a^2}\text{.}
+\end{align*}
+Diese Abschätzung ist jedoch nicht besonders gut und kann stark verbessert werden. Für die Verteilung von $C_t$ lässt sich auch explizit eine Formel angeben, die jedoch kompliziert und häufig schwierig auszuwerten ist.
+\end{beispiel*}
+
+Wir nehmen nun an, dass $k$ Ereignisse beobachtet wurden. Wie sieht dann die Verteilung der $T_i$ aus? Das folgende Lemma \ref{Nummer4.3.7} besagt, dass die bedingte Verteilung für $T_1$ die Gleichverteilung auf $[0,t]$ ist.
+
+\begin{lemma}[Bedingte Verteilung von $T_1$]\label{Nummer4.3.7}
+Sei $(N_t)$ ein homogener Poissonprozess mit Rate $\lambda$. Dann gilt für $0 \leq s \leq t$
+\begin{align*}
+P(T_1 \leq s \mid N_t = 1) &= \frac{s}{t}\text{.}
+\end{align*}
+\end{lemma}
+
+\begin{beweis}
+Da $T_1 \leq s$ äquivalent zu $N_s = 1$ ist, gilt mit $N_0 = 0$, der Unabhängigkeit der Zuwächse und mit der Dichte der Poissonverteilung
+\begin{align*}
+P(T_1 \leq s \mid N_t = 1) &= \frac{P(T_1 \leq s, N_t = 1)}{P(N_t = 1)} = \frac{P(N_s - N_0 = 1, N_t - N_s = 0)}{P(N_t = 1)}\\
+\quad &= \frac{P(N_s = 1)P(N_t - N_s = 0)}{P(N_t = 1)} = \frac{\frac{\lambda s e^{-\lambda s}}{1!} \frac{(\lambda(t-s))^0 e^{-\lambda(t-s)}}{0!}}{\frac{\lambda t e^{-\lambda t}}{1!}}\\
+\quad &= \frac{s}{t}\text{.} \qedhere
+\end{align*}
+\end{beweis}
+
+\begin{satz}[Bedingte Verteilung von $T_1, \ldots, T_k$]\label{Nummer4.3.8}
+Sei $(N_t)$ ein homogener Poissonprozess mit Rate $\lambda$. Dann hat die Verteilung der $T_1, \ldots, T_k$ unter der Bedingung $N_t = k$, das heißt $P((T_1, \ldots, T_k) \in \bullet \mid N_t = k)$, auf $\R^k$ die Lebesgue-Dichte
+\begin{align*}
+h\colon \R^k &\to \R\\
+(t_1, \ldots, t_k) &\mapsto \frac{k!}{t^k} \ind_{\{0 \leq t_1 \leq \ldots \leq t_k \leq t\}}\text{.}
+\end{align*}
+Dies ist die Dichte der Ordnungsstatistik von $k$ unabhängigen und auf $[0, t]$ gleichverteilten Zufallsvariablen.
+\end{satz}
+
+\begin{beweis}
+Wir werden den Beweis hier nicht führen, da er konzeptionell einfach ist, aber eine längere Rechnung erfordert. Nachzulesen ist er in \cite[Satz 10.27]{MEINTRUP}.
+\end{beweis}

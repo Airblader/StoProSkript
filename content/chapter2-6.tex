@@ -1,0 +1,164 @@
+\section{Gleichgradige Integrierbarkeit}
+
+\begin{definition}[Gleichgradige Integrierbarkeit]\label{Nummer2.6.1}
+Eine Familie $(X_i)_{i \in I}$ von Zufallsvariablen heißt \deftxt{gleichgradig integrierbar}\index{Integrierbarkeit!gleichgradige} oder \deftxt{gleichmäßig integrierbar}\index{Integrierbarkeit!gleichmäßige} genau dann, wenn
+\begin{align*}
+\sup_{i \in I} \int_{|X_i| \geq c} |X_i|~\dd P &\to 0 \qquad \text{für } c \to \infty\text{.}
+\end{align*}
+\end{definition}
+
+Analog wird die gleichgradige Integrierbarkeit für Mengen definiert. Falls $c \nearrow \infty$ ist, so ist die Konvergenz in Definition \ref{Nummer2.6.1} ebenfalls monoton.
+
+\begin{information}
+Zwischen gleichgradiger und gleichmäßiger Stetigkeit besteht ein Unterschied, während bei der Integrierbarkeit beide Begriffe für den selben Sachverhalt verwendet werden.
+\end{information}
+
+\begin{beispiel}\label{Nummer2.6.2}
+Ist $X \in \sL_1$, so ist $\{X\}$ gleichgradig integrierbar.
+\end{beispiel}
+
+\begin{lemma}\label{Nummer2.6.3}
+Sind $K_1, \ldots, K_m$ gleichmäßig integrierbar, so ist auch $K_1 \cup \ldots \cup K_m$ gleichmäßig integrierbar. Mit Beispiel \ref{Nummer2.6.2} folgt dann insbesondere, dass endliche Mengen integrierbarer Zufallsvariablen gleichmäßig integrierbar sind.
+\end{lemma}
+
+\begin{beweis}
+Dieser Beweis wird zur Übung überlassen.
+\end{beweis}
+
+\begin{satz}[Projektionsfamilien]\label{Nummer2.6.4}\index{Projektionsfamilien}
+Sei $Y \in \sL_1$ und $\sF_i \subset \sA$ seien Sub-$\sigma$-Algebren für $i \in I \neq \emptyset$. Wir setzen $X_i := \E(Y \mid \sF_i)$. Dann ist $(X_i)_{i \in I}$ gleichmäßig integrierbar.
+\end{satz}
+
+Ist $I = \N_0$ und $(\sF_n)_{n \geq 0}$ eine Filtration, so ist insbesondere $(X_n)_{n \geq 0}$ ein gleichgradig integrierbares Martingal. Im nächsten Abschnitt werden wir sehen, dass gleichgradig integrierbare Martingale stets von dieser Form sind.
+
+\begin{beweis}
+Wir definiren ein Maß $\mu\colon \sA \to [0, \infty)$ durch $\mu(A) := \int_A |Y|~\dd P$ für $A \in \sA$. Klar ist, dass $\mu$ ein endliches Maß mit $\mu \ll P$ ist. Sei nun $\e > 0$. Mit \cite[Korollar I.12.3]{WT}\footnote{Auch zu finden in \cite[Korollar 2.40]{MEINTRUP}.} folgt, dass es ein $\delta > 0$ gibt, so dass $P(A) < \delta$ impliziert, dass $\mu(A) < \e$ gilt. Mit der Ungleichung von Markov folgt zudem
+\begin{align*}
+\sup_{i \in I} P(|X_i| \geq c) &\leq \sup_{i \in I} \frac{\E |X_i|}{c} = \sup_{i \in I} \frac{\E |\E(Y \mid \sF_i)|}{c}\\
+\quad &\leq \sup_{i \in I} \frac{\E|Y|}{c} \to 0
+\end{align*}
+für $c \to \infty$. Daher existiert ein $c > 0$ mit $\sup_{i \in I} P(|X_i| \geq c) < \delta$. Damit folgt
+\begin{align*}
+\sup_{i \in I} \E |X_i| \ind_{|X_i| \geq c} &\leq \sup_{i \in I} \E(\E(|Y| \mid \sF_i) \ind_{|X_i| \geq c}) = \sup_{i \in I} \E (|Y| \ind_{|X_i| \geq c}) = \sup_{i \in I} \mu(|X_i| \geq c)\\
+\quad &\leq \e\text{.} \qedhere
+\end{align*}
+\end{beweis}
+
+\begin{lemma}[Gleichmäßige Beschränktheit]\label{Nummer2.6.5}
+Ist $K$ eine gleichmäßig integrierbare Menge, so ist $K$ auch gleichmäßig beschränkt in $\sL_1$, das heißt
+\begin{align*}
+\sup_{X \in K} \norm{X}_1 &< \infty\text{.}
+\end{align*}
+Die Umkehrung gilt im Allgemeinen nicht.
+\end{lemma}
+
+\begin{beweis}
+Der Beweis des Lemmas wird zur Übung überlassen.
+\end{beweis}
+
+An dieser Stelle wollen wir noch ein Beispiel dafür geben, dass die Umkehrung von Lemma \ref{Nummer2.6.5} im Allgemeinen falsch ist. Betrachte dazu die Gleichverteilung auf $[0,1]$ und die Zufallsvariablen $X_n := n \cdot \ind_{\left[0, \frac{1}{n}\right]}$. Dann ist $\norm{X_n}_1 = 1$ für alle $n \geq 1$, aber für $c \leq n$ gilt auch $\E|X_n|\ind_{|X_n| > c} = 1$. Dann ist auch das Supremum davon $1$, was jedoch einen Widerspruch darstellt.
+
+\begin{information}
+Man kann auf $\sL_1$ die kleinste Topologie betrachten, bezüglich welcher alle linearen Funktionale die Form $f \mapsto \int fh~\dd P$ für festes $h \in \sL_\infty$ haben. Dies ist die sogenannte schwache oder $w$-Topologie. Dann gibt es den Satz von Dunford-Pettis, der besagt, dass $K$ genau dann gleichmäßig integrierbar ist, wenn $\overline{K}^w$ $w$-kompakt ist.
+\end{information}
+
+\begin{satz}[Charakterisierung I]\label{Nummer2.6.6}
+Es sei $(X_i)_{i \in I}$ eine Familie von Zufallsvariablen. Dann sind die folgenden Aussagen äquivalent:
+\begin{enumerate}
+	\item\label{Nummer266A1} $(X_i)_{i \in I}$ ist gleichmäßig integrierbar.
+	\item\label{Nummer266A2} $(X_i)_{i \in I}$ ist gleichmäßig beschränkt in $\sL_1$ und für alle $\e > 0$ existiert ein $\delta > 0$, so dass für alle $A \in \sA$ gilt:
+	\begin{align*}
+	P(A) < \delta \qquad &\Rightarrow \qquad \sup_{i \in I} \int_A |X_i|~\dd P < \e\text{.} \tag{N266A2}\label{EQ266A2}
+	\end{align*}
+\end{enumerate}
+\end{satz}
+
+\begin{beweis}
+Wir betrachten zunächst die Richtung von \ref{Nummer266A1} nach \ref{Nummer266A2}. Die gleichmäßige Beschränktheit folgt dann aus Lemma \ref{Nummer2.6.5}. Sei nun $\e > 0$, dann existiert aufgrund der gleichmäßigen Integrierbarkeit ein $c > 0$ mit $\int_{|X_i| \geq c} |X_i|~\dd P < \e$ für alle $i \in I$. Nun setzen wir $\delta := \frac{\e}{c}$, für $A \in \sA$ mit $P(A) < \delta$ gilt dann
+\begin{align*}
+\int_A |X_i|~\dd P &= \int_{A \cap \{|X_i| < c\}}|X_i|~\dd P + \int_{A \cap \{|X_i| \geq c\}}|X_i|~\dd P\\
+\quad &\leq cP(A) + \e\\
+\quad &\leq 2\e\text{.}
+\end{align*}
+Nun beweisen wir die Richtung von \ref{Nummer266A2} nach \ref{Nummer266A1}. Sei $\e > 0$ und $\delta > 0$ so, dass \eqref{EQ266A2} erfüllt ist. Wir setzen $c := \frac{1}{\delta} \sup_{i \in I} \int |X_i|~\dd P < \infty$. Mit der Ungleichung von Markov folgt dann
+\begin{align*}
+P(|X_i| \geq c) &\leq \frac{\E|X_i|}{c} \leq \delta\text{.}
+\end{align*}
+Wenden wir \eqref{EQ266A2} nun auf $A := \{|X_i| \geq c\}$ an, so erhalten wir für alle $i \in I$
+\begin{align*}
+\int_{|X_i| \geq c} |X_i|~\dd P &< \e\text{.} \qedhere
+\end{align*}
+\end{beweis}
+
+\begin{satz}[Charakterisierung II]\label{Nummer2.6.7}
+Es sei $(X_n)_{n \geq 1} \subset \sL_1$ und $X_\infty$ eine Zufallsvariable. Dann sind die folgenden Aussagen äquivalent:
+\begin{enumerate}
+	\item\label{Nummer267A1} Die Familie $(X_n)_{n \geq 1}$ ist gleichmäßig integrierbar und $X_n \to X_\infty$ stochastisch.
+	\item\label{Nummer267A2} Es gilt $X_\infty \in \sL_1$ und $X_n \to X_\infty$ in $\sL_1$.
+\end{enumerate}
+\end{satz}
+
+\begin{beweis}
+Wir beweisen zunächst die Richtung von \ref{Nummer267A1} nach \ref{Nummer267A2}. In der Wahrscheinlichkeitstheorie haben wir gelernt, dass eine Teilfolge $X_{n_k}$ mit $X_{n_k} \to X_\infty$ $P$-fast sicher existiert. Mit dem Lemma von Fatou\footnote{Dieses findet sich im Anhang als Lemma \ref{appendix:fatou}.} folgt dann
+\begin{align*}
+\E|X_\infty| &\leq \liminf \E|X_{n_k}| < \infty\text{,}
+\end{align*}
+wobei der letzte Schritt wegen der gleichmäßigen Beschränktheit gilt. Dann ist also $X_\infty \in \sL_1$. Ferner betrachten wir nun $\{X_n : n \in \overline{\N}\}$. Diese Menge ist gleichmäßig integrierbar nach Beispiel \ref{Nummer2.6.2} und Lemma \ref{Nummer2.6.3}. Sei nun $\e > 0$. Mit Satz \ref{Nummer2.6.6} folgt dann, dass es ein $\delta > 0$ gibt, so dass \eqref{EQ266A2} erfüllt ist für unsere Menge. Da $X_n \to X_\infty$ stochastisch, existiert ein $n_0$, so dass für alle $n \geq n_0$ $P(|X_n - X_\infty| > \e) < \delta$ gilt. Für $A := \{|X_n - X_\infty| > \e\}$ gilt mit \eqref{EQ266A2} dann $\int_A |X_n|~\dd P < \e$ für alle $n \geq n_0$ oder $n = \infty$. Dann ist
+\begin{align*}
+\int |X_n - X_\infty|~\dd P &\leq \int_{|X_n - X_\infty| < \e} |X_n - X_\infty|~\dd P + \int_{|X_n - X_\infty| > \e} |X_n - X_\infty|~\dd P\\
+\quad &\leq \e + \int_{|X_n - X_\infty| > \e} |X_n| + |X_\infty|~\dd P\\
+\quad &\leq 3\e\text{.}
+\end{align*}
+Kommen wir zur Richtung von \ref{Nummer267A2} nach \ref{Nummer267A1}. Nach unsereren Kenntnissen aus der Wahrscheinlichkeitstheorie genügt es, gleichmäßige Integrierbarkeit zu zeigen. Da $(X_n)$ in $\sL_1$ konvergiert, ist $(X_n)$ gleichmäßig beschränkt. Daher zeigen wir noch \eqref{EQ266A2} aus Satz \ref{Nummer2.6.6}. Sei also $\e > 0$. Da $X_\infty$ gleichmäßig integrierbar ist, folgt die Existenz eines $\delta > 0$, so dass für alle $A \in \sA$ mit $P(A) < \delta$ gilt, dass $\int_A |X_\infty|~\dd P < \e$. Sei nun $n_0 \geq 1$ mit $\norm{X_n - X_\infty}_1 < \e$ für alle $n \geq n_0$. Für $A \in \sA$ mit $P(A) < \delta$ folgt dann
+\begin{align*}
+\int_A |X_n|~\dd P &\leq \int_A |X_n - X_\infty|~\dd P + \int_A |X_\infty|~\dd P\\
+\leq 2\e\text{.}
+\end{align*}
+Da ferner $\{X_1, \ldots, X_{n_0 - 1}\}$ gleichmäßig integrierbar ist, existiert mit Satz \ref{Nummer2.6.6} ein $\delta' > 0$ mit
+\begin{align*}
+P(A) < \delta' \qquad &\Rightarrow \qquad \sup_{n \leq n_0-1} \int_A |X_n|~\dd P < \e\text{.}
+\end{align*}
+Setzen wir nun $\delta'' := \min\{\delta, \delta'\}$, so sind wir fertig.
+\end{beweis}
+
+\begin{satz}[Majorante]\label{Nummer2.6.8}
+Es sei $(X_i)_{i \in I}$ eine Familie von Zufallsvariablen und $Y \in \sL_1$ mit $|X_i| \leq Y$ für alle $i \in I$. Dann ist $(X_i)_{i \in I}$ gleichmäßig integrierbar.
+\end{satz}
+
+\begin{beweis}
+Der Beweis wird zur Übung überlassen.
+\end{beweis}
+
+\begin{korollar}[Majorisierte Konvergenz]\label{Nummer2.6.9}
+Es sei $X_n \to X$ stochastisch und $Y \in \sL_1$ mit $|X_n| \leq Y$ für alle $n \geq 1$. Dann gilt $X_n \to X$ in $\sL_1$ und $\E X_n \to \E X$. 
+\end{korollar}
+
+\begin{beweis}
+Satz \ref{Nummer2.6.8} zeigt, dass $(X_n)_{n \geq 1}$ gleichmäßig integrierbar ist. Aus Satz \ref{Nummer2.6.7} folgt dann, dass $X \in \sL_1$ und $X_n \to X$ in $\sL_1$ gilt. Damit ist
+\begin{align*}
+|\E X_n - \E X| &\leq \E |X_n - X| \to 0\text{.} \qedhere
+\end{align*}
+\end{beweis}
+
+\begin{satz}[Beschränktheit]\label{Nummer2.6.10}
+Sei $(X_i)_{i \in I}$ eine Familie von Zufallsvariablen, $\phi\colon \R \to [0, \infty)$ messbar und $\lim_{t \to \infty} \frac{\phi(t)}{t} = \infty$. Gilt $K := \sup_{i \in I} \E \phi \circ |X_i| < \infty$, so ist $(X_i)_{i \in I}$ gleichmäßig beschränkt.
+\end{satz}
+
+\begin{beweis}
+Sei $\e > 0$ und setze $M := \frac{K}{\e}$. Dann existiert $c > 0$ mit $\frac{\phi(t)}{t} \geq M$ für alle $t \geq c$ und wir erhalten
+\begin{align*}
+\int_{|X_i| \geq c} |X_i|~\dd P &\leq \frac{1}{M} \sup_{|X_i| \geq c} \phi(|X_i|)~\dd P \leq \frac{1}{M} K = \e\text{.} \qedhere
+\end{align*}
+\end{beweis}
+
+Ist $\phi$ monoton wachsend und konvex und gilt $\frac{\phi(t)}{t} \to \infty$, so sind die Bedingungen für Satz \ref{Nummer2.6.10} erfüllt. Ferner gibt es den Satz de la Vallée-Poussin: Ist $(X_i)$ gleichmäßig integrierbar, so gilt $\sup_{i \in I} \E \phi \circ |X_i| < \infty$ für alle konvexen und wachsenden $\phi$, die zudem $\frac{\phi(t)}{t} \to \infty$ erfüllen.
+
+\begin{korollar}[$\sL_p$-Beschränktheit]\label{Nummer2.6.11}
+Ist $(X_i)_{i \in I} \subset \sL_p$ für ein $p > 1$ gleichmäßig beschränkt, so ist $(X_i)_{i \in I}$ gleichmäßig integrierbar.
+\end{korollar}
+
+Satz \ref{Nummer2.6.11} gilt auch für $p = \infty$, nicht aber für $p = 1$.
+
+\begin{beweis}
+Wir setzen $\phi(t) := t^p$ und wenden Satz \ref{Nummer2.6.10} an, da $\E \phi \circ |X_i| = \norm{X_i}_p^p$. 
+\end{beweis}

@@ -1,0 +1,241 @@
+\section{Existenz des Wiener-Prozesses}
+
+In diesem Abschnitt wollen wir zeigen, dass Wiener-Prozesse tatsächlich existieren. Dazu werden wir zeigen, dass gewisse stochastische Prozesse eine stetige Version besitzen und zentrierte Gauß-Prozesse mit der Kovarianzfunktion $\Gamma(s,t) = \min\{s,t\}$ gehören hier dazu. Der Wiener-Prozess ist dann die stetige Version dieses Gauß-Prozesses.
+
+\begin{definition}[Hölder-Stetigkeit]\label{Nummer5.2.1}
+Sei $I \subset \R$ ein Intervall $f\colon I \to \R$. Dann heißt $f$ \deftxt{lokal Hölder-stetig}\index{Hölder-Stetigkeit!lokale} mit Ordnung $\gamma > 0$ genau dann, wenn für alle $x \in I$ ein $c > 0$ und $\delta > 0$ existieren, so dass
+\begin{align*}
+\vert f(y) - f(z) \vert &\leq c \vert y-z \vert^\gamma
+\end{align*}
+für alle $y, z \in I$ mit $\vert x-y \vert < \delta$ und $\vert x-z \vert < \delta$ gilt.
+
+Ferner heißt $f$ \deftxt{Hölder-stetig}\index{Hölder-Stetigkeit} mit Ordnung $\gamma$, wenn ein $c > 0$ existiert, so dass 
+\begin{align*}
+\vert f(y) - f(z) \vert &\leq c \vert y-z \vert^\gamma
+\end{align*}
+für alle $y, z \in I$ gilt.
+\end{definition}
+
+Für $\gamma = 1$ ist dies Lipschitz-Stetigkeit, Hölder-Stetigkeit mit der Ordnung $\gamma > 1$ impliziert, dass $f$ konstant ist. Es gibt Hölder-stetige Funktionen, die nicht Lipschitz-stetig sind, zum Beispiel $\sqrt{}\colon [0, \infty) \to [0, \infty)$. Lokale Hölder-Stetigkeit impliziert ferner Stetigkeit.
+
+\begin{lemma}\label{Nummer5.2.2}
+Sei $f\colon I \to \R$ lokal Hölder-Stetigkeit mit Ordnung $\gamma$. Dann gelten die folgenden Aussagen:
+\begin{enumerate}
+	\item\label{N522A1} Die Abbildung $f$ ist Hölder-stetig zur Ordnung $\gamma'$ für alle $\gamma' \in (0, \gamma]$.
+	\item\label{N522A2} Ist $I$ kompakt, so ist $f$ Hölder-stetig mit Ordnung $\gamma$.
+	\item\label{N522A3} Ist $I$ beschränkt mit Länge $T$ und gibt es $\delta > 0$ und $c > 0$ mit
+	\begin{align*}
+	\vert f(y) - f(z) \vert &\leq c \vert y-z \vert^\gamma
+	\end{align*}
+	für alle $y, z \in I$ mit $\vert y-z \vert < \delta$, so ist $f$ Hölder-stetig der Ordnung $\gamma$ mit $c' := c \left(\frac{T}{\delta}\right)^{1-\gamma}$.
+\end{enumerate}
+\end{lemma}
+
+\begin{beweis}
+Die erste Eigenschaft ist klar. 
+
+Für \ref{N522A2} geben wir ein typisches Kompaktheitsargument an: Schreibe $c_x$ und $\delta_x$ für die Konstanten in Definition \ref{Nummer5.2.1}, dann bilden die $B(x, \delta_x)$ für $x \in I$ eine offene Überdeckung von $I$. Dann existieren $x_1, \ldots, x_n \in I$ mit $I \subset \bigcup_{i=1}^n B(x_i, \delta_{x_i})$ und ohne Einschränkung sei $x_1 < x_2 < \ldots < x_n$. Beachte nun, dass die Ungleichung für die lokale Hölder-Stetigkeit auf $B(x_i, \delta_{x_i})$ global gilt mit den Konstanten $c_{x_i}$ und $\delta_{x_i}$. Wir nehmen weiter ohne Einschränkung an, dass $x_1, \ldots, x_n$ minimal ist in dem Sinne, dass keine dieser $x_i$ weggenommen werden kann, ohne die Überdeckungseigenschaft zu verletzen. Wir setzen nun $\delta := \frac12 \min_i x_i + \delta_{x_i} - (x_{i+1} - \delta_{x_{i+1}})$, für alle $x \in I$ existiert dann ein $i \in \{1, \ldots, n\}$ mit $B(x, \delta) \subset B(x_i, \delta_{x_i})$. Für $y,z \in I$ mit $\vert y-z \vert < \delta$ gilt dann $y, z \in B(x, \delta)$ mit $x := \frac{y+z}{2}$. Dann gilt die definierende Ungleichung der Hölder-Stetigkeit mit der Konstanten $c_{x_i}$. Setzen wir $c' := \max_i c_{x_i}$, so erhalten wir dies global. Umgekehrt gilt für $y, z \in I$ mit $\vert y-z \vert \geq \delta$
+\begin{align*}
+\vert f(y) - f(z) \vert &\leq 2\norm{f}_\infty \leq 2\norm{f}_\infty \left(\frac{\vert y-z \vert}{\delta}\right)^\gamma\text{,}
+\end{align*}
+insgesamt setzen wir also $c' := \max\{c_{x_1}, \ldots, c_{x_n}, 2\norm{f}_\infty\delta^{-\gamma}\}$ und erhalten Hölder-Stetigkeit.
+
+Für \ref{N522A3} sei $n := \left\lceil \frac{T}{\delta} \right\rceil$, was der Anzahl der Intervalle der Länge $\delta$ in $I$ angibt. Für $y', z' \in I$ gilt 
+\begin{align*}
+\frac{\vert y'-z' \vert}{n} &\leq \delta\text{.}
+\end{align*}
+Damit gilt für $y, z \in I$ und ohne Einschränkung $y < z$ durch Bilden einer Teleskopsumme und der Dreiecksungleichung
+\begin{align*}
+\vert f(y) - f(z) \vert &\leq \sum_{k=1}^n \left\vert f\left(y + (y-z)\frac{k}{n}\right) - f\left(y + (y-z)\frac{k-1}{n}\right)\right\vert\\
+\quad &\leq \sum_{k=1}^n c\left\vert (y-z)\frac{1}{n} \right\vert^\gamma\\
+\quad &= cn^{1-\gamma}\vert y-z \vert^\gamma\text{.} \qedhere
+\end{align*}
+\end{beweis}
+
+\begin{satz}[Kolmogorov-Chentsov]\label{Nummer5.2.3}\index{Kolmogorov-Chentsov!Satz von}
+Sei $(X_t)_{t \geq 0}$ ein $\R$-wertiger stochastischer Prozess, für den es Konstanten $\alpha, \beta, c > 0$ gibt mit
+\begin{align*}
+P(\vert X_t - X_s \vert \geq \e) &\leq c\frac{\vert t - s \vert^{1+\beta}}{\e^\alpha} \tag{*}
+\end{align*}
+für alle $s, t \geq 0$ und $\e > 0$. Dann gelten die folgenden Aussagen:
+\begin{enumerate}
+	\item\label{N523A1} Es existiert eine Version $(\tilde{X}_t)_{t \geq 0}$ von $(X_t)_{t \geq 0}$, die $P$-fast sicher lokal Hölder-stetige Pfade mit Ordnung $\gamma$ für $0 < \gamma < \frac{\beta}{\alpha}$ hat.
+	\item\label{N523A2} Für jedes $0 < \gamma < \frac{\beta}{\alpha}$ und alle $\e > 0$ und $T < \infty$ existiert ein $k > 0$ mit
+	\begin{align*}
+	P\left(\vert \tilde{X}_t - \tilde{X}_s \vert \leq k\vert t-s \vert^\gamma~\forall_{s,t \in [0, T]}\right) &\geq 1-\e\text{.}
+	\end{align*}
+\end{enumerate}
+\end{satz}
+
+Die Ungleichung in (*) bedeutet im Wesentlichen, dass $X_t$ im $\alpha$-ten Mittel Hölder-stetig ist. Die erste Aussage des Satzes liefert die Existenz einer Hölder-Konstante für jeden Pfad, der zweite Teil besagt, dass für viele Pfade die selbe Konstante gewählt werden kann.
+
+Es gibt Verallgemeinerungen des Satzes, in denen die $\R$-Wertigkeit durch $\sX$-Wertigkeit ersetzt werden kann, falls $\sX$ ein vollständiger metrischer Raum ist. Die Zeit $t$ kann durch mehrdimensionale Indexbereiche ersetzt werden, wobei $1+\beta$ dann zu $d+\beta$ wird.
+
+\begin{beweis}
+Zunächst werden wir zwei Vereinfachungen vornehmen. Es genügt, die Existenz von lokal Hölder-stetigen Versionen auf $[0, T]$ für alle $T > 0$ zu zeigen. Dazu sei $(X_t^T)_{t \geq 0}$ eine lokal Hölder-stetige Version auf $[0,T]$. Für $S, T > 0$ sind dann nach Satz \ref{Nummer1.2.6} $(X_t^T)$ und $(X_t^S)$ auf $[0, \min\{S,T\}]$ nicht unterscheidbar. Daraus folgt, dass für $\Omega_{S,T} := \{\omega : \exists_{t \in [0, S \wedge T]} \text{ mit } X_t^T(\omega) \neq X_t^S(\omega)\text{, } X^T(\omega) \text{ und } X^S(\omega) \text{ lokal Hölder-stetig}\}$ gilt, dass $P(\Omega_{S,T}) = 0$ ist. Damit ist auch $\Omega_\infty := \bigcup_{S,T \in \N} \Omega_{S,T}$ eine Nullmenge. Wir setzen nun $\tilde{X}_t(\omega) := X_t^t(\omega)$ für $\omega \in \Omega \setminus \Omega_\infty$. Für $s, t \in [0, \infty)$ mit $s \leq t$ gibt es dann $T$ mit $s \leq t \leq T$ und es folgt
+\begin{align*}
+\left\vert \tilde{X}_t(\omega)-\tilde{X}_s(\omega) \right\vert &= \left\vert X_t^t(\omega) - X_s^s(\omega) \right\vert = \left\vert X_t^T(\omega) - X_s^T(\omega) \right\vert\text{,}
+\end{align*}
+woraus man unmittelbar die Abschätzung der Hölder-Stetigkeit gewinnen kann. Als weitere Vereinfachung wollen wir begründen, dass es sogar genügt, lediglich $T = 1$ zu betrachten. In den anderen Fällen kann die Zeit auf $[0,1]$ umskaliert werden, da dies nicht die lokale Hölder-Stetigkeit ändert.
+
+Wir kommen nun zum eigentlichen Beweis. Wir wollen zunächst zeigen, dass $(X_t)$ auf den Zahlen in $[0,1] \cap \Q$ mit endlicher Binärdarstellung lokal Hölder-stetig ist. Da diese Zahlen dicht in $[0,1]$ liegen, gibt es dann eine lokal Hölder-stetige Fortsetzung $(\tilde{X}_t)$, die sich als gesuchte Version herausstellen wird. Dazu sei $n \in \N$ und $k \in \{1, \ldots, 2^n\}$, dann gilt
+\begin{align*}
+P(\vert X_{k2^{-n}} - X_{(k-1)2^{-n}} \vert \geq 2^{-\gamma n}) &\stackrel{\text{(*)}}{\leq} c \frac{2^{-n(1+\beta)}}{2^{-\alpha\gamma n}} = c \cdot 2^{-n(1+\beta-\alpha\gamma)}\text{.} \tag{**}
+\end{align*}
+Wir setzen nun
+\begin{align*}
+A_n &:= \left\{\max_{k \in \{1, \ldots, 2^n\}} \vert X_{k2^{-n}} - X_{(k-1)2^{-n}} \vert \geq 2^{-\gamma n}\right\}\text{,}\\
+B_n &:= \bigcup_{m=n}^\infty A_m \qquad\text{und}\qquad N := \limsup_{n \to \infty} A_n = \bigcap_{n=1}^\infty B_n\text{.}
+\end{align*}
+Wir wollen nun zeigen, dass $P(N) = 0$ gilt. Mit (**) folgt hierzu
+\begin{align*}
+P(A_n) &\leq \sum_{k=1}^{2^n} P(\vert X_{k2^{-n}} - X_{(k-1)2^{-n}} \vert \geq 2^{-\gamma n})\\
+\quad &\leq c \cdot 2^{n - n(1+\beta - \alpha\gamma)}\\
+\quad &= c \cdot 2^{-n(\beta - \alpha\gamma)}\text{.}
+\end{align*}
+Wegen $\gamma < \frac{\beta}{\gamma}$ folgt weiter
+\begin{align*}
+\sum_{n=1}^\infty P(A_n) &\leq c \sum_{n=1}^\infty 2^{-n(\beta - \alpha\gamma)} < \infty\text{.}
+\end{align*}
+Mit dem Satz von Borel-Cantelli folgt dann $P(N) = P(\limsup A_n) = 0$. Nun betrachten wir $\Omega \setminus N$ und fixieren daher $\omega \in \Omega \setminus N$. Dann ist $\omega \in \Omega \setminus N = \Omega \setminus \left(\bigcap_{n=1}^\infty \bigcup_{m=n}^\infty A_m\right) = \bigcup_{n=1}^\infty \left(\Omega \setminus \bigcap_{m=n}^\infty A_m\right)$, also existiert $n_0$ mit $\omega \notin \bigcup_{m=n_0}^\infty A_m = B_{n_0}$. Nach Konstruktion folgt dann
+\begin{align*}
+\vert X_{k2^{-n}}(\omega) - X_{(k-1)2^{-n}}(\omega) \vert &< 2^{-\gamma n} \tag{***}
+\end{align*}
+für alle $n \geq n_0$ und $k = 1, \ldots, 2^n$. 
+
+Wir betrachten nun die dyadischen Zahlen mit endlicher Darstellung, d.\,h. es sei $D_m := \{k2^{-m} : k = 0, \ldots, 2^m\}$ und dann $D := \bigcup_{m=1}^\infty D_m$. Unser Ziel ist es, (***) auf $D$ zu verallgemeinern. Dazu beachten wir, dass jedes $t \in D_m$ eine eindeutige Binärdarstellung
+\begin{align*}
+t &= \sum_{i=0}^m b_i(t)2^{-i}
+\end{align*}
+mit geeigneten $b_i(t) \in \{0,1\}$ besitzt. Für $t \in D_m$ mit $t < 2^{-n}$ für $m \geq n$ gilt ferner $b_i(t) = 0$ für alle $i = 0, \ldots, n$. Dies folgt, da $2^{-n} > t = \sum_{i=0}^m b_i(t)2^{-i} \geq b_{i^*}(t)2^{-i^*}$ gilt, also muss $b_{i^*}(t) = 0$ für $i^* \leq n$ sein.\\
+Sei nun $m \geq n \geq n_0$ und $s, t \in D_m$ mit $s \leq t \leq s + 2^{-n}$, d.\,h. es gilt $0 \leq t-s \leq 2^{-n}$. Da $D_n$ eine Partition von $[0,1]$ der Feinheit $2^{-n}$ definiert, gibt es ein $u \in D_n$ mit $u \leq s < u + 2^{-n}$ und $u \leq t < s + 2^{-n} < u + 2^{1-n}$. Damit folgt $0 \leq s-u < 2^{-n}$ und $0 \leq t-u < 2^{-(n-1)}$. Für die Binärdarstellung von $t-u \in D_m$ und $s-u \in D_m$ folgt nun
+\begin{align*}
+b_i(s-u) &= b_i(t-u) = 0
+\end{align*}
+für alle $i < n$. Wir setzen nun $t_l := u + \sum_{i=n}^l b_i(t-u)2^{-i}$ für $l = n-1, \ldots, m$. Dann gilt $t_{n-1} = u$, $t_m = t$, $t_l \in D_l$ und $\vert t_l - t_{l-1} \vert \leq 2^{-l}$. Wir erhalten nun schließlich
+\begin{align*}
+\vert X_t(\omega) - X_u(\omega) \vert &\leq \sum_{l=n}^m \vert X_{t_l}(\omega) - X_{t_{l-1}}(\omega) \vert \leq \sum_{l=n}^m 2^{-\gamma l}\\
+\quad &\leq \frac{2^{-\gamma n}}{1 - 2^{-\gamma}}\text{.}
+\end{align*}
+Analog erhalten wir auch 
+\begin{align*}
+\vert X_s(\omega) - X_u(\omega) \vert &\leq \frac{2^{-\gamma n}}{1-2^{-\gamma}}\text{.}
+\end{align*}
+Für $m \geq n \geq n_0$ und $s, t \in D_m$ mit $\vert s-t \vert \leq 2^{-n}$ folgt also 
+\begin{align*}
+\vert X_s(\omega) - X_t(\omega) \vert &\leq \underbrace{\frac{2}{1 - 2^{-\gamma}}}_{=: \tilde{c}} 2^{-\gamma n}\text{.} \tag{****}
+\end{align*}
+
+Der in (****) auftauchende Faktor $(2^{-n})^\gamma$ muss nun noch durch $\vert s-t \vert^\gamma$ ersetzt werden, um Hölder-Stetigkeit zu erhalten. Dazu seien $s, t \in D$ mit $\vert s-t \vert \leq 2^{-n_0}$ für ein $n_0$, wobei dieses $n_0$ maximal gewählt sein soll, es gilt also $\vert s-t \vert > 2^{-(n_0 + 1)} = 2^{-n_0-1}$. Für $n \geq n_0$ gilt dann $\vert s-t \vert > 2^{-n-1}$. Ferner gibt es ein $m \geq 1$ mit $s, t \in D_m$ und ohne Einschränkung sei $m \geq n$. Damit gilt
+\begin{align*}
+\vert X_s(\omega) - X_t(\omega) \vert &\stackrel{\text{(****)}}{\leq} \tilde{c} 2^{-\gamma n_0} = \tilde{c} 2^\gamma 2^{-(n_0+1)\gamma} \leq 2^\gamma \tilde{c} \vert s-t \vert^\gamma\text{.}
+\end{align*} 
+Mit anderen Worten haben wir auf Intervallen der Länge $2^{-n_0}$ also $\gamma$-Hölder-Stetigkeit. Mit einer analogen Argumentation wie in Lemma \ref{Nummer5.2.2} \ref{N522A3} existiert eine Konstante $k = 2^\gamma \tilde{c} 2^{(n_0+1)(1-\gamma)}$ mit 
+\begin{align*}
+\vert X_s(\omega) - X_t(\omega) \vert &\leq k\vert s-t \vert^\gamma
+\end{align*}
+für alle $s, t \in D$. Der betrachtete Pfad ist also global Hölder-stetig auf $D$. Da $D \subset [0,1]$ dicht ist, existiert eine Hölder-stetige Fortsetzung $\tilde{X}(\omega)$ von $X(\omega)$ auf $[0,1]$. 
+
+Es bleibt nun noch zu zeigen, dass der so gefundene Prozess $\tilde{X}$ eine Version von $X$ ist. Für $t \in D$ gilt nach Konstruktion $P(X_t \neq \tilde{X}_t) = P(N) = 0$. Für $t \notin D$ mit $(t_n) \subset D$ und $t_n \to t$ folgt
+\begin{align*}
+P(X_t \neq \tilde{X}_t) &= P(X_t \neq \lim_{n \to \infty} X_{t_n}) = 0\text{,}
+\end{align*}
+da wir $X_{t_n} \to X_t$ stochastisch aus (*) erhalten. 
+
+Nun kommen wir zur zweiten Aussage. Sei $\e > 0$ und $n \geq 1$ so groß, dass
+\begin{align*}
+P(B_n) &\leq \sum_{m=n}^\infty P(A_m) \leq c\sum_{m=n}^\infty 2^{-m(\beta-\alpha\gamma)} \leq \e
+\end{align*}
+erfüllt ist. Für $\omega \notin B_n$ folgt dann mit der obigen Rechnung
+\begin{align*}
+\vert X_t(\omega) - X_s(\omega) \vert &\leq k\vert s-t \vert^\gamma
+\end{align*}
+für alle $s, t \in [0,1]$. Durch eine Transformation kann man dies auf allgemeine $T$ erweitern.
+\end{beweis}
+
+\begin{korollar}[Existenz des Wiener-Prozesses]\label{Nummer5.2.4}
+Es existiert ein Wiener-Prozess. Ferner haben je zwei Wiener-Prozesse die gleichen endlich-dimensionalen Randverteilungen. Schließlich sind fast alle Pfade eines Wiener-Prozesses lokal Hölder-stetig zur Ordnung $\gamma$ für alle $\gamma \in \left(0, \frac12\right)$.
+\end{korollar}
+
+\begin{beweis}
+Für die Existenz zeigen wir zunächst, dass ein zentrierter Gauß-Prozess mit Kovarianzfunktion $\Gamma(s,t) := \min\{s,t\}$ für alle $s, t \in \R$ existiert. Im Hinblick auf Lemma \ref{Nummer5.1.5} zeigen wir zunächst, dass $\Gamma$ strikt positiv definit ist. Dazu seien $t_1, \ldots, t_n \in [0,\infty)$ paarweise verschieden und $\alpha \in \R^n \setminus \{0\}$, dann gilt
+\begin{align*}
+\sum_{i,j=1}^n \alpha_i\alpha_j \Gamma(t_i, t_j) &= \sum_{i,j = 1}^n \alpha_i\alpha_j \int_0^\infty \ind_{[0, t_i]}(x)\ind_{[0, t_j]}(x)~\dd x\\
+\quad &= \int_0^\infty \sum_{i,j = 1}^n \alpha_i\alpha_j \ind_{[0, t_i]}(x)\ind_{[0, t_j]}(x)~\dd x\\
+\quad &= \int_0^\infty \left(\sum_{i=1}^n \alpha_i \ind_{[0, t_i]}(x)\right)^2~\dd x\\
+\quad &\geq 0\text{.}
+\end{align*} 
+Da für paarweise verschiedene $t_1, \ldots, t_n$ die Familie $(\ind_{[0, t_i]})_{i=1,\ldots,n}$ linear unabhängig ist, folgt $\sum \alpha_i\ind_{[0,t_i]} = 0$ $\lambda$-fast sicher genau dann, wenn $\alpha_1 = \ldots = \alpha_n = 0$ gilt. Da wir genau solche $\alpha$ jedoch ausgeschlossen haben, ist obiges Integral sogar strikt positiv. Nach Lemma \ref{Nummer5.1.5} existiert also ein zentrierter Gauß-Prozess mit Kovarianzfunktion $\Gamma$. Wir wollen nun noch eine stetige Version von $(X_t)$ finden, die dann nach Satz \ref{Nummer5.1.6} einen Wiener-Prozess liefert. Dazu beobachten wir, dass der Beweis von Satz \ref{Nummer5.1.6} nicht die Stetigkeit verwendet hatte, also sind die Zuwächse von $(X_t)$ unabhängig und $X_t-X_s$ ist $\sN(0,t-s)$-verteilt für $t \geq s$, insbesondere ist also $X_1 = X_1 - X_0 \sim \sN(0,1)$. Für $n \geq 1$ erhalten wir damit
+\begin{align*}
+\E (X_t - X_s)^{2n} &= \E(\sqrt{t-s} X_1)^{2n} = (t-s)^n \E X_1^{2n} =: (t-s)^n c_n\text{.}
+\end{align*}
+Mit der Markovungleichung erhalten wir dann
+\begin{align*}
+P(\vert X_t - X_s \vert \geq \e) &\leq \frac{\E \vert X_t - X_s \vert^{2n}}{\e^{2n}} = c_n \frac{\vert t-s \vert^n}{\e^{2n}}\text{.}
+\end{align*}
+Setzen wir nun $1+\beta = n$ und $\alpha=2n$, so besitzt $(X_t)$ nach Satz \ref{Nummer5.2.3} eine $\gamma$-Hölderstetige Version für $\gamma < \frac{\beta}{\alpha} = \frac{n-1}{2n} \to \frac12$.
+\end{beweis}
+
+\begin{definition}[Hölder-Stetigkeit in einem Punkt]\label{Nummer5.2.5}
+Eine Funktion $f\colon I \to \R$ für ein Intervall $I$ heißt \deftxt{Hölder-stetig der Ordnung $\gamma > 0$ im Punkt $x_0 \in I$}\index{Hölder-Stetigkeit!in Punkt} genau dann, wenn es $c, \delta > 0$ gibt, so dass für alle $x \in I$ mit $\vert x-x_0 \vert < \delta$ gilt:
+\begin{align*}
+\vert f(x)-f(x_0) \vert &\leq c\vert x-x_0 \vert^\gamma\text{.}
+\end{align*}
+\end{definition}
+
+Lokale Hölder-Stetigkeit impliziert insbesondere Hölder-Stetigkeit in allen Punkten. Ist $f$ in $x_0$ differenzierbar, so ist $f$ auch $1$-Hölder-stetig in $x_0$.
+
+\begin{satz}[Irregularität der Pfade (Paley-Zygmund)]\label{Nummer5.2.6}
+Für $\gamma > \frac12$ sind die Pfade eines Wiener-Prozesses fast sicher in keinem $t_0 \geq 0$ Hölder-stetig zur Ordnung $\gamma$. Insbesondere ist fast sicher jeder Pfad eines Wiener-Prozesses nirgends differenzierbar.
+\end{satz}
+
+In der Analysis werden Funktionen, die stetig, aber nirgends differenzierbar sind, als Skurrilität angesehen und nur exemplarisch behandelt, bei den Wiener-Prozessen sind sie hingegen Normalität.
+
+\begin{beweis}
+Es genügt, $T = [0,1]$ zu betrachten. Für $t \in T$ und $\gamma > \frac12$ definieren wir
+\begin{align*}
+H_{\gamma, t} &:= \left\{f\colon T \to \R \mid f \text{ stetig und $\gamma$-Hölder-stetig in $t$}\right\}
+\shortintertext{und}
+H_\gamma &:= \bigcup_{t \in T} H_{\gamma, t}\text{.}
+\end{align*}
+Wir wollen zeigen, dass $W(\omega) \notin H_\gamma$ für fast alle $\omega$ gilt. Dazu sei $t \in T$ und $f \in H_{\gamma, t}$. Ferner sei $\delta > 0$ und $c > 0$ mit
+\begin{align*}
+\vert s-t \vert < \delta &\qquad\Rightarrow\qquad \vert f(t)-f(s) \vert \leq c\vert t-s \vert^\gamma\text{.}
+\end{align*}
+Wir wählen nun $k > \frac{2}{2\gamma-1}$ und setzen $n_0 := \left\lceil \frac{k+2}{\delta} \right\rceil$, für $i = \lfloor t_n \rfloor + 1$ und $l \in \{0, \ldots, k-1\}$ sowie $n \geq n_0$ gilt dann
+\begin{align*}
+\left\vert f\left(\frac{i+l+1}{n}\right) - f\left(\frac{i+l}{n}\right)\right\vert &\leq \left\vert f\left(\frac{i+l+1}{n}\right) - f(t) \right\vert + \left\vert f(t) - f\left(\frac{i+l}{n}\right) \right\vert\text{.}
+\end{align*}
+Es gilt $\lfloor t_n \rfloor + 1 + (k-1) + 1 = \lfloor t_n \rfloor + k + 1$ und daher folgt
+\begin{align*}
+\left\vert \frac{i+l+1}{n} - t \right\vert &\leq \left\vert \frac{\lfloor t_n \rfloor}{n} + \frac{k+1}{n} - t \right\vert\\
+\quad &\leq \left\vert \frac{\lfloor t_n \rfloor}{n} - t \right\vert + \frac{k+1}{n}\\
+\quad &= t - \frac{\lfloor t_n \rfloor}{n} + \frac{k+1}{n}\\
+\quad &\leq t - \frac{t_n - 1}{n} + \frac{k+1}{n} = \frac{1}{n} + \frac{k+1}{n} = \frac{k+2}{n}\\
+\quad &\leq \delta\text{.}
+\end{align*}
+Insgesamt erhalten wir damit
+\begin{align*}
+\left\vert f\left(\frac{i+l+1}{n}\right) - f\left(\frac{i+l}{n}\right) \right\vert &\leq 2c\left(\frac{k+2}{n}\right)^\gamma\text{.}
+\end{align*}
+Für $N > 2c(k+2)^\gamma$ gilt also
+\begin{align*}
+f \in A_{N, n, i} &:= \bigcap_{l=0}^{k-1} \left\{g : \left\vert g\left(\frac{i+l+1}{n}\right) - g\left(\frac{i+l}{n}\right) \right\vert \leq Nn^{-\gamma}\right\}\text{.}
+\end{align*}
+Wir setzen nun $A_{N, n} := \bigcup_{i=1}^n A_{N, n, i}$, $A_N := \bigcap_{n \geq n_0} A_{N, n}$ und schließlich $A := \bigcup_{N=1}^\infty A_N$. Für $f \in A_{N, n}$ für alle $n \geq n_0$ haben wir gezeigt, dass $f \in A_N$ für unser gewähltes $N$ gilt und dass dann $f \in A$ gilt. Insgesamt erhalten wir damit $H_\gamma \subset A$. Jetzt wollen wir zeigen, dass die Pfade fast sicher nicht in $A$ liegen. Dazu betrachten wir
+\begin{align*}
+P\left(\left\{\omega : W(\omega) \in A_{N, n, i}\right\}\right) &= P\left(\omega : \left\vert W_{\frac{i+l+1}{n}}(\omega) - W_{\frac{i+l}{n}}(\omega) \right\vert \leq Nn^{-\gamma}~\forall_{l = 0, \ldots, k-1}\right)\\
+\quad &= \left(P(\vert W_{\frac{1}{n}} \vert \leq Nn^{-\gamma})\right)^k\\
+\quad &= \left(P(\vert W_1 \vert \leq Nn^{-\gamma + \frac12})\right)^k\\
+\quad &\leq 2\left(Nn^{-\gamma + \frac12}\right)^k\text{.}
+\end{align*}
+Damit erhalten wir nun
+\begin{align*}
+P(\omega : W(\omega) \in A_N) &= P\left(\omega : W(\omega) \in \bigcap_{m \geq n_0} A_{N, m}\right)\\
+\quad &\leq \lim_{n \to \infty} P\left(\omega : W(\omega) \in \bigcap_{m \geq n} A_{N, m}\right)\\
+\quad &\leq \limsup_{n \to \infty} P(\omega : W(\omega) \in A_{N, m})\\
+\quad &\leq \limsup_{n \to \infty} \sum_{i=1}^n P(\omega : W(\omega) \in A_{N, n, i})\\
+\quad &\leq \limsup_{n \to \infty} 2n\left(Nn^{-\gamma + \frac12}\right)^k = 0
+\end{align*}
+für alle $N \geq 1$ und wegen $k > \frac{2}{2\gamma -1}$, so dass schließlich $P(W(\omega) \in A) = 0$ folgt.
+\end{beweis}

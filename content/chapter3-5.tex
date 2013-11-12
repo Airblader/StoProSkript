@@ -1,0 +1,153 @@
+\section{Stationarität}
+
+Wir wollen untersuchen, ob es zu einer gegebenen Übergangsmatrix $\P$ eine Startverteilung $\alpha$ gibt, so dass die homogene Markovkette stationär ist. Dazu beobachten wir, dass zu einem gegebenen $\P$ jede Startverteilung eine homogene Markovkette ergibt, deren Irreduzibilität und Rekurrenz von $\alpha$ unabhängig ist. Im Folgenden schreiben wir $P_\alpha$ statt $P$, wenn die Wahrscheinlichkeiten der Markovkette mit der Startverteilung $\alpha$ betrachtet werden.
+
+\begin{definition}[Stationarität]\label{Nummer3.5.1}
+Sei $\P$ eine stochastische Matrix über $S$. Eine Verteilung $\pi$ auf $S$ heißt \deftxt{stationär}\index{Stationarität} bezüglich $\P$ genau dann, wenn für alle $j \in S$ gilt:
+\begin{align*}
+\sum_{i \in S} \pi(i)p_{i,j} &= \pi(j)\text{.}
+\end{align*}
+\end{definition}
+
+Anschaulich ausgedrückt ist die Wahrscheinlichkeit, im ersten Schritt nach $j$ zu gelangen, wenn der Start $i$-verteilt ist, also $\pi(j)$. In der Matrixschreibweise gilt also $\pi\P = \pi$ und $\pi$ ist ein Eigenvektor von $\P$ zum Eigenwert $1$.
+
+\begin{satz}[Stationäre homogene Markovketten]\label{Nummer3.5.2}
+Sei $\P$ eine stochastische Matrix und $\pi$ eine stationäre Verteilung von $\P$, sowie $\alpha$ irgendeine Startverteilung und $(X_n)_{n \geq 0}$ die homogene Markovkette bezüglich $\alpha$ und $\P$. Für $B \in \bigotimes_{\N} \Pot(S)$ gilt dann
+\begin{align*}
+P_\pi((X_n, X_{n+1}, \ldots) \in B) &= P_\pi((X_0, X_1, \ldots) \in B)\text{.}
+\end{align*}
+\end{satz}
+
+Satz \ref{Nummer3.5.2} besagt also, dass $(\pi, P)$ eine stationäre, homogene Markovkette definiert.
+
+\begin{beweis}
+Wir wissen, dass $\pi\P = \pi$ gilt. Induktiv folgt dann auch $\pi\P^n = \pi$ für $n \geq 1$. Mit Lemma \ref{Nummer3.2.3} folgt dann
+\begin{align*}
+P_\pi(X_n = j) &= \sum_{i \in S} \pi(j)p_{i,j}^{(n)} = \pi(j)\text{.}
+\end{align*}
+Damit erhalten wir
+\begin{align*}
+P_\pi((X_n, X_{n+1}, \ldots) \in B) &= \sum_{i \in S} P_\pi(X_n = i)P_\pi((X_n, \ldots) \in B \mid X_n = i)\\
+\quad &= \sum_{i \in S} \pi(i)P_\pi((X_0, \ldots) \in B \mid X_0 = i)\\
+\quad &= P_\pi((X_0, \ldots) \in B)\text{.} \qedhere
+\end{align*}
+\end{beweis}
+
+Wir wollen nun Bedingungen für die Existenz stationärer Verteilungen studieren.
+
+\begin{lemma}[Positivität stationärer Verteilungen]\label{Nummer3.5.3}
+Sei $\pi$ eine stationäre Verteilung bezüglich $\P$ und $A \subset S$ abgeschlossen und irreduzibel. Gibt es ein $i_0 \in A$ mit $\pi(i_0) > 0$, so gilt $\pi(i) > 0$ für alle $i \in A$. 
+\end{lemma}
+
+Ist $(X_n)_{n \geq 0}$ eine irreduzible, homogene Markovkette und $\pi$ eine stationäre Verteilung dieser Markovkette, so folgt also insbesondere $\pi(i) > 0$ für alle $i \in S$.
+
+\begin{beweis}
+Wir setzen $S_+ := \{i \in A : \pi(i) > 0\}$ und $S_0 := \{i \in A : \pi(i) = 0\}$. Offenbar sind $S_+$ und $S_0$ disjunkt und es gilt $S_+ \neq \emptyset$ nach Voraussetzung. Zu zeigen ist nun $S_0 = \emptyset$. Wir nehmen an, dass $S_0 \neq \emptyset$ gilt, dann existiert also ein $j_0 \in S_0$ mit $\pi(j_0) = 0$. Für $j \in S_0$ folgt
+\begin{align*}
+\sum_{i \in S} \pi(i)p_{i,j} &= \pi(j) = 0\text{.}
+\end{align*}
+Da $\pi(i) > 0$ für alle $i \in S_+$ gilt, folgt $p_{i,j}=0$ für alle $i \in S_+$ und $j \in S_0$. Es gibt also keine Verbindung von $S_+$ nach $S_0$, also gibt es keinen Pfad in $A$, der von $i_0$ nach $j_0$ führt. Dies steht jedoch im Widerspruch zur Irreduzibilität von $A$.
+\end{beweis}
+
+\begin{satz}\label{Nummer3.5.4}
+Sei $(X_n)_{n \geq 0}$ eine homogene Markovkette mit stationärer Verteilung $\pi$, $A \subset S$ abgeschlossen und irreduzibel und es existiere ein $i_0 \in A$ mit $\pi(i_0) > 0$. Dann gilt
+\begin{align*}
+\E(\tau_i \mid X_0 = i) &= \frac{P_\pi(\tau_i < \infty)}{\pi(i)}
+\end{align*}
+für alle $i \in A$. Insbesondere sind alle $i \in A$ positiv rekurrent und ist $(X_n)_{n \geq 0}$ irreduzibel, so gilt für alle $i \in S$
+\begin{align*}
+\pi(i) &= \frac{1}{\E(\tau_i \mid X_0 = i)}\text{,}
+\end{align*}
+das heißt in diesem Fall ist $\pi$ eindeutig.
+\end{satz}
+
+\begin{beweis}
+Für $i \in S$ zeigen wir zunächst
+\begin{align*}
+\pi(i)\E(\tau_i \mid X_0 = i) = P_\pi(\tau_i < \infty)\text{.} \tag{*}
+\end{align*}
+Dazu betrachten wir die disjunkte Zerlegung
+\begin{align*}
+\{\tau_i \leq n\} &= \bigcup_{l=1}^n \{X_l = i, X_{l+1} \neq i, \ldots, X_n \neq i\} = \bigcup_{l=0}^{n-1} \{X_{n-l} = i, X_{n-l+1} \neq i, \ldots, X_n \neq i\}\text{,}
+\end{align*} 
+dann folgt mit Satz \ref{Nummer3.5.2}
+\begin{align*}
+P_\pi(\tau_i < \infty) &= \lim_{n \to \infty} P_\pi(\tau_i \leq n) = \lim_{n \to \infty} \sum_{l=0}^{n-1} P_\pi(X_{n-l} = i, X_{n-l+1} \neq i, \ldots, X_n \neq i)\\
+\quad &= \lim_{n \to \infty} \sum_{l=0}^{n-1} P_\pi(X_0 = i, X_1 \neq i, \ldots, X_l \neq i)\\
+\quad &= \sum_{l=0}^\infty P(X_0 = i, \tau_i > l)\text{,}
+\intertext{da $X_j \neq i$ genau dann gilt, wenn $\tau_i > l$ ist. Weiter folgt dann}
+\quad &= \sum_{l=0}^\infty P_\pi(\tau_i > l \mid X_0 = i)P_\pi(X_0 = i)\\
+\quad &= \sum_{l=0}^\infty P(\tau_i > l \mid X_0 = i)\pi(i)\\
+\quad &= \pi(i) \E(\tau_i \mid X_0 = i)\text{.}
+\end{align*}
+Dies beweist (*). Sei nun $i \in A$, dann folgt mit Lemma \ref{Nummer3.5.3} wegen $\pi(i_0) > 0$ auch $\pi(i) > 0$. Wir können (*) daher durch $\pi(i)$ teilen und erhalten die gewünschte Gleichung.
+
+Ferner gilt mit Satz \ref{Nummer3.4.12} auch
+\begin{align*}
+P_\pi(\tau_i < \infty) &= \sum_{j \in S} P(\tau_i < \infty \mid X_0 = j)P_\pi(X_0 = j) = \sum_{j \in S} 1 \cdot \pi(j)\\
+\quad &= 1\text{.} \qedhere
+\end{align*}
+\end{beweis}
+
+\begin{satz}\label{Nummer3.5.5}
+Ist $(X_n)_{n \geq 0}$ eine homogene Markovkette und $i \in S$ ein positiv rekurrenter Zustand, so existiert eine stationäre Verteilung.
+\end{satz}
+
+\begin{beweis}
+Für $j \in S$ sei
+\begin{align*}
+c(j) &:= \sum_{n=0}^\infty P(X_n = j, \tau_i > n \mid X_0 = i)\text{.}
+\end{align*}
+Dann wollen wir zeigen, dass $\pi(j) := \frac{c_j}{\E(\tau_i \mid X_0 = i)}$ eine stationäre Verteilung definiert. Wir zeigen zunächst, dass $\pi$ eine Verteilung ist. Dafür betrachten wir
+\begin{align*}
+\sum_{j \in S} c(j) &= \sum_{n=0}^\infty P(\tau_i > n \mid X_0 = i) = \E(\tau_i \mid X_0 = i) < \infty\text{.}
+\end{align*}
+
+Für die Stationarität sei $c_n(j) := P(X_n = j, \tau_i > n \mid X_0 = i)$ für $n \geq 0$ und $j \in S$. Dann wollen wir zeigen, dass für alle $k \in S$
+\begin{align*}
+\sum_{j \in S} c(j)p_{jk} &= \sum_{n=0}^\infty \sum_{j \in S} c_n(j)p_{jk} \stackrel{\text{!}}{=} c(k)
+\end{align*}
+gilt. Im ersten Fall sei $i \neq k$. Da $\{\tau_i > n\} \in \sigma(X_0, \ldots, X_n)$ gilt, folgt
+\begin{align*}
+\sum_{n=0}^\infty \sum_{j \in S} c_n(j)p_{jk} &= \sum_{n=0}^\infty \sum_{j \in S} P(X_n=j, \tau_i > n \mid X_0 = i)P(X_{n+1} = k \mid X_n = j)\\
+\quad &= \sum_{n=0}^\infty \sum_{j \in S} P(X_n = j, \tau_i > n \mid X_0 = i)P(X_{n+1} = k \mid X_n = j, \tau_i > n)\text{.}
+\intertext{Mit der uns bereits bekannten Formel $P(A \cap C \mid B) = P(A \mid C \cap B)P(C \mid B)$ gilt dann}
+\quad &= \sum_{n=0}^\infty \sum_{j \in S} P(X_n = j, X_{n+1} = k, \tau_i > n \mid X_0 = i)\\
+\quad &= \sum_{n=0}^\infty P(X_{n+1} = k, \tau_i > n \mid X_0 = i)\text{.}
+\intertext{Wegen $X_{n+1} = k \neq i$ folgt $\tau_i \neq n+1$ und daher}
+\quad &= \sum_{n=0}^\infty P(X_{n+1} = k, \tau_i > n+1 \mid X_0 = i)\\
+\quad &= \sum_{n=0}^\infty c_{n+1}(k)\text{.}
+\intertext{Wegen $c_0(k) = P(X_0=k, \tau_i > n \mid X_0=i) = 0$ fällt der erste Summand weg und wir erhalten}
+\quad &= \sum_{n=0}^\infty c_n(k)\\
+\quad &= c(k)\text{.}
+\end{align*}
+Im zweiten Fall sei $i=k$, dann erhalten wir zunächst wie eben
+\begin{align*}
+\sum_{n=0}^\infty \sum_{j \in S} c_n(j)p_{ij} &= \sum_{n=0}^\infty P(X_{n+1} = i, \tau_i > n \mid X_0 = i)
+\intertext{und nun mit $\tau_i > 0$ und $\tau_i < \infty$ $P$-fast sicher}
+\quad &= \sum_{n=0}^\infty P(\tau_i = n+1 \mid X_0 = i)\\
+\quad &= 1\\
+\quad &= P(X_0 = i, \tau_i > 0 \mid X_0 = i)\\
+\quad &= \sum_{n=0}^\infty P(X_n = i, \tau_i > n \mid X_0 = i)\text{.}
+\intertext{Das Ereignis in der Summe ist für $n > 0$ aber nie erfüllt und wir erhalten schließlich}
+\quad &= c(i)\text{.} \qedhere
+\end{align*}
+\end{beweis}
+
+\begin{korollar}\label{Nummer3.5.6}
+Es sei $(X_n)_{n \geq 0}$ eine irreduzible, homogene Markovkette. Dann sind die folgenden Aussagen äquivalent:
+\begin{enumerate}
+	\item\label{N356A1} Es existiert ein positiv rekurrenter Zustand $i \in S$.
+	\item\label{N356A2} Alle Zustände $i \in S$ sind positiv rekurrent.
+	\item\label{N356A3} Es existiert eine stationäre Verteilung.
+	\item\label{N356A4} Es existiert genau eine stationäre Verteilung.
+\end{enumerate}
+Ist eine dieser Aussagen -- und damit alle -- erfüllt, so gilt für $i \in S$
+\begin{align*}
+\pi(i) &= \frac{1}{\E(\tau_i \mid X_0 = i)}\text{.}
+\end{align*}
+\end{korollar}
+
+\begin{beweis}
+Für \ref{N356A1} $\Rightarrow$ \ref{N356A3} verwenden wir Satz \ref{Nummer3.5.5}, für \ref{N356A3} $\Rightarrow$ \ref{N356A4} und \ref{N356A3} $\Rightarrow$ \ref{N356A2} verwenden wir Satz \ref{Nummer3.5.4} und \ref{N356A2} $\Rightarrow$ \ref{N356A1} und \ref{N356A4} $\Rightarrow$ \ref{N356A3} sind trivial.
+\end{beweis}

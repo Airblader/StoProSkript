@@ -1,0 +1,150 @@
+\section{Grundlegende Eigenschaften}
+
+In diesem Abschnitt wollen wir zwei Ziele erreichen. Zunächst wollen wir einige Möglichkeiten kennenlernen, aus Martingalen neue Martingale zu konstruieren. Danach wollen wir zeigen, dass stochastische Prozesse im Wesentlichen aus Martingalen und vorhersagbaren stochastischen Prozessen bestehen.
+
+\begin{satz}\label{Nummer2.2.1}
+Es seien $X = (X_n)_{n \geq 0}$ und $Y = (Y_n)_{n \geq 0}$ reellwertige, $\sF$-adaptierte stochastische Prozesse, wobei $\sF$ eine Filtration ist. Dann gilt:
+\begin{enumerate}
+	\item\label{Nummer221A1} Sind $X$ und $Y$ Martingale und $\alpha, \beta \in \R$, so ist auch $\alpha X + \beta Y$ ein Martingal.
+	\item\label{Nummer221A2} Sind $X$ und $Y$ beide Super- oder Sub-Martingale und $\alpha, \beta \geq 0$, so ist auch $\alpha X + \beta Y$ ein Super- bzw. Sub-Martingal.
+	\item\label{Nummer221A3} Sind $X$ und $Y$ Super-Martingale, so ist $X \wedge Y := \min\{X, Y\}$ ebenfalls ein Super-Martingal. Sind $X$ und $Y$ Sub-Martingale, so ist analog $\max\{X, Y\}$ ein Sub-Martingal.
+	\item\label{Nummer221A4} Ist $X$ ein Super-Martingal, $(T_n)_{n \geq 1} \subset \N$ mit $T_n \to \infty$ und $\E X_{T_n} \geq \E X_0$ für alle $n \geq 1$, so ist $X$ ein Martingal.
+\end{enumerate}
+\end{satz}
+
+\begin{beweis}
+Die ersten beiden Eigenschaften lassen sich durch simples Nachrechnen unter Verwendung der Linearität des bedingten Erwartungswertes beweisen. Für \ref{Nummer221A3} setzen wir $Z_n := X_n \wedge Y_n$. Wegen $|Z_n| \leq |X_n| + |Y_n|$ folgt dann $Z_n \in \sL_1$ und die Tatsache, dass $Z_n$ adaptiert ist. Dann erhalten wir
+\begin{align*}
+\E(Z_n~|~\sF_{n-1}) &\leq \E(X_n~|~\sF_{n-1}) \leq \E(X_{n-1}~|~\sF_{n-1}) \leq \E(Y_{n-1}~|~\sF_{n-1}) \leq \E(Z_{n-1}~|~\sF_{n-1})\text{.}
+\end{align*} 
+Nun wollen wir \ref{Nummer221A4} beweisen. Dazu sei $m \in \N$, dann existiert ein $n \in \N$ mit $m < T_n$ und wir setzen $Y_i := \E(X_{T_n}~|~\sF_i)$ für $i < T_n$. Zuerst zeigen wir, dass $P$-fast sicher $X_i = Y_i$ für alle $i < T_n$ gilt. Dazu betrachte
+\begin{align*}
+Y_i &= \E(X_{T_n}~|~\sF_i) = \E(\E(X_{T_n}~|~\sF_{T_n - 1})~|~\sF_i)\\
+		&\leq \E(X_{T_n-1}~|~\sF_i)\\
+		&\phantom{\leq}\quad\vdots\\
+		&\leq \E(X_i~|~\sF_i) = X_i\text{.}
+\end{align*}
+Mit dieser Rechnung gilt nun
+\begin{align*}
+\E X_0 &\leq \E X_{T_n} = \E(\E( X_{T_n}~|~\sF_i)) = \E Y_i\\
+			 &\leq \E X_i = \E(\E(X_i~|~\sF_{i-1}))\\
+			 &\leq \E X_{i-1}\\
+			 &\phantom{\leq}\quad\vdots\\
+			 &\leq \E X_0\text{.}
+\end{align*}
+Damit müssen all diese Ungleichungen also tatsächlich Gleichungen sein und wir erhalten insbesondere $\E X_i = \E Y_i$ für alle $i < T_n$. Fassen wir dies zusammen, so erhalten wir $X_i = Y_i$ $P$-fast sicher für alle $i < T_n$. Nun gilt
+\begin{align*}
+\E(X_m~|~\sF_{m-1}) &= \E(\underbrace{\E(X_{T_n}~|~\sF_m)}_{= Y_m}~|~\sF_{m-1}) = \E(X_{T_n}~|~\sF_{m-1}) = Y_{m-1} = X_{m-1}\text{.} \qedhere
+\end{align*}
+\end{beweis}
+
+\begin{satz}\label{Nummer2.2.2}
+Es sei $X = (X_n)_{n \geq 0}$ ein Martingal und $\phi\colon \R \to \R$ eine konvexe Abbildung. Dann gilt:
+\begin{enumerate}
+	\item\label{Nummer222A1} Falls für den positiven Anteil der Komposition $\E(\phi \circ X)^+ < \infty$ für alle $n \geq 0$ gilt, so folgt, dass $\phi \circ X$ ein Sub-Martingal ist.
+	\item\label{Nummer222A2} Ist $X_n \in \sL_p$ für ein $p \in [1, \infty)$ und alle $n \geq 0$, so ist $|X|^p$ ein Sub-Martingal.
+\end{enumerate}
+\end{satz}
+
+\begin{beweis}
+Die Aussage \ref{Nummer222A2} folgt aus \ref{Nummer222A1} für $\phi(t) := |t|^p$. Beweisen wir also \ref{Nummer222A1}. Dazu sei $v(x) = ax+b$ affin linear für $x \in \R$ mit $v \leq \phi$ (vgl. Beweis von Satz \ref{Nummer1.5.5}). Dann gilt $\phi^- = \max\{0, -\phi\} \leq \max\{0, -v\} = v^-$ und wir erhalten
+\begin{align*}
+\E(\phi \circ X_n)^- &\leq \E(v \circ X)^- \leq |a| \E |X_n| + |b| < \infty\text{.}
+\end{align*}
+Dann ist $\phi \circ X_n \in \sL_1$. Nun folgt mit Satz \ref{Nummer1.5.5}
+\begin{align*}
+\E(\phi \circ X_n~|~\sF_{n-1}) &\geq \phi \E(X_n~|~\sF_{n-1}) = \phi \circ X_{n-1}\text{.} \qedhere
+\end{align*}
+\end{beweis}
+
+\begin{lemma}\label{Nummer2.2.3}
+Es sei $M = (M_n)_{n \geq 0}$ ein $\sF$-adaptiertes, vorhersagbares Martingal. Dann gilt $P$-fast sicher $M_n = M_0$ für alle $n \geq 0$.
+\end{lemma}
+
+\begin{beweis}
+Es genügt, induktiv zu zeigen, dass $P$-fast sicher $M_n = M_{n-1}$ für alle $n \geq 1$ gilt. Dies gilt aber wegen $M_n = \E(M_n~|~\sF_{n-1}) = M_{n-1}$.
+\end{beweis}
+
+\begin{lemma}\label{Nummer2.2.4}
+Es sei $M = (M_n)_{n \geq 0}$ ein Martingal, dann folgt $\E(M_n \cdot M_m) = \E M_m^2$ für alle $0 \leq m \leq n$.
+\end{lemma}
+
+\begin{beweis}
+Wir können ohne Einschränkung $n > m$ annehmen, da der Fall $n = m$ trivial ist. Dann gilt mit iterierter Anwendung der Martingaleigenschaft
+\begin{align*}
+\E(M_n \cdot M_m) &= \E(\E(M_n \cdot M_m ~|~ \sF_m)) = \E(M_m(\underbrace{\E(M_n~|~\sF_m)}_{= M_m})) = \E(M_m \cdot M_m)\text{.} \qedhere
+\end{align*}
+\end{beweis}
+
+\begin{satz}[Doob-Zerlegung]\index{Doob!-Zerlegung}\label{Nummer2.2.5}
+Es sei $X = (X_n)_{n \geq 0}$ ein an $\sF = (\sF_n)_{n \geq 0}$ adaptierter stochastischer Prozess mit $X_n \in \sL_1(P)$ für alle $n \geq 0$. Dann existiert -- bis auf Ununterscheidbarkeit -- genau ein Martingal $M$ und ein $\sF$-vorhersagbarer stochastischer Prozess $A$ mit $A_0 = 0$, so dass $X = M + A$ gilt. Ferner ist $X$ ein Sub-Martingal genau dann, wenn $A$ monoton wachsend ist.
+\end{satz}
+
+Mit anderen Worten bestehen stochastische Prozesse also aus Martingalen und vorhersagbaren Prozessen.
+
+\begin{beweis}
+Wir zeigen zunächst die Existenz. Für $n \geq 0$ sei dazu
+\begin{align*}
+M_n &:= X_0 + \sum_{k=1}^n \left(X_k - \E(X_k~|~\sF_{k-1})\right)\text{,}
+\shortintertext{sowie}
+A_n &:= -\sum_{k=1}^n \left(X_{k-1} - \E(X_k~|~\sF_{k-1})\right)\text{.}
+\end{align*}
+Dann gilt, dass $A_n$ nach Konstruktion $\sF_{n-1}$-messbar ist, da es als Summe über $\sF_{k-1}$-messbare Terme entsteht und $\sF_{k-1} \subset \sF_{n-1}$ für $k \in \{1, \ldots, n\}$ gilt. Dann folgt, dass $A$ $\sF$-vorhersagbar ist; dass $A_0 = 0$ gilt ist klar. Ferner ist $M_n$ nach Konstruktion mit analoger Argumentation $\sF_n$-messbar und integrierbar, wir müssen also noch die Martingaleigenschaft zeigen. Dazu betrachten wir
+\begin{align*}
+\E(M_n - M_{n-1}~|~\sF_{n-1}) &= \E(X_n - \E(X_n~|~\sF_{n-1})~|~\sF_{n-1}) = \E(X_n~|~\sF_{n-1}) - \E(X_n~|~\sF_{n-1}) = 0\text{.}
+\end{align*}
+Nun bleibt noch zu zeigen, dass $M$ und $A$ tatsächlich $X$ zerlegen. Dies gilt wegen
+\begin{align*}
+M_n + A_n &= X_0 + \sum_{k=1}^n (X_k - \E(X_k~|~\sF_{k-1})) - \sum_{k=1}^n X_{k-1} + \sum_{k=1}^n \E(X_k~|~\sF_{k-1})\\
+					&= X_n\text{.}
+\end{align*}
+Damit ist die Existenz gezeigt und wir zeigen die Eindeutigkeit. Dazu sei $X = M + A = M' + A'$, dann gilt $M - M' = A' - A$. Nach Satz \ref{Nummer2.2.1} ist $M - M'$ ein Martingal und $A' - A$ ist vorhersagbar, also auch $M - M'$. Mit Lemma \ref{Nummer2.2.3} folgt dann $M_n - M_n' = M_0 - M_0' = A_0 - A_0' = 0 - 0 = 0$, also folgt $P$-fast sicher $M = M'$.
+
+Zum Schluss beweisen wir noch, dass $X$ ein Sub-Martingal ist genau dann, wenn $A$ wachsend ist. Dazu überlegen wir uns zunächst
+\begin{align*}
+\E(X_n~|~\sF_{n-1}) &= \E(M_n~|~\sF_{n-1}) + \E(A_n~|~\sF_{n-1}) = M_{n-1} + A_n\text{.}
+\end{align*}
+Also ist $X$ ein Sub-Martingal. Daraus folgt $M_{n-1} + A_n = \E(X_n~|~\sF_{n-1}) \geq X_{n-1} = M_{n-1} + A_{n-1}$ und wir erhalten $A_n \geq A_{n-1}$. Die andere Richtung folgt analog.
+\end{beweis}
+
+\begin{korollar}\label{Nummer2.2.6}
+Es sei $X = (X_n)_{n \geq 0}$ ein quadrat-integrierbares $\sF$-Martingal, d.\,h. es gilt $X_n \in \sL_2$ für alle $n \geq 0$. Dann gilt:
+\begin{enumerate}
+	\item\label{Nummer226A1} $X^2$ ist ein Sub-Martingal.
+	\item\label{Nummer226A2} Es gibt genau einen $\sF$-vorhersagbaren stochastischen Prozess $A$ mit $A_0 = 0$, so dass $X^2-A$ ein Martingal ist. Dieser Prozess $A$ heißt \deftxt{quadratischer Variationsprozess}\index{Quadratischer Variationsprozess} von $X$ und wird mit $\langle X \rangle := A$ bezeichnet.
+	\item\label{Nummer226A3} Der Prozess $\langle X \rangle$ ist monoton wachsend.
+	\item\label{Nummer226A4} Es gilt $\displaystyle\langle X \rangle_n = \sum_{i=1}^n \E((X_i - X_{i-1})^2~|~\sF_{i-1})$ und $\displaystyle \E\langle X \rangle_n = \Var (X_n - X_0)$.
+\end{enumerate}
+\end{korollar}
+
+\begin{beweis}
+Aussage \ref{Nummer226A1} folgt unmittelbar aus Satz \ref{Nummer2.2.2}. Aussage \ref{Nummer226A2} folgt aus Satz \ref{Nummer2.2.5}, denn für $X^2$ mit $X^2 = M + A$ erhalten wir $X^2 - A = M$. Aussage \ref{Nummer226A3} folgt ebenfalls aus Satz \ref{Nummer2.2.5}. Wir zeigen also noch \ref{Nummer226A4}. Dazu betrachten wir
+\begin{align*}
+\sum_{i=1}^n \E((X_i - X_{i-1})^2~|~\sF_{i-1}) &= \sum_{i=1}^n \E(X_i^2 - 2X_iX_{i-1} + X_{i-1}^2~|~\sF_{i-1})\text{,}
+\shortintertext{durch Auseinanderziehen und Anwenden der Definitionen der bedingten Erwartung und Martingalen erhalten wir dann}
+\quad &= \sum_{i=1}^n \left(\E(X_i^2~|~\sF_{i-1}) - X_{i-1}^2\right) \stackrel{\text{\ref{Nummer2.2.5}}}{=} A_n\\
+\quad &= \langle X \rangle_n\text{.}
+\end{align*}
+Nun wollen wir noch die Formel für den Erwartungswert beweisen. Es gilt
+\begin{align*}
+\E A_n &= \sum_{i=1}^n \E(\E(X_i - X_{i-1})^2~|~\sF_{i-1}) = \sum_{i=1}^n \E\left(X_i^2 - 2X_iX_{i-1} + X_{i-1}^2\right)\text{,}
+\shortintertext{und wieder durch Auseinanderziehen und Lemma \ref{Nummer2.2.4} erhalten wir}
+\quad &= \sum_{i=1}^n \left(\E X_i^2 - \E X_{i-1}^2\right) = \E X_n^2 - \E X_0^2 = \E X_n^2 - 2\E X_nX_0 + \E X_0^2 = \E (X_n - X_0)^2\\
+\quad &= \Var (X_n - X_0)\text{,}
+\end{align*}
+da $\E X_n = \E X_0$ gilt, wie wir bereits gesehen haben.
+\end{beweis}
+
+\begin{beispiel}\label{Nummer2.2.7}
+Es seien $(Y_i)_{i \geq 1}$ unabhängig mit $Y_i \in \sL_2(P)$ und $\E Y_i = 0$ für alle $i \geq 0$, sowie $X_n := \sum_{i=1}^n Y_i$ für $n \geq 0$. Dann gilt
+\begin{align*}
+\langle X \rangle_n &= \sum_{i=1}^n \E Y_i^2 = \sum_{i=1}^n \Var Y_i\text{.} \qedhere
+\end{align*}
+\end{beispiel}
+
+\begin{beispiel}\label{Nummer2.2.8}
+Es seien $(Y_i)_{i \geq 0}$ unabhängig mit $Y_i \in \sL_2(P)$ und $\E Y_i = 1$ für alle $i \geq 0$, sowie $X_n := \prod_{i=1}^n Y_i$ für $n \geq 0$. Dann gilt
+\begin{align*}
+\langle X \rangle_n &= \sum_{i=1}^n X_{i-1}^2 \Var Y_i\text{.} \qedhere
+\end{align*}
+\end{beispiel}

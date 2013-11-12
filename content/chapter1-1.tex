@@ -1,0 +1,75 @@
+\chapter{Übersicht und Einführung}
+
+\begin{beschreibung}
+In diesem Kapitel wollen wir die grundlegenden Begriffe für die stochastischen Prozesse definieren, eine kurze Einführung in die Thematik geben und einfache Eigenschaften herleiten.
+\end{beschreibung}
+
+\section{Stochastische Prozesse}
+
+Im ersten Schritt wollen wir uns den namensgebenden Begriff anschauen und festlegen, was wir unter einem stochastischen Prozess verstehen:
+
+\begin{definition}[Stochastischer Prozess]\label{Nummer1.1.1}
+Sei $(\Omega, \sA, P)$ ein Wahrscheinlichkeitsraum, $(\sX, \sB)$ ein Messraum und $T \neq \emptyset$. Dann heißt eine Familie $X = (X_t)_{t \in T}$ mit für alle $t \in T$ messbaren Funktionen $X_t\colon \Omega \to \sX$ ein \deftxt{stochastischer Prozess}\index{Stochastischer Prozess}.
+\end{definition}
+
+Da der Begriff die Grundlage für die ganze Thematik darstellt, werden wir desweiteren einige Eigenschaften kennenlernen, um verschiedene Arten von stochastischen Prozessen zu unterscheiden.
+
+\begin{klassifikation}\label{Nummer1.1.2}
+Wir legen folgende klassifizierenden Eigenschaften für stochastische Prozesse fest:
+\begin{itemize}
+	\item Ist $\sX = \R$, so sprechen wir von \deftxt{reellwertigen}\index{Stochastischer Prozess!reellwertiger} stochastischen Prozessen.
+	\item Ein stochastischer Prozess mit endlichem/abzählbarem \deftxt{Zustandsraum}\index{Zustandsraum} $\sX$ heißt selbst \deftxt{endlich}\index{Stochastischer Prozess!endlicher}/\deftxt{abzählbar}\index{Stochastischer Prozess!abzählbarer}.
+	\item Ist $\sX = \R^d$, so sprechen wir von einem \deftxt{Punktprozess}\index{Punktprozess}.
+	\item Ist $T \in \{\N, \N_0, \Z\}$, so nennen wir den Prozess einen \deftxt{zeitdiskreten}\index{Stochastischer Prozess!zeitdiskreter} stochastischen Prozess.
+	\item Falls $T \subset \R$ ein Intervall ist, so sprechen wir von einem \deftxt{zeitkontinuierlichen}\index{Stochastischer Prozess!zeitkontinuierlicher} stochastischen Prozess.
+\end{itemize}
+\end{klassifikation}
+
+Wir werden uns im Wesentlichen jedoch auf zeitdiskrete/kontinuierliche stochastische Prozesse mit Zustandsraum $\R$ oder höchstens abzählbaren Mengen beschränken, es gibt in der Theorie jedoch noch viel mehr Fälle wie z.\,B. Mengen von Funktionen als Zustandsraum.
+
+\begin{beispiel*}[Bereits bekannte stochastische Prozesse]
+Stochastische Prozesse sind zu diesem Zeitpunkt keine völlig neuartigen Objekte, wir kennen bereits folgende Vertreter:
+\begin{itemize}
+	\item $(X_n)_{n \in \N}$ mit i.\,i.\,d. Zufallsvariablen $X_n$.
+	\item $(\overline{X_n})_{n \in \N}$ für eine Folge von i.\,i.\,d. Zufallsvariablen $(X_n)_{n \in \N}$ mit $\overline{X_n} = \frac{1}{n}\sum_{i=1}^n X_i$.
+	\item $(X_n^*)_{n \in \N}$ für i.\,i.\,d. Zufallsvariablen $X_n$ mit $X_n \in \sL_2$ und $\sigma^2 := \Var X_1 > 0$, sowie
+	\begin{align*}
+	X_n^* &:= \frac{1}{\sqrt{n\sigma^2}} \sum_{i=1}^n (X_i - \E X_i)\text{.}
+	\end{align*}
+\end{itemize}
+Seien $(X_i)_{i \in \N}$ i.\,i.\,d. mit $X_1 \in \sL_2$ und $\Var X_1 > 0$, dann ist $(\overline{X_n})_{n \in \N}$ weder unabhängig noch identisch verteilt und $(X_n^*)_{n \in \N}$ nicht unabhängig, aber eventuell identisch verteilt.
+\end{beispiel*}
+
+\begin{definition}[Pfad/Trajektorie]\label{Nummer1.1.3}
+Sei $X = (X_t)_{t \in T}$ ein stochastischer Prozess, dann heißt für $\omega \in \Omega$ die Abbildung
+\begin{align*}
+X(\omega)\colon T &\to \sX\text{,}\\
+t &\mapsto X_t(\omega)
+\end{align*}
+\deftxt{Pfad}\index{Pfad} oder \deftxt{Trajektorie}\index{Trajektorie} von $X$ bezüglich $\omega$.
+\end{definition}
+
+Stochastische Prozesse erzeugen also zufällige Abbildungen von $T$ in den Zustandsraum $\sX$. Abhängig von der Klasse des Prozesses (zeitdiskret, zeitkontinuerlich, \ldots) ist die erzeugte Funktion mitunter eine Folge oder eine "`normale"' reellwertige Funktion.
+
+\begin{lemma}\label{Nummer1.1.4}
+Wir betrachten die Menge $\sX^T := \bigtimes_{t \in T} \sX$ der Abbildungen $T \to \sX$, ausgestattet mit der Produkt-$\sigma$-Algebra $\sB^T := \bigotimes_{t \in T} \sB$. Ferner sei $X = (X_t)_{t \in T}$ ein $\sX$-wertiger stochastischer Prozess über $(\Omega, \sA, P)$. Dann ist
+\begin{align*}
+X\colon \Omega &\to \sX^T\text{,}\\
+\omega &\mapsto X(\omega) = (t \mapsto X_t(\omega))
+\end{align*}
+eine messbare Abbildung, das heißt $X$ ist eine $\sX^T$-wertige Zufallsvariable.
+\end{lemma}
+
+\begin{beweis}
+Die Aussage des Lemma folgt unmittelbar aus \cite[Lemma I.9.16]{WT}.
+\end{beweis}
+
+Wir haben nun zwar einen neuen Begriff, allerdings noch kein Ziel, das wir anstreben. Daher wollen wir nun auf einige typische Fragestellungen eingehen. Häufig wird untersucht, ob die Trajektorien beschränkt sind, wie ihr Wachstumsverhalten aussieht, ob sie für $t \to \infty$ konvergieren, ob sie stetig sind, wann ihre Austrittszeiten sind (d.\,h. wann verlässt der Pfad ein gewisses Intervall) et cetera.
+
+Stochastische Prozesse finden in vielen Gebieten breite Anwendung. Beispiele für typische Anwendungsfelder für stochastische Prozesse sind:
+\begin{enumerate}
+	\item \emph{Finanzmathematik} -- Bewertung von Finanzprodukten, Risikomangement, Investitionsstrategien
+	\item \emph{Physik} -- Diffusionssysteme, stochastische Thermodynamik, Quantenphysik
+	\item \emph{Biologie} -- Populationsmodelle, "`Genomics"'
+	\item \emph{Ingenieurswissenschaften} -- Warteschlangenprobleme, Steuerungsprobleme
+\end{enumerate}

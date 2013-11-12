@@ -1,0 +1,103 @@
+\section{Stoppzeiten}
+
+Wir würden stochastische Prozesse gerne in Abhängigkeit ihres Verhaltens bis zum Eintritt eines bestimmten Ereignisses untersuchen beziehungsweise modifizieren. Dazu sei $(\Omega, \sA, P)$ wie üblich ein Wahrscheinlichkeitsraum.
+
+\begin{definition}[Stoppzeit]\label{Nummer2.3.1}
+Es sei $\sF = (\sF_n)_{n \geq 0}$ eine Filtration. Eine Abbildung $\tau\colon \Omega \to \overline{\N_0} := \N_0 \cup \{\infty\}$ heißt \deftxt{Stoppzeit}\index{Stoppzeit} genau dann, wenn
+\begin{align*}
+\{\tau \leq n\} \in \sF_n \qquad \text{für alle } n \geq 0\text{.}
+\end{align*}
+\end{definition}
+
+Falls wir einen stochastischen Prozess bei der Zeit $\tau(\omega)$ in Abhängigkeit des Verhaltens bis zur Zeit $\tau(\omega)$ anhalten wollen -- wir werden darauf gleich noch näher eingehen --, so darf $\tau(\omega)$ nur von unserem Kenntnisstand bis zur Zeit $\tau(\omega)$ abhängen. Die Menge $\{\tau \leq n\}$ enthält alle Zeiten vor dem Zeitpunkt $n$, die nur von der Kenntnis bis zu diesem Zeitpunkt abhängen. 
+
+\begin{information}
+Für zeitdiskrete stochastische Prozesse -- auf die wir uns hier ja im Wesentlichen beschränken --, kann man statt der in Definition \ref{Nummer2.3.1} verwendeten Menge auch $\{\tau = n\}$ verwenden.
+\end{information}
+
+\begin{beispiel}[Eintrittszeit]\label{Nummer2.3.2}
+Es sei $(X_n)_{n \geq 0}$ ein $\sF$-adaptierter Prozess und $A \subset \R$ messbar. Dann ist die \deftxt{Eintrittszeit}\index{Eintrittszeit} $\tau_A\colon \Omega \to \overline{\N_0}$ mit $\omega \mapsto \inf\{n \in \N_0 : X_n(\omega) \in A\}$ eine Stoppzeit, d.\,h. $\tau_A(\omega)$ ist der erste Zeitpunkt, zu welchem die Trajektorie $X(\omega)$ in $A$ liegt. Betrachte hierzu
+\begin{align*}
+\{\tau_A \leq n\} &= \{\omega : \exists_{k \in \{0, \ldots, n\}} : X_k(\omega) \in A\} = \bigcup_{k=0}^n \{X_k \in A\} \in \sF_n\text{.} \qedhere
+\end{align*}
+\end{beispiel}
+
+\begin{beispiel}[Konstante Stoppzeit]\label{Nummer2.3.3}
+Es sei $\sF$ eine Filtration und $n_0 \in \N_0$. Dann ist $\tau\colon \Omega \to \overline{\N_0}$ mit $\omega \mapsto n_0$ eine (\deftxt{konstante}\index{Stoppzeit!konstante}) Stoppzeit. Betrachte
+\begin{align*}
+\{\tau \leq n\} &= \begin{cases}\emptyset & \text{falls } n < n_0\\\Omega & \text{falls } n \geq n_0\end{cases} \in \sF_n\text{.} \qedhere
+\end{align*}
+\end{beispiel}
+
+\begin{lemma}\label{Nummer2.3.4}
+Seien $\sigma$ und $\tau$ Stoppzeiten, dann gilt
+\begin{enumerate}
+	\item\label{Nummer234A1} $\sigma \wedge \tau := \min\{\sigma, \tau\}$ und $\sigma \vee \tau := \max\{\sigma, \tau\}$ sind Stoppzeiten.
+	\item\label{Nummer234A2} $\sigma + \tau$ ist eine Stoppzeit.
+	\item\label{Nummer234A3} $\tau + s$ ist für alle $s \geq 0$ eine Stoppzeit.
+\end{enumerate}
+\end{lemma}
+
+Insbesondere gilt zu beachten, dass die Bedingung $s \geq 0$ in Aussage \ref{Nummer234A3} des Lemmas essentiell ist und die Aussage für $s < 0$ im Allgemeinen nicht gilt.
+
+\begin{beweis}
+Für \ref{Nummer234A1} betrachten wir $\{\tau \vee \sigma \leq n\} = \{\tau \leq n\} \cap \{\sigma \leq n\}$ und $\{\tau \wedge \sigma \leq n\} = \{\tau \leq n\} \cup \{\sigma \leq n\}$, diese Mengen sind offenbar messbar. 
+
+Für \ref{Nummer234A2} sei $n \in \N_0$, dann folgt aus \ref{Nummer234A1}, dass $\tau \vee n$ und $\tau \wedge n$ Stoppzeiten sind. Für $m < n$ gilt nun $\{\tau \wedge n \leq m\} \in \sF_m \subset \sF_n$, für $m \geq n$ gilt $\{\tau \wedge n \leq m\} = \Omega \in \sF_n$. Damit ist $\tau' := (\tau \wedge n) + \ind_{\{\tau > n\}}$ eine $\sF_n$-messbare Zufallsvariable. Analog erhalten wir die $\sF_n$-Messbarkeit von $\sigma' := (\sigma \wedge n) + \ind_{\{\sigma > n\}}$. Damit folgt $\tau' + \sigma' \in \sF_n$. Schließlich gilt für $\tau \leq n$ und $\sigma \leq n$, dass $\tau' + \sigma' = \tau + \sigma$ gilt, ist aber zum Beispiel $\tau > n$, so ist $\tau' = n+1 > n$. Damit folgt $\{\sigma + \tau \leq n\} = \{\sigma' + \tau' \leq n\} \in \sF_n$.
+
+Aussage \ref{Nummer234A3} folgt aus Aussage \ref{Nummer234A2} und Beispiel \ref{Nummer2.3.3}. Wir wollen noch zeigen, warum die Aussage für $s < 0$ nicht stimmt. Es ist $\{\tau + s \leq n\} = \{\tau \leq n-s\} \in \sF_{n-s}$, aber im Allgemeinen gilt $\sF_{n-s} \not\subset \sF_n$. 
+\end{beweis}
+
+\begin{definition}[Gestoppter stochastischer Prozess]\label{Nummer2.3.5}
+Sei $\tau$ eine endliche Stoppzeit (d.\,h. $\tau < \infty$ $P$-fast sicher) und $X = (X_n)_{n \geq 0}$ ein $\sF$-adaptierter stochastischer Prozess. Wir definieren:
+\begin{enumerate}
+	\item Es sei $X_\tau\colon \Omega \to \R$ eine Abbildung vermöge $\omega \mapsto X_{\tau(\omega)}(\omega)$. Dies ist der Wert der Trajektorie $X(\omega)$ zum Stoppzeitpunkt $\tau(\omega)$.
+	\item \deftxt{Gestoppter Prozess}\index{Stochastischer Prozess!gestoppter}: $X^\tau = (X_n^\tau)_{n \geq 0}$ sei definiert durch
+	\begin{align*}
+	X_n^\tau &:= X_{\tau \wedge n} = \begin{cases}X_n & \text{für } n \leq \tau\\ X_\tau & \text{für } n \geq \tau\end{cases}\text{.}
+	\end{align*}
+\end{enumerate}
+\end{definition}
+
+Die für die stochastischen Prozesse typische Frage ist nun, in welchem Sinne $X_\tau$ und $X^\tau$ messbar sind, von welchen Kenntnisständen diese Variablen also abhängen. Dies wollen wir nun diskutieren.
+
+\begin{definition}[$\tau$-Vergangenheit]\label{Nummer2.3.6}
+Es sei $(\Omega, \sA, P)$ ein Wahrscheinlichkeitsraum, $\sF = (\sF_n)_{n \geq 0}$ eine Filtration und $\tau$ eine $\sF$-Stoppzeit. Dann ist
+\begin{align*}
+\sF_\tau &:= \{A \in \sA : A \cap \{\tau \leq n\} \in \sF_n \text{ für alle } n \geq 0\}
+\end{align*}
+eine $\sigma$-Algebra. Diese wird die \deftxt{$\sigma$-Algebra der $\tau$-Vergangenheit}\index{$\tau$-Vergangenheit} genannt.
+\end{definition}
+
+\begin{lemma}\label{Nummer2.3.7}
+Es seien $\sigma$ und $\tau$ Stoppzeiten. Dann gelten die folgenden Aussagen:
+\begin{enumerate}
+	\item\label{Nummer237A1} Gilt $\sigma \leq \tau$, so folgt $\sF_\sigma \subset \sF_\tau$. 
+	\item\label{Nummer237A2} Für $n \geq 0$ gilt $\sF_{\tau \wedge n} \subset \sF_n$.
+\end{enumerate}
+\end{lemma}
+
+\begin{beweis}
+Aussage \ref{Nummer237A2} folgt aus \ref{Nummer237A1}, da $\sigma := \tau \wedge n$ eine Stoppzeit mit $\sigma \leq \tau$ ist. Wir beweisen nun also \ref{Nummer237A1}. Sei $A \in \sF_\sigma$ und $n \geq 0$, dann gilt wegen $\{\tau \leq n\} \subset \{\sigma \leq n\}$
+\begin{align*}
+A \cap \{\tau \leq n\} &= \underbrace{A \cap \{\sigma \leq n\}}_{\in \sF_n} \cap \underbrace{\{\tau \leq n\}}_{\in \sF_n} \in \sF_n\text{,}
+\end{align*}
+also ist $A \in \sF_\tau$.
+\end{beweis}
+
+\begin{satz}[Messbarkeit von $X_\tau$ und $X^\tau$]\label{Nummer2.3.8}
+Sei $X = (X_n)_{n \geq 0}$ ein $\sF$-adaptierter stochastischer Prozess und $\tau$ eine endliche Stoppzeit. Dann gilt:
+\begin{enumerate}
+	\item\label{Nummer238A1} $X_\tau$ ist $\sF_\tau$-messbar.
+	\item\label{Nummer238A2} $X^\tau$ ist $\sF$-adaptiert und auch $\sF^\tau$-adaptiert, wobei $\sF^\tau_n := \sF_{\tau \wedge n}$ ist.
+\end{enumerate}
+\end{satz}
+
+\begin{beweis}
+Wir beweisen zunächst \ref{Nummer238A1}. Sei $B \subset \R$ messbar. Dann müssen wir $\{X_\tau \in B\} \in \sF_\tau$, also $\{X_\tau \in B\} \cap \{\tau \leq n\} \in \sF_n$ für alle $n \geq 0$ zeigen. Dies geschieht über den folgenden, typischen Ansatz:
+\begin{align*}
+\{X_\tau \in B\} \cap \{\tau \leq n\} &= \{X_\tau \in B\} \cap \bigcup_{k=0}^n \{\tau = k\} = \bigcup_{k=0}^n \left(\{X_\tau \in B\} \cap \{\tau = k\}\right)\\
+\quad &= \bigcup_{k=0}^n \{X_k \in B\} \in \sF_n\text{.}
+\end{align*}
+Kommen wir zu \ref{Nummer238A2}. Da $\tau \wedge n$ eine Stoppzeit ist, ist $X_n^\tau = X_{\tau \wedge n}$ nach \ref{Nummer238A1} $\sF_{\tau \wedge n}$-messbar und nach Lemma \ref{Nummer2.3.7} damit auch $\sF_n$-messbar.
+\end{beweis}

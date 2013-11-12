@@ -1,0 +1,71 @@
+\chapter{Anhang}
+\renewcommand*{\thetmpsatz}{\thechapter.\arabic{tmpsatz}}
+\setcounter{tmpsatz}{0}
+An dieser Stelle wollen wir einige wichtige Sätze aus anderen Vorlesungen festhalten, wie mehrmals benötigt und referenziert werden. Da diese nur der Übersicht dienen, werden wir auf Beweise dieser Sätze an dieser Stelle verzichten.
+
+\begin{satz}[Totale Wahrscheinlichkeit]\label{appendix:totwkeit}
+Sei $(\Omega, \sA, P)$ ein Wahrscheinlichkeitsraum und $(B_i)_{i \in I}$ eine höchstens abzählbare Zerlegung von $\Omega$. Ferner gelte $P(B_i) > 0$ für alle $i \in I$. Für alle $A \in \sA$ gilt dann
+\begin{align*}
+P(A) &= \sum_{i \in I} P(B_i)P(A \mid B_i)\text{.}
+\end{align*}
+\end{satz}
+
+\begin{beweis}
+Der Beweis findet sich in \cite[Satz I.7.3]{WT}.
+\end{beweis}
+
+\begin{satz}[Beppo Levi I / Monotone Konvergenz]\label{appendix:beppolevi1}
+Es sei $(\Omega, \sA, \mu)$ ein Maßraum und $f_n\colon \Omega \to [0, \infty]$ für $n \geq 1$ eine Folge messbarer Funktionen mit $f_n \nearrow f$. Dann folgt, dass $f$ messbar und nicht-negativ ist. Außerdem gilt
+\begin{align*}
+\int f~\dd \mu &= \lim_{n \to \infty} \int f_n~\dd \mu = \sup_{n \geq 1} \int f_n~\dd \mu\text{.}
+\end{align*}
+\end{satz}
+
+\begin{beweis}
+Der Beweis findet sich in \cite[Satz I.11.13]{WT}.
+\end{beweis}
+
+%\begin{satz}[Beppo Levi II]\label{appendix:beppolevi2}
+%Es sei $(\Omega, \sA, \mu)$ ein Maßraum und $(f_n) \subset \sL^1(\mu)$ eine Folge integrierbarer Funktionen, so dass $\mu$-fast überall $f_n \nearrow f$ für eine Abbildung $f\colon \Omega \to \R$ gilt. Dann folgt
+%\begin{align*}
+%\lim_{n \to \infty} \int f_n~\dd\mu &= \int f~\dd\mu = \int f^+~\dd\mu - \int f^-~\dd\mu\text{.}
+%\end{align*}
+%\end{satz}
+%
+%\begin{beweis}
+%Der Beweis findet sich in \cite[Satz I.11.13]{WT}.
+%\end{beweis}
+
+\begin{lemma}[Fatou]\label{appendix:fatou}
+Es sei $(\Omega, \sA, \mu)$ ein Maßraum und $f_n\colon \Omega \to [0, \infty]$ für $n \geq 1$ eine messbare Funktionenfolge. Dann gilt
+\begin{align*}
+\int \liminf_{n \to \infty} f_n~\dd\mu &\leq \liminf_{n \to \infty} \int f_n~\dd \mu\text{.}
+\end{align*}
+\end{lemma}
+
+\begin{beweis}
+Der Beweis findet sich in \cite[Lemma I.11.14]{WT}.
+\end{beweis}
+
+\begin{satz}[Lebesgue / Dominierte Konvergenz]\label{appendix:lebesgue}
+Es sei $(\Omega, \sA, \mu)$ ein Maßraum, $f_n\colon \Omega \to \R \cup \{\pm\infty\}$ für $n \geq 1$ eine Folge messbarer Funktionen und $f, g\colon \Omega \to \R \cup \{\pm\infty\}$ messbare Abbildungen mit $f_n \to f$ und $|f_n| \leq g$ für alle $n \geq 1$. Ist $g$ bezüglich $\mu$ integrierbar, so gilt dies auch für $f$ und es folgt
+\begin{align*}
+\int \lim_{n \to \infty} f_n~\dd\mu &= \int f~\dd\mu = \lim_{n \to \infty} \int f_n~\dd\mu\text{.}
+\end{align*}
+\end{satz}
+
+\begin{beweis}
+Der Beweis findet sich in \cite[Lemma I.11.16]{WT}.
+\end{beweis}
+
+\begin{lemma}[Borel-Cantelli II]\label{appendix:borelcantelli2}
+Es sei $(\Omega, \sA, P)$ ein Wahrscheinlichkeitsraum und $(A_n)_{n \geq 1} \subset \sA$ unabhängig. Dann gilt
+\begin{align*}
+\sum_{n=1}^\infty P(A_n) = \infty &\Longrightarrow P\left(\limsup_{n \to \infty} A_n\right) = 1\text{.}
+\end{align*}
+Für unabhängige Folgen $(A_n)_{n \geq 1} \subset \sA$ gilt damit insbesondere $P(\limsup A_n) \in \{0,1\}$ und $P(\liminf A_n) \in \{0,1\}$.
+\end{lemma}
+
+\begin{beweis}
+Der Beweis findet sich in \cite[Lemma II.6.1]{WT}.
+\end{beweis}

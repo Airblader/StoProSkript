@@ -1,0 +1,53 @@
+\section{Einfache Beispiele}
+
+\begin{beispiel}[Unabhängig und identisch verteilt]\label{Nummer1.4.1}
+Sei $X = (X_n)_{n \geq 1}$ i.\,i.\,d. Dann gilt:
+\begin{enumerate}
+	\item\label{Nummer141A1} Die Randverteilungen sind gerade die Produktmaße (siehe auch "`Kanonisches Modell"' in \cite[Satz II.2.5]{WT}).
+	\item\label{Nummer141A2} $X$ ist stationär.
+	\item\label{Nummer141A3} $X$ hat stationäre Zuwächse.
+	\item\label{Nummer141A4} $X$ hat im Allgemeinen keine unabhängigen Zuwächse.
+\end{enumerate}
+Die Aussagen \ref{Nummer141A2} und \ref{Nummer141A3} folgen aus \ref{Nummer141A1}, \ref{Nummer141A4} wird dem Leser zum Beweis überlassen.
+\end{beispiel}
+
+\begin{beispiel}[Irrfahrt]\label{Nummer1.4.2}
+Es sei $(Y_n)_{n \geq 0}$ ein i.\,i.\,d. stochastischer Prozess mit $Y_n \sim \Binom\left(1, \frac12\right)$. Dann heißt $X = (X_n)_{n \geq 0}$ mit $X_n := \sum_{i=0}^n Y_i$ für $n \geq 0$ \deftxt{symmetrische Irrfahrt}\index{Irrfahrt!symmetrische}. Ist $Y_n \sim \Binom(1, p)$ für $p \in [0,1]$, so sprechen wir von einer \deftxt{asymmetrischen}\index{Irrfahrt!asymmetrische} Irrfahrt. Der Prozess $X$ hat stationäre und unabhängige Zuwächse, ist jedoch nicht stationär.
+
+Zunächst gilt für $m < n$, dass
+\begin{align*}
+X_n - X_m = \sum_{i=m+1}^n Y_i \tag{*}\label{Nummer142E1}
+\end{align*} 
+ist. Da die $Y_i$ unabhängig sind, folgt die Unabhängigkeit der Zuwächse aus \cite[Satz II.2.7, Satz II.2.9]{WT} und der Tatsache, dass kein Index $i$ doppelt vorkommt. Die Stationarität der Zuwächse folgt ebenfalls aus \eqref{Nummer142E1}. Da $X_n \sim \Binom(n, p)$ gilt sind die eindimensionalen Randverteilungen nicht gleich, d.\,h. $P_n \neq P_{n+1}$.\\
+In der Regel wird die symmetrische Irrfahrt jedoch anders definiert, da man in beide Richtungen gehen können möchte. Man setzt hierfür $Z_n := \sum X_n - 1$. Dies entspricht der Summe von Zufallsvariablen mit Werten in $\{\pm 1\}$.
+
+Die Irrfahrt wird u.\,a. zur Untersuchung von einfachen Wettspielen verwendet. Beispielsweise gebe es zwei Spieler und eine Münze, die wiederholt geworfen wird. Falls sie Kopf zeigt, so verliert Spieler 1 und zahlt seinem Kontrahenten einen Euro, entsprechend umgekehrt für den Fall "`Zahl"'. Man kann sich nun fragen, wie lange es dauert, bis einer der Spieler pleite ist (ein gewisses Startkapital sei gegeben) oder wie groß die Wahrscheinlichkeit dafür ist, dass Spieler 1 verliert et cetera. \qedhere
+\begin{figure}[!htb]
+\centering
+\begin{tikzpicture}
+\draw[->, semithick] (0, -0.5) -- (0, 4);
+\draw[->, semithick] (-0.5, 0) -- (7.5, 0);
+\draw[circle, fill=blue] (0, 3) circle (2pt) node (AK) {};
+\node[rotate=90] (Sp1) at (-0.5, 3) {\small Anfangskapital};
+\draw[blue, semithick] (0, 3) -- (1, 2) -- (2, 3) -- (3, 2) -- (4, 1) -- (5, 2) -- (6, 1) -- (7, 0); 
+\draw[circle, fill=blue] (7,0) circle (2pt) node (Pleite2) {};
+\node (Pleite1) at (8, 1.5) {\small Pleite};
+\draw[->] (Pleite1) to[out=-90, in=80] (Pleite2);
+\end{tikzpicture}
+\caption[Darstellung einer Irrfahrt]{Darstellung einer Wettspiel-Irrfahrt für einen Spieler.}\label{irrfahrt}
+\end{figure}
+\end{beispiel}
+
+\begin{beispiel}[Gleitendes Mittel]\label{Nummer1.4.3}
+Es sei $(X_n)_{n \in \Z}$ ein $\R$-wertiger stochastischer Prozess, $k \in \N$ und $c_0, \ldots, c_k \in [0,1]$ mit $\sum_{i=0}^k c_i = 1$. Wir definieren nun $Y = (Y_n)_{n \in \Z}$ vermöge $Y_n := \sum_{i=0}^k c_i X_{n-i}$. Dann heißt $Y$ \deftxt{gleitendes Mittel}\index{gleitendes Mittel} von $X$ bezüglich der Gewichtung $c_0, \ldots, c_k$. Gleitende Mittel glätten den Prozess $X$ gewissermaßen und werden unter anderem bei der Zeitreihenanalyse eingesetzt (z.\,B. Aktienkurse). Der Prozess $Y$ ist stationär. Gilt zudem, dass $(X_n)_{n \in \Z}$ i.\,i.\,d. mit $X_i \in \sL_2$ ist, so ist $\Var Y_n \leq \Var X_n$, wobei die echte Ungleichung in der Mehrzahl der Fälle gilt. Der Beweis für diese Eigenschaften wird dem Leser überlassen.
+\end{beispiel}
+
+\begin{beispiel}[Untypisches Beispiel]\label{Nummer1.4.4}
+Es sei $P = \bigotimes_{i=1}^\infty \lambda_{[0,1]}$ auf $[0,1]^\N$, ausgestattet mit der Produkt-$\sigma$-Algebra. Wir definieren für $\omega \in [0,1]$, also eine Folge $\omega = (\omega_i)_{i \geq 1}$, und $t \in [0, \infty)$ die Zufallsvariablen
+\begin{align*}
+X_t(\omega) &:= \sum_{i=1}^\infty \frac{\omega_i}{i!}t^i\text{.}
+\end{align*}
+Die Reihe konvergiert absolut und gleichmäßig auf allen Kompakta. Ferner bildet $X = (X_t)_{t \geq 0}$ einen stochastischen Prozess und jede Trajektorie $X(\omega) = (t \mapsto X_t(\omega))$ ist eine analytische Funktion. Ist also $X_t(\omega)$ für alle $t \in (t_1, t_2)$ bekannt, so ist bereits die gesamte Trajektorie bekannt. 
+\end{beispiel}
+
+Solche Prozesse wie in Beispiel \ref{Nummer1.4.4} interessieren uns hier allerdings nicht, weshalb wir sie nicht mehr betrachten werden. Stattdessen haben die Prozesse, die wir betrachten werden, eine wesentlich lockerere Beziehung zwischen Vergangenheit und Zukunft. Dafür müssen wir jedoch erst mehr Theorie entwickeln.

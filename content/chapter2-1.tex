@@ -1,0 +1,116 @@
+\chapter{Zeitdiskrete Martingale}
+
+\begin{beschreibung}
+Martingale waren ursprünglich eine Klasse von Wettstrategien im 18. Jahrhundert Frankreichs, aber auch ein Begriff für bestimmte Pferdezügel. In der Theorie der stochastischen Prozesse sind Martingale bestimmte Klassen von Prozessen, welche die stochastischen Prozesse gewissermaßen einschnüren.
+\end{beschreibung}
+
+\section{Definition und einfache Beispiele}
+
+Im Folgenden sei $(\Omega, \sA, P)$ immer ein Wahrscheinlichkeitsraum, sowie $T \subset [0, \infty)$ eine Indexmenge. Da wir vor allem zeitdiskrete Martingale betrachten werden, wird häufig $T = \N$ oder $T = \N_0$ sein.
+
+\begin{definition}[Filtration]\label{Nummer2.1.1}
+Eine Familie $\sF = (\sF_t)_{t \in T}$ von $\sigma$-Unteralgebren von $\sA$ heißt \deftxt{Filtration}\index{Filtration} genau dann, wenn $\sF_s \subset \sF_t$ für alle $s, t \in T$ mit $s \leq t$ gilt.
+\end{definition}
+
+Wird $\sF_t$ als unser Kenntnisstand zum Zeitpunkt $t$ betrachtet, so sichert die Filtrationseigenschaft, dass wir höchstens dazulernen, unser Kenntnisstand mit der Zeit also größer wird.
+
+\begin{definition}[Adaptierter stochastischer Prozess]\label{Nummer2.1.2}
+Sei $X = (X_t)_{t \in T}$ ein $\sX$-wertiger stochastischer Prozess und $\sF = (\sF_t)_{t \in T}$ eine Filtration, dann heißt $X$ an $\sF$ \deftxt{adaptiert}\index{Stochastischer Prozess!adaptierter} genau dann, wenn $X_t$ für alle $t \in T$ $\sF_t$-messbar ist.
+\end{definition}
+
+Dies bedeutet also, dass $X_t$ mit unserem Kenntnisstand $\sF_t$ beschreibbar ist.
+
+\begin{definition}[Vorhersagbarer stochastischer Prozess]\label{Nummer2.1.3}
+Sei $X = (X_n)_{n \geq 0}$ ein $\sX$-wertiger stochastischer Prozess und $\sF = (\sF_n)_{n \geq 0}$ eine Filtration, dann heißt $X$ \deftxt{vorhersagbar}\index{Stochastischer Prozess!vorhersagbarer} oder \deftxt{previsibel}\index{Stochastischer Prozess!previsibler} bezüglich $\sF$ genau dann, wenn $X_n$ für alle $n \geq 1$ $\sF_{n-1}$-messbar und $X_0$ konstant ist.
+\end{definition}
+
+In diesem Fall können wir den Prozess also bereits aus dem Kenntnisstand vom Zeitpunkt zuvor beschreiben und daher gewissermaßen vorhersagen. Ist $X$ previsibel, so ist $X$ auch adaptiert. Eine häufig verwendete Filtration ist die \deftxt{natürliche Filtration}\index{Filtration!natürliche}:\\
+Ist $(X_t)_{t \in T}$ ein stochastischer Prozess und $\sF_t := \sigma\left(X_s : T \ni s \leq t\right)$, dann ist $X$ an $\sF := (\sF_t)_{t \in T}$ adaptiert. Dies ist die kleinste Filtration bezüglich welcher $X$ adaptiert ist. Oft werden wir hierfür $\sF_t^X := \sF_t$ schreiben. Wir kommen nun zum eigentlichen Objekt unserer Begierde:
+
+\begin{definition}[Martingal]\label{Nummer2.1.4}
+Sei $M = (M_n)_{n \geq 0}$ ein $\R$-wertiger stochastischer Prozess mit $M_n \in \sL_1(P)$ für alle $n \geq 0$, sowie $\sF = (\sF_n)_{n \geq 0}$ eine Filtration, an welcher $M$ adaptiert ist. Dann heißt $M$
+\begin{enumerate}
+	\item \deftxt{(zeitdiskretes) Martingal}\index{Martingal} bezüglich $\sF$ genau dann, wenn $\E(M_n~|~\sF_{n-1}) = M_{n-1}$ $P$-fast sicher für alle $n \geq 1$ gilt.
+	\item \deftxt{Sub-Martingal}\index{Martingal!Sub-Martingal} genau dann, wenn $\E(M_n~|~\sF_{n-1}) \geq M_{n-1}$ $P$-fast sicher für alle $n \geq 1$ gilt.
+	\item \deftxt{Super-Martingal}\index{Martingal!Super-Martingal} genau dann, wenn $\E(M_n~|~\sF_{n-1}) \leq M_{n-1}$ $P$-fast sicher für alle $n \geq 1$ gilt.
+\end{enumerate}
+\end{definition}
+
+Wir wollen an dieser Stelle einige einfache Eigenschaften festhalten:
+\begin{enumerate}
+	\item Ist $M$ ein Martingal, so ist es natürlich auch ein Sub- und ein Super-Martingal.
+	\item $M$ ist ein Sub-Martingal genau dann, wenn $-M$ ein Super-Martingal ist.
+	\item Ist $M$ ein Martingal, so ist auch $(M_n - M_0)_{n \geq 0}$ ein Martingal.
+	\item Ist $M$ ein Martingal, so gilt $\E M_n = \E(\E(M_n~|~\sF_{n-1})) = \E M_{n-1}$ für alle $n \geq 1$, die Erwartungswerte von Martingalen ändern sich also nicht über die Zeit. Für Sub-Martingale (Super-Martingale) gilt mit analoger Begründung, dass die Erwartungswerte monoton steigen (fallen).
+\end{enumerate}
+
+Die beste Prognose von $M_n$ zum Zeitpunkt $n-1$ ist, wie wir im letzten Kapitel gesehen haben, $\E(M_n~|~\sF_{n-1})$. Die Martingaleigenschaft besagt nun gerade, dass die Prognose gleich $M_{n-1}$ ist.
+
+Alternativ wollen wir Martingale nun als ein Spiel interpretieren: Es sei $M = (M_n)_{n \geq 0}$ ein $\R$-wertiger stochastischer Prozess, der an $(\sF_n)_{n \geq 0}$ adaptiert ist. Dabei soll $M_n$ unser Vermögen zum Zeitpunkt $n$ beschreiben, also ist $M_n - M_{n-1}$ unser Gewinn in der $n$-ten Spielrunde. Ist $M$ ein Martingal, so gilt mit der Martingal- und Adaptionseigenschaft
+\begin{align*}
+\E(M_n - M_{n-1}~|~\sF_{n-1}) &= \E(M_n~|~\sF_{n-1}) - \E(M_{n-1}~|~\sF_{n-1}) = M_{n-1} - M_{n-1} = 0\text{.}
+\end{align*}
+In der $n$-ten Spielrunde ist das Spiel also fair, sofern unser Kenntnisstand zum Zeitpunkt $n - 1$ zugrundegelegt wird. Ist $M$ ein Super-Martingal, so folgt analog, dass $\E(M_{n-1} - M_n~|~\sF_{n-1}) \leq 0$ gilt, also ist das Spiel auf unsere Kosten unfair.
+
+\begin{beispiel}[Summen unabhängiger Zufallsvariablen]\label{Nummer2.1.5}
+Ist $(X_n)_{n \geq 0}$ eine Folge unabhängiger Zufallsvariablen mit $X_n \in \sL_1(P)$ für alle $n \geq 0$ und $X_0 = 0$. Dann ist
+\begin{align*}
+M_n &:= \sum_{i=0}^n (X_i - \E X_i) \qquad \text{für } n \geq 0
+\end{align*}
+ein Martingal bezüglich der natürlichen Filtration von $M_n$. Die Adaptionseigenschaft und Integrierbarkeit sind offensichtlich, zu zeigen bleibt die Martingaleigenschaft. Es ist
+\begin{align*}
+\E(M_{n+1} - M_n~|~\sF_n) &= \E(X_{n+1} - \E X_{n+1}~|~\sF_n) = \E(X_{n+1}~|~\sF_n) - \E X_{n+1} = \E X_{n+1} - \E X_{n+1} = 0\text{,}
+\end{align*}
+wobei wir ausgenutzt haben, dass $X_{n+1}$ und $\sF_n$ unabhängig sind.
+\end{beispiel}
+
+\begin{beispiel}[Martingal durch Filtration]\label{Nummer2.1.6}
+Es sei $X \in \sL_1(P)$ und $(\sF_n)_{n \geq 0}$ eine Filtration. Dann definiert
+\begin{align*}
+M_n &:= \E(X~|~\sF_n) \qquad \text{für } n \geq 0
+\end{align*}
+ein Martingal. Auch hier sind die Adaptionseigenschaft und Integrierbarkeit klar, zu beweisen bleibt also wieder die Martingaleigenschaft. Wegen $\sF_{n-1} \subset \sF_n$ gilt
+\begin{align*}
+\E(M_n~|~\sF_{n-1}) &= \E(\E(X~|~\sF_n)~|~\sF_{n-1}) = \E(X~|~\sF_{n-1}) = M_{n-1}\text{.} \qedhere
+\end{align*}
+\end{beispiel}
+
+\begin{beispiel}[Produkte unabhängiger Zufallsvariablen]\label{Nummer2.1.7}
+Es sei $(X_n)_{n \geq 0}$ eine Folge unabhängiger Zufallsvariablen mit $\sL_1(P) \ni X_n \geq 0$ und $\E X_n = 1$ für alle $n \geq 0$. Wir setzen $M_0 := 0$, $\sF_0 := \{\emptyset, \Omega\}$ und dann $M_n := X_1 \cdot \ldots \cdot X_n$ und $\sF_n := \sigma(X_1, \ldots, X_n)$. Dann ist $M_n$ ein Martingal. Die Adaptionseigenschaft ist nach Konstruktion klar und die Integrierbarkeit folgt aus $X_1 \cdot \ldots \cdot X_n \in \sL_1(P)$. Wir zeigen nun noch die Martingaleigenschaft. Es gilt
+\begin{align*}
+\E(M_n~|~\sF_{n-1}) &= \E(M_{n-1} \cdot X_n~|~\sF_{n-1}) \stackrel{\text{\ref{Nummer1.5.8}}}{=} M_{n-1} \cdot\E(X_n~|~\sF_{n-1}) = M_{n-1} \cdot \E X_n = M_{n-1} \cdot 1\text{.} \qedhere
+\end{align*}
+\end{beispiel}
+
+Nach diesen etwas einfacheren Beispielen wollen wir nun noch ein komplizierteres Beispiel diskutieren:
+
+\begin{beispiel}[Diskretes stochastisches Integral]\label{Nummer2.1.8}
+Es sei $(X_n)_{n \geq 0}$ ein $\sF = (\sF_n)_{n \geq 0}$-adaptierter stochastischer Prozess, sowie $(H_n)_{n \geq 1}$ ein $\sF$-vorhersagbarer stochastischer Prozess. Dann heißt der Prozess $H.X$, der durch
+\begin{align*}
+(H.X)_n &:= X_0 + \sum_{m=1}^n H_m(X_m - X_{m-1}) \qquad\text{für } n \geq 0
+\end{align*}
+definiert ist, \deftxt{diskretes stochastisches Integral}\index{Diskretes stochastisches Integral}. Ist $X$ ein Martingal, so heißt $H.X$ auch \deftxt{Martingaltransformierte}\index{Martingaltransformierte} von $X$.
+
+Wir wollen nun erläutern, woher diese Bezeichnung kommt. Dazu benötigen wir das \deftxt{Stieltjes-Integral}\index{Stieltjes-Integral}, das durch
+\begin{align*}
+\int_0^t h~\dd g(x) &:= \lim \sum_{k=1}^n h(t_{k-1}) \left(g(t_k) - g(t_{k-1})\right)
+\end{align*}
+definiert ist, wobei der Grenzwert des Rangs der Zerlegung $0 = t_0 < t_1 < \ldots < t_n = t$ gegen Null betrachtet wird, das heißt die Zerlegung immer feiner gemacht wird. Dieser Grenzwert existiert, wenn $g$ hinreichend regulär ist. Bei $H.X$ wird die Grenzwertbildung weggelassen und die Zerlegung von $[0, n]$ ist sehr speziell gewählt, nämlich $t_m = m$. Dies motiviert die Bezeichnung "`diskretes Integral"' für $H.X$. Ferner wählen wir $g(t_k) = X_k(\omega)$, das heißt wir integrieren bezüglich einer zufälligen Funktion, was die Bezeichnung "`stochastisches (Integral)"' motiviert. Man kann später den Grenzwert sogar durchführen, dazu benötigt man jedoch die Regularität der Trajektorien von $X$.
+\end{beispiel}
+
+\begin{lemma}\label{Nummer2.1.9}
+Es sei $(X_n)_{n \geq 0}$ an eine Filtration $\sF$ adaptiert mit $X_i \in \sL_1(P)$ für alle $i \geq 0$. Ferner sei $(H_n)_{n \geq 1}$ vorhersagbar bezüglich $\sF$ mit $H_n(X_n - X_{n-1}) \in \sL_1$ für alle $n \geq 1$. Dann gilt:
+\begin{enumerate}
+	\item Ist $X$ ein Martingal, so ist auch $H.X$ ein Martingal.
+	\item Ist $X$ ein Sub-/Super-Martingal und $H \geq 0$, so ist auch $H.X$ ein Sub-/Super-Martingal.
+\end{enumerate}
+\end{lemma}
+
+\begin{beweis}
+Wir beweisen beide Eigenschaften gleichzeitig. Es gilt
+\begin{align*}
+\E((H.X)_n - (H.X)_{n-1}~|~\sF_{n-1}) &= \E(H_n(X_n - X_{n-1})~|~\sF_{n-1}) \stackrel{\text{\ref{Nummer1.5.8}}}{=} H_n \cdot \E(X_n - X_{n-1}~|~\sF_{n-1})\\
+\quad &= \begin{cases}0 & \text{falls $X$ Martingal}\\\geq 0 & \text{falls $X$ Sub-Martingal}\\\leq 0 & \text{falls $X$ Super-Martingal}\end{cases}\text{.}
+\end{align*}
+Damit ist alles gezeigt.
+\end{beweis}

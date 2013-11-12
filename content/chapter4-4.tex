@@ -1,0 +1,91 @@
+\section{Inhomogene Poissonprozesse}
+
+Bisher war die Rate $\lambda$ konstant, also von der Zeit $t$ unabhängig. Wir wollen nun untersuchen, was passiert, wenn sie sich mit der Zeit ändert.
+
+\begin{definition}[Inhomogener Poissonprozess]\label{Nummer4.4.1}
+Sei $(N_t)_{t \geq 0}$ ein rechtsstetiger, $\N_0$-wertiger stochastischer Prozess und $\lambda\colon [0, \infty) \to (0, \infty)$ Lebesgue-integrierbar auf allen kompakten Intervallen. Dann heißt $(N_t)_{t \geq 0}$ ein \deftxt{nicht-homogener} oder \deftxt{inhomogener Poissonprozess}\index{Poissonprozess!inhomogener} genau dann, wenn folgende Eigenschaften gelten:
+\begin{enumerate}
+	\item\label{N441A1} Es gilt $N_0 = 0$.
+	\item\label{N441A2} Der Prozess $(N_t)$ hat unabhängige Zuwächse.
+	\item\label{N441A3} Für $s, t \geq 0$ ist der Zuwachs $N_{s+t} - N_s$ poissonverteilt mit der Rate $\displaystyle\int_s^{s+t} \hspace{-1em}\lambda(u)~\dd u$.
+\end{enumerate}
+\end{definition}
+
+Wir haben also die Charakterisierung aus Satz \ref{Nummer4.2.1} verwendet, um von den homogenen auf die inhomogenen Poissonprozesse zu verallgemeinern. Jeder homogene Poissonprozess ist insbesondere ein inhomogener Poissonprozess mit konstanter Ratenfunktion $\lambda(t) := \lambda_0$. Den Nachweis zur Existenz und Eindeutigkeit echt inhomogener Poissonprozesse werden wir hier nicht führen und verweisen daher auf die Literatur.
+
+\begin{definition}[Mittelwertfunktion]\label{Nummer4.4.2}
+Ist $(N_t)$ ein inhomogener Poissonprozess mit Ratenfunktion $\lambda$, so heißt $m\colon [0, \infty) \to (0, \infty)$ mit $t \mapsto \E N_t$ \deftxt{Mittelwertfunktion}\index{Mittelwertfunktion}.
+\end{definition}
+
+\begin{satz}[Eigenschaften der Mittelwertfunktion]\label{Nummer4.4.3}
+Sei $(N_t)$ ein inhomogener Poissonprozess mit Ratenfunktion $\lambda$ und Mittelwertfunktion $m$. Dann gelten die folgenden Aussagen:
+\begin{enumerate}
+	\item\label{N443A1} Die Mittelwertfunktion $m$ ist eine Stammfunktion von $\lambda$, also gegeben durch
+	\begin{align*}
+	m(t) &= \int_0^t \lambda(u)~\dd u\text{.}
+	\end{align*}
+	\item\label{N443A2} Die Mittelwertfunktion $m$ ist streng monoton wachsend und stetig.
+	\item\label{N443A3} Ist $m^*$ streng monoton wachsend und stetig, so existiert $\lambda^*$ mit $m^*(t) = \int_0^t \lambda^*(u)~\dd u$ für $t \geq 0$, also definiert $m^*$ einen inhomogenen Poissonprozess mit Ratenfunktion $\lambda^*$. Ferner ist $m^*$ Lebesgue-fast überall differenzierbar und es gilt $(m^*)' = \lambda^*$ fast sicher, also ist $\lambda^*$ fast sicher eindeutig.
+\end{enumerate}
+\end{satz}
+
+Im Fall homogener Poissonprozesse gilt also $m(t) = \E N_t = \lambda t$ und damit $m' = \lambda$.
+
+\begin{beweis}
+Für \ref{N443A1} beachten wir, dass $N_t = N_t - N_0$ poissonverteilt mit Rate $\int_0^t \lambda(u)~\dd u$ ist. Dann gilt $m(t) = \E N_t = \int_0^t \lambda(u)~\dd u$, da der Erwartungswert $\alpha$-poissonverteilter Zufallsvariablen gerade $\alpha$ ist.
+
+Die strenge Monotonie in \ref{N443A2} ist mit \ref{N443A1} klar, da $\lambda(t) > 0$ gilt. Für die Stetigkeit betrachten wir für $0 \leq s \leq t \leq b$ das endliche Maß $Q_b$ auf $\R$, welches die Lebesguedichte
+\begin{align*}
+h_b(u) &= \begin{cases}\lambda(u) & \text{falls } u \in [0,b]\\ 0 & \text{sonst}\end{cases}
+\end{align*}
+besitzt. Dann gilt
+\begin{align*}
+m(t) - m(s) &= \int_s^t \lambda(u)~\dd u = Q_b([s,t])
+\end{align*}
+und wir erhalten die Stetigkeit von $m$ aus der Stetigkeit von $Q_b$.
+
+Ist $m^*$ streng monoton wachsend, so spricht man davon, dass $m^*$ von beschränkter Variation ist. Es folgt, dass $m^*$ fast überall differenzierbar mit den Eigenschaften aus \ref{N443A3} ist. Wir wollen dies hier nicht ausführen und verweisen daher auf \cite{KESTELMAN} oder \cite{GRAVES}.
+\end{beweis}
+
+\begin{korollar}[Compound Process]\label{Nummer4.4.4}
+Sei $(N_t)$ ein inhomogener Poissonprozess mit Mittelwertfunktion $m$. Dann gelten für den durch
+\begin{align*}
+C_t &:= \sum_{i=1}^{N_t} Y_i
+\end{align*}
+definierten Compound Process\index{Compound Process} von $N_t$ und einer von $(N_t)$ unabhängigen Folge mit i.\,i.\,d. Zufallsvariablen $Y_i$ die folgenden Eigenschaften:
+\begin{enumerate}
+	\item\label{N444A1} Ist $Y_1 \in \sL_1$, so folgt $C_t \in \sL_1$ und es gilt
+	\begin{align*}
+	\E C_t &= m(t) \E Y_1\text{.}
+	\end{align*}
+	\item\label{N444A2} Ist $Y_1 \in \sL_2$, so folgt $C_t \in \sL_2$ und es gilt
+	\begin{align*}
+	\Var C_t &= m(t) \E Y_1^2\text{.}
+	\end{align*}
+\end{enumerate}
+Insbesondere sind $t \mapsto \E C_t$ und $t \mapsto \Var C_t$  streng monoton (oder konstant Null) und stetig.
+\end{korollar}
+
+\begin{beweis}
+Für den Erwartungswert erhält man mit Satz \ref{Nummer4.3.6}
+\begin{align*}
+\E C_t &= \E N_t \E Y_1 = m(t)\E Y_1\text{.}
+\end{align*}
+
+Für die Varianz erhält man wegen $\E X = \alpha = \Var X$ für $X \sim \Pois(\alpha)$ wiederum mit Satz \ref{Nummer4.3.6}
+\begin{align*}
+\Var C_t &= \E N_t \Var Y_1 + \Var N_t (\E Y_1)^2 = m(t) \E Y_1^2\text{.} \qedhere
+\end{align*}
+\end{beweis}
+
+\begin{korollar}[Summen]\label{Nummer4.4.5}
+Sind $(N_t^{(1)})$ und $(N_t^{(2)})$ unabhängige, inhomogene Poissonprozesse mit Mittelwert- und Ratenfunktionen $m_1$ und $\lambda_1$ bzw. $m_2$ und $\lambda_2$, so ist $(N_t^{(1)} + N_t^{(2)})$ ein inhomogener Poissonprozess mit Mittelwertfunktion $m_1+m_2$ und Ratenfunktion $\lambda_1+\lambda_2$.
+\end{korollar}
+
+\begin{beweis}
+Für den Beweis, dass die Summe einen inhomogenen Poissonprozess definiert, müssen wir die drei Eigenschaften aus Definition \ref{Nummer4.4.1} nachweisen. Die erste Eigenschaft ist jedoch klar und die zweite Eigenschaft können wir wie in Satz \ref{Nummer4.3.1} zeigen. Die dritte und letzte Eigenschaft ist eine ähnliche Rechnung wie im Beweis von Satz \ref{Nummer4.3.1} und wird hier nicht bewiesen.
+\end{beweis}
+
+\begin{beispiel*}[Fortsetzung von Beispiel \ref{Nummer4.3.4} -- Teil 2]
+Wieder betrachten wir eine Bank, der erste Eingang sei nun jedoch gegenüber einer Bushaltestelle, der zweite Eingang münde in eine Fußgängerzone und der dritte Eingang ist ein Zugang zu einem Bürohochhaus, dessen Angestellte zwischen 12 Uhr und 13 Uhr Mittagspause haben. Die Rechnungen verlaufen dann analog zu denen bei homogenen Poissonprozessen.
+\end{beispiel*}

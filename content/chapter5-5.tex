@@ -1,0 +1,98 @@
+\section{Der Wiener-Prozess als Martingal}
+
+In diesem letzten Abschnitt wollen wir eine kurze Einführung in die Theorie der Martingale in stetiger Zeit geben und die Anwendung auf Wiener-Prozesse diskutieren.
+
+\begin{definition}[Martingal]\label{Nummer5.5.1}
+Ein stochastischer Prozess $(X_t)_{t \geq 0}$, der an $\sF = (\sF_t)_{t \geq 0}$ adaptiert und integrierbar ist, heißt \deftxt{Martingal}\index{Martingal} genau dann, wenn
+\begin{align*}
+\E(X_t \mid \sF_s) &= X_s
+\end{align*}
+für alle $0 \leq s \leq t$ gilt. Sub- und Super-Martingale werden ebenfalls analog definiert.
+\end{definition}
+
+\begin{satz}[Unabhängige Zuwächse]\label{Nummer5.5.2}
+Sei $(X_t)$ ein integrierbarer, stochastischer Prozess mit unabhängigen Zuwächsen. Dann ist $(X_t - \E X_t)_{t \geq 0}$ ein Martingal bezüglich der natürlichen Filtration. 
+
+Insbesondere ist der Wiener-Prozess ein Martingal und $(N_t - \lambda t)_{t \geq 0}$ ist ebenfalls ein Martingal, falls $N_t$ ein homogener Poisson-Prozess mit Rate $\lambda$ ist.
+\end{satz}
+
+\begin{beweis}
+Die Aussage folgt aus Lemma \ref{Nummer5.1.8} und einigen elementaren Rechnungen. 
+\end{beweis}
+
+\begin{satz}[Gleichgradig integrierbare Martingale]\label{Nummer5.5.3}
+Sei $(X_t)$ ein Martingal, dann sind folgende Aussagen äquivalent:
+\begin{enumerate}
+	\item\label{N553A1} Der Prozess $(X_t)$ ist gleichgradig integrierbar.
+	\item\label{N553A2} Es existiert $X_\infty \in \sL_1$ mit $X_t = \E(X_\infty \mid \sF_t)$ für alle $t \geq 0$.
+\end{enumerate}
+\end{satz}
+
+\begin{beweis}
+Die Richtung von \ref{N553A1} $\Rightarrow$ \ref{N553A2} ist eine Folgerung aus Satz \ref{Nummer2.7.2}, die andere Richtung folgt aus Satz \ref{Nummer2.6.4}.
+\end{beweis}
+
+\begin{satz}[Optional Sampling Theorem]\label{Nummer5.5.4}\index{Optional Sampling Theorem}
+Sei $(X_t)_{t \geq 0}$ ein rechtsstetiges Martingal und $\sigma \leq \tau$ Stoppzeiten. Ist $\tau$ beschränkt oder $(X_t)$ gleichgradig integrierbar, so sind $X_\sigma, X_\tau \in \sL_1$ und es gilt
+\begin{align*}
+\E(X_\tau \mid \sF_\sigma) = X_\sigma\text{.}
+\end{align*}
+Dabei ist $X_\sigma$ nach Lemma \ref{Nummer5.3.4} und Satz \ref{Nummer5.3.5} $\sF_\sigma$-messbar.
+\end{satz}
+
+\begin{beweis}
+Wir wollen den Beweis an dieser Stelle lediglich skizzieren. Wie im Beweis von Satz \ref{Nummer2.4.3} zeigen wir zunächst
+\begin{align*}
+\E(X_N \mid \sF_\tau) &= X_\tau
+\end{align*}
+für $N \in [0, \infty]$ mit $\tau \leq N$. Dies beweist man in zwei Schritten: Zunächst nimmt man an, dass $\tau$ abzählbar viele, aufsteigende Werte besitzt. Dann kann man die Aussage aus Satz \ref{Nummer2.4.3} und Satz \ref{Nummer2.8.1} folgern. Im zweiten Schritt betrachtet man allgemeine $\tau$ und approximiert diese durch $\tau_n \searrow \tau$, wobei die $\tau_n$ wie im ersten Schritt gegeben sind. Hierfür ist die Rechtsstetigkeit nötig. Für die Details verweisen wir auf \cite{MEINTRUP}. Dort wird auch gezeigt, dass jedes Martingal eine rechtsstetige Version besitzt, wenn $\sA$ vervollständigt wird.
+\end{beweis}
+
+\begin{korollar}[Optional Stopping Theorem (Doob)]\label{Nummer5.5.5}\index{Optional Stopping Theorem}\index{Doob!Optional Stopping Theorem}
+Sei $(X_t)$ ein rechtsstetiges Martingal und $\tau$ eine Stoppzeit. Dann ist $(X_{\tau \wedge t})_{t \geq 0}$ ein Martingal. Ist $\tau$ beschränkt oder $(X_t)$ gleichgradig integrierbar, so gilt $X_\tau \in \sL_1$ und $\E X_\tau = \E X_0$.
+\end{korollar}
+
+\begin{beweis}
+Die Martingaleigenschaft folgt aus Satz \ref{Nummer5.5.4} für die beschränkten Stoppzeiten $\tau \wedge s$ und $\tau \wedge t$. Die zweite Aussage folgt aus Satz \ref{Nummer5.5.4} für $\sigma = 0$, denn dann ist $\E(X_\tau \mid \sF_0) = X_0$ und damit $\E X_\tau = \E(\E(X_\tau \mid \sF_0)) = \E X_0$.
+\end{beweis}
+
+\begin{satz}[Wiener-Prozesse und Martingale]\label{Nummer5.5.6}
+Sei $(W_t)$ ein Wiener-Prozess. Dann sind $(W_t)$ und $(W_t^2 - t)$ stetige Martingale.
+\end{satz}
+
+Es lassen sich auch andere Transformationen betrachten, die (stetige) Martingale ergeben. Hierzu verweisen wir auf \cite[13.10 und 13.11]{MEINTRUP}.
+
+\begin{beweis}
+Die Aussagen folgen aus Satz \ref{Nummer5.5.2} und einfachem Nachrechnen.
+\end{beweis}
+
+\begin{korollar}[Ruinwahrscheinlichkeiten des Wiener-Prozesses]\label{Nummer5.5.7}
+Sei $(W_t)$ ein Wiener-Prozess und $a < 0 < b$. Wir setzen $\tau := \inf\{t \geq 0 : W_t = a \text{ oder } W_t = b\}$. Dann gilt
+\begin{enumerate}
+	\item $\displaystyle P(W_\tau = a) = \frac{b}{b-a}$.
+	\item $\displaystyle \E \tau = -ab$.
+\end{enumerate}
+\end{korollar}
+
+\begin{beweis}
+Der Beweis verläuft weitgehend analog zur symmetrischen Irrfahrt aus Beispiel \ref{Nummer2.4.2}. Für die Details verweisen wir auf \cite[S. 381 ff.]{MEINTRUP}. 
+\end{beweis}
+
+Der Wiener-Prozess lässt sich durch "`Irrfahrten"' approximieren: Sind $(Y_i)$ i.\,i.\,d. Zufallsvariablen mit $\E Y_i = 0$ und $\Var Y_i =: \sigma \in (0, \infty)$, so setzen wir für $t \geq 0$
+\begin{align*}
+s_t^{(n)} &:= \sum_{i=1}^{\lfloor nt \rfloor} Y_i \qquad\text{ und }\qquad \tilde{s}_t^{(n)} := \frac{1}{\sqrt{\sigma^2 n}}s_t^{(n)}\text{.}
+\end{align*}
+Das \deftxt{Donskersche Invarianzprinzip} besagt dann, dass $\tilde{s}^{(n)}$ gegen einen Wiener-Prozess konvergiert. Wie diese Konvergenz und der Wiener-Prozess aussehen wollen wir hier nicht erläutern und verweisen auf \cite{KLENKE}.
+
+Der Wiener-Prozess lässt sich auch als Fourierreihe mit zufälligen Koeffizienten darstellen. Diese Koeffizienten sind unabhängig und normalverteilt. Eine mögliche Orthonormalbasis lässt sich explizit darstellen.
+
+Der Satz vom iterierten Logarithmus besagt
+\begin{align*}
+\lim_{t \to \infty} \sup \frac{\vert W_t \vert}{\sqrt{2t \log \log t}} &= 1 \quad P\text{-fast sicher.}
+\end{align*}
+
+Ferner gibt es ein Gesetz der großen Zahlen, welches
+\begin{align*}
+\lim_{t \to \infty} \frac{W_t}{t} &= 0 = \E W_0 \quad P\text{-fast sicher}
+\end{align*}
+besagt. Insbesondere ist $(t W_\frac{1}{t})_{t \geq 0}$ wieder ein Wiener-Prozess.

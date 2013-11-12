@@ -1,0 +1,130 @@
+\section{Äquivalente Beschreibung}
+
+Wir wollen uns nun der Frage widmen, wieso Poissonprozesse ihren Namen tragen und dafür eine äquivalente Beschreibung dieser Prozesse angeben.
+
+\begin{satz}[Charakterisierung]\label{Nummer4.2.1}
+Ein $\N_0$-wertiger, rechtsstetiger stochastischer Prozess $(N_t)_{t \geq 0}$ ist genau dann ein homogener Poissonprozess mit Rate $\lambda > 0$, wenn die folgenden Eigenschaften erfüllt sind:
+\begin{enumerate}
+	\item\label{N421A1} Es gilt $P$-fast sicher $N_0 = 0$.
+	\item\label{N421A2} Der Prozess $(N_t)$ hat unabhängige Zuwächse.
+	\item\label{N421A3} Die Zuwächse sind poissonverteilt, für $s, t \geq 0$ gilt also $N_{s+t} - N_s \sim \Pois(\lambda t)$.
+\end{enumerate}
+\end{satz}
+
+Bevor wir diesen Satz beweisen, erinnern wir zunächst daran, dass $\Pois(\lambda)$ durch die Dichte $\frac{\lambda^k}{k!}e^{-\lambda}$ bezüglich des Zählmaßes auf $\N_0$ gegeben ist. Ferner weisen wir darauf hin, dass \ref{N421A3} impliziert, dass die Zuwächse stationär sind und für $s=0$ folgt mit \ref{N421A1} auch $N_t \sim \Pois(\lambda t)$. Insbesondere gilt $\E N_t = \lambda t$, das heißt im Intervall $[0, t]$ treten im Mittel $\lambda t$ Ereignisse ein. Pro Zeiteinheit treten im Mittel also $\lambda$ Ereignisse ein, es gilt also $\frac{\E N_t}{t} = \lambda$, wie wir eben schon gesehen haben. Diese Tatsache erklärt den Begriff \emph{Rate} für den Parameter $\lambda$.
+
+Um Satz \ref{Nummer4.2.1} zu beweisen, benötigen wir zunächst zwei Lemmata, die wir zunächst behandeln.
+
+\begin{lemma}\label{Nummer4.2.2}
+Sei $\alpha_n\colon \R^n \to \R$ gegeben durch $x \mapsto \sum_{i=1}^n x_i$. Für $t \geq 0$ gilt dann
+\begin{align*}
+\int_0^\infty \cdots \int_0^\infty \ind_{\{\alpha_n(x) \leq t\}}~\dd x_1 \cdots \dd x_n &= \frac{t^n}{n!}\text{.}
+\end{align*}
+\end{lemma}
+
+Aufgrund der Nicht-Negativität des Integranden können wir das Integral mit dem Satz von Tonelli auch als Integral über das Produktmaß schreiben oder die Integrationsreihenfolge beliebig verändern.
+
+\begin{beweis}
+Für den Beweis führen wir eine vollständige Induktion durch. Für $n = 1$ betrachten wir
+\begin{align*}
+\int_0^\infty \ind_{\{\alpha_1(x) \leq t\}}~\dd x &= \int_0^t 1~\dd x = t = \frac{t^1}{1!}\text{.}
+\end{align*}
+Wir kommen nun zum Induktionsschritt. Es gilt
+\begin{align*}
+\int_0^\infty \cdots \int_0^\infty \ind_{\{\alpha_{n+1}(x) \leq t\}}~\dd x_1 \cdots \dd x_n &= \int_0^\infty \cdots \int_0^\infty \ind_{\{\alpha_n(x) \leq t - x_{n+1}\}}\ind_{\{x_{n+1} \leq t\}}~\dd x_1 \cdots \dd x_n\\
+\quad &= \int_0^t \frac{(t - x_{n+1})^n}{n!}~\dd x_{n+1}\\
+\quad &= \frac{t^{n+1}}{(n+1)!}\text{.} \qedhere
+\end{align*}
+\end{beweis}
+
+\begin{lemma}\label{Nummer4.2.3}
+Sei $(N_t)_{t \geq 0}$ ein homogener Poissonprozess mit Rate $\lambda > 0$. Dann gilt für alle $s, t \geq 0$ für den Zuwachs $N_{s+t} - N_s \sim \Pois(\lambda t)$ und dieser Zuwachs ist von $\sigma(N_r : r \leq s)$ unabhängig.
+\end{lemma}
+
+\begin{beweis}
+Wir wollen für $r \leq s$, $k, l \in \N_0$ zunächst zeigen, dass
+\begin{align*}
+P(N_r = k, N_{s+t} - N_s = l) &= \exp(-\lambda r)\frac{(\lambda r)^k}{k!}\exp(-\lambda t)\frac{(\lambda t)^l}{l!} \tag{*}
+\end{align*}
+gilt. Wir betrachten zunächst den Spezialfall $r = s$ und die Wartezeiten $(W_n)_{n \geq 1}$. Wir wissen, dass die Wartezeiten unabhängig und identisch verteilt sind mit $W_n \sim \Exp(\lambda)$. Die Dichte $h$ von $(W_n)_{n=1}^{k+l+1}$ ist daher das Temsorprodukt der einzelnen Dichten, das heißt für $x \geq 0$ ist $h\colon \R^{k+l+1} \to \R$ gegeben durch
+\begin{align*}
+x &\mapsto \prod_{i=1}^{k+l+1} \lambda e^{-\lambda x_i} = \lambda^{k+l+1} \exp\left(-\lambda \alpha_{k+l+1}(x)\right)\text{,}
+\end{align*}
+wobei $\alpha_n$ wie in Lemma \ref{Nummer4.2.2} gegeben ist. Da $N_r = n$ äquivalent zu $T_n \leq r < T_{n+1}$ ist, erhalten wir
+\begin{align*}
+P(N_s = k, N_{s+t}-N_s = l) &= P(T_k \leq s < T_{k+1}, T_{k+l} \leq s+t < T_{k+l+1})\\
+\quad &= P\left(\sum_{i=1}^k W_i \leq s < \sum_{i=1}^{k+1} W_i, \sum_{i=1}^{k+l} W_i \leq s+t < \sum_{i=1}^{k+l+1} W_i\right)
+\intertext{und mit dem Transformationssatz und der Dichte $h$ erhalten wir}
+\quad &= \int_0^\infty \cdots \int_0^\infty \ind_{\{\alpha_k(x) \leq s < \alpha_{k+1}(x), \alpha_{k+l}(x) \leq s+t < \alpha_{k+l+1}(x)\}}h(x)~\dd x_1 \cdots \dd x_{k+l+1}\text{.}
+\end{align*}
+Im ersten Schritt berechnen wir das Integral bezüglich $x_{k+l+1}$. Dazu beachten wir, dass $\ind_{\{\alpha_k(x) \leq s < \alpha_{k+1}(x)\}}$ nur von $x_1, \ldots, x_{k+1}$ abhängt und damit wegen $\ind_{A \cap B} = \ind_A\ind_B$ aus dem Integral herausgezogen und daher in diesem Schritt ignoriert werden kann. Mit $y = \alpha_{k+l+1}(x) = \alpha_{k+l}(x) + x_{k+l+1}$ ist nun
+\begin{align*}
+\int_0^\infty \lambda^{k+l+1}\exp(-\lambda \alpha_{k+l+1}(x))&\ind_{\{\alpha_{k+l}(x) \leq s+t < \alpha_{k+l+1}(x)\}}~\dd x_{k+l+1}\\
+\quad &= \int_{\alpha_{k+l}(x)}^\infty x^{k+l+1}\exp(-\lambda ) \ind_{\{\alpha_{k+l}(x) \leq s+t < y\}}~\dd y\\
+\quad &=\int_{s+t}^\infty \lambda^{k+l+1}\exp(-\lambda y) \ind_{\{\alpha_{k+l}(x) \leq s+t\}}~\dd y\\
+\quad &= \lambda^{k+l}\exp(-\lambda(s+t))\ind_{\{\alpha_{k+l}(x) \leq s+t\}}\text{.}
+\end{align*}
+Im zweiten Schritt integrieren wir nun bezüglich $x_{k+1}, \ldots, x_{k+l+1}$. Es ist
+\begin{align*}
+\int_0^\infty \cdots \int_0^\infty &\ind_{\{\alpha_k(x) \leq s < \alpha_{k+1}(x), \alpha_{k+l}(x) \leq s+t < \alpha_{k+l+1}(x)\}}h(x)~\dd x_{k+1} \cdots \dd x_{k+l+1}\\
+\quad &= \int_0^\infty \cdots \int_0^\infty \lambda^{k+l}\exp(-\lambda (s+t)) \int_{\{\alpha_k(x) \leq s < \alpha_{k+1}(x), \alpha_{k+l}(x) \leq s+t\}}~\dd x_{k+1} \cdots \dd x_{k+l}
+\intertext{und mit $y_1 = \alpha_{k+1}(x)-s - \alpha_k(x) - x_{k+1}-s$ und $y_2 = x_{k+2}, \ldots, y_l = x_{k+l}$ ist $s < \alpha_k(x)+x_{k+1}$ genau dann, wenn $y > 0$ gilt. Außerdem ist $y_1 + \ldots + y_l = \alpha_{k+l}(x) - s$ und wir erhalten}
+\quad &= \lambda^{k+l}\exp(-\lambda (s+t)) \int_0^\infty \cdots \int_0^\infty \ind_{\{\alpha_k(x) \leq s\}} \ind_{\{\alpha_l(y) \leq t\}}~\dd y_1 \cdots \dd y_l
+\intertext{Die erste Indikatorfunktion im Integranden ist von $y$ unabhängig und wir erhalten mit Lemma \ref{Nummer4.2.2} daher}
+\quad &= \lambda^{k+l}\exp(-\lambda (s+t)) \ind_{\{\alpha_k(x) \leq s\}} \frac{t^l}{l!}\text{.}
+\end{align*}
+Im dritten Schritt berechnen wir nun das gesamte Integral. Es ist mit Lemma \ref{Nummer4.2.2}
+\begin{align*}
+\int_0^\infty \cdots \int_0^\infty &\ind_{\{\alpha_k(x) \leq s < \alpha_{k+1}(x), \alpha_{k+l}(x) \leq s+t < \alpha_{k+l+1}(x)\}}h(x)~\dd x_1 \cdots \dd x_{k+l+1}\\
+\quad &= \int_0^\infty \cdots \int_0^\infty \lambda^{k+l}\exp(-\lambda (s+t)) \frac{t^l}{l!} \ind_{\{\alpha_k(x) \leq s\}}~\dd x_1 \cdots \dd x_k\\
+\quad &= \lambda^{k+l}\exp(-\lambda (s+t))\frac{t^l}{l!} \frac{s^k}{k!}\\
+\quad &= \exp(-\lambda s) \frac{(\lambda s)^k}{k!} \exp(-\lambda t) \frac{(\lambda t)^l}{l!}\text{.}
+\end{align*}
+Nun müssen wir noch den Fall $r < s$ betrachten. Mit einer analogen Rechnung zur bisherigen erhalten wir
+\begin{align*}
+P(N_r = k, N_{s+t} - N_s = l) &= \sum_{m=0}^\infty P(N_r = k, N_s - N_r = m, N_{s+t} - N_s = l)\\
+\quad &= \sum_{m=0}^\infty \exp(-\lambda r)\frac{(\lambda r)^k}{k!} \exp(-\lambda (s-r)) \frac{(\lambda (s-r))^m}{m!} \exp(-\lambda t)\frac{(\lambda t)^l}{l!}\\
+\quad &= \exp(-\lambda r)\frac{(\lambda r)^k}{k!} \exp(-\lambda t) \frac{(\lambda t)^l}{l!}\text{.}
+\end{align*}
+Damit haben wir (*) bewiesen. Nun folgt für $r \leq s$
+\begin{align*}
+P(N_{s+t} - N_s = l) &= \sum_{k=0}^\infty P(N_r = k, N_{s+t} - N_s = l) \stackrel{\text{(*)}}{=} \sum_{k=0}^\infty \exp(-\lambda r)\frac{(\lambda r)^k}{k!} \exp(-\lambda t)\frac{(\lambda t)^l}{l!}\\
+\quad &= \exp(-\lambda t)\frac{(\lambda t)^l}{l!}\text{.}
+\end{align*}
+Also gilt $N_{s+t}-N_s \sim \Pois(\lambda t)$. Für die Unabhängigkeit merken wir an, dass $\sigma(N_r : r \leq s)$ von $\{N_r = k\}$ für $r \leq s$ und $k \in \N_0$ erzeugt wird. Da $N_r = N_{0 + r} - N_0 \sim \Pois(\lambda r)$ ist, erhalten wir
+\begin{align*}
+P(N_r = k, N_{s+t}-N_s = l) &\stackrel{\text{(*)}}{=} \exp(-\lambda r)\frac{(\lambda r)^k}{k!} \exp(-\lambda t)\frac{(\lambda t)^l}{l!} = P(N_r = k)P(N_{s+t}-N_s=l)\text{.}
+\end{align*}
+Damit sind $\{N_r = k\}$ und $\{N_{s+t} - N_s = l\}$ unabhängig. Außerdem bilden die Mengen $\{N_{s+t} - N_s = l\}$ ein $\cap$-stabiles Erzeugendensystem von $\sigma(N_{s+t} - N_s)$, allerdings bilden $\{N_r = k\}$ kein solches $\cap$-stabiles Erzeugendensystem für $\sigma(N_r : r \leq s)$. Ein $\cap$-stabiles Erzeugendensystem hiervon wäre zum Beispiel $\{N_{i_1} = k_{i_1}\} \cap \ldots \cap \{N_{i_s} = k_{i_s}\}$, womit man die gesamte Rechnung für (*) nochmals durchführen müsste. Dies werden wir an dieser Stelle nicht ausführen und verweisen daher auf die Literatur. 
+\end{beweis}
+
+\begin{beweis}[Beweis von Satz \ref{Nummer4.2.1}]
+Wir beweisen zunächst "`$\Rightarrow$"'. Dann ist \ref{N421A1} per Definition erfüllt und \ref{N421A2} und \ref{N421A3} folgen aus Lemma \ref{Nummer4.2.3} mit der Unabhängigkeit von $\sigma(N_r : r \leq s)$. 
+
+Für "`$\Leftarrow$"' sei $(N_t)$ ein stochastischer Prozess, so dass \ref{N421A1}, \ref{N421A2} und \ref{N421A3} gelten. Ferner sei $(\tilde{N}_t)_{t \geq 0}$ ein homogener Poissonprozess mit Rate $\lambda > 0$. Wir betrachten
+\begin{align*}
+P(N_{t_1} = k_1, \ldots, N_{t_n} = k_n) &= P(N_{t_1} = k_1, N_{t_2} - N_{t_1} = k_2 - k_1, \ldots, N_{t_n} - N_{t_{n-1}} = k_n - k_{n-1})\\
+\quad &= P(N_{t_1} = k_1) \cdot \underbrace{P(N_{t_2} - N_{t_1} = k_2 - k_1)}_{= \Pois((t_2 - t_1)\lambda)(\{k_2-k_1\})} \cdot \ldots \cdot P(N_{t_n} - N_{t_{n-1}} = k_n - k_{n-1})\\
+\quad &= \tilde{P}(\tilde{N}_{t_1} = k_1) \cdot \tilde{P}(\tilde{N}_{t_2} - \tilde{N}_{t_1} = k_2 - k_1) \cdot \ldots \cdot \tilde{P}(\tilde{N}_{t_n} - \tilde{N}_{t_{n-1}} = k_n - k_{n-1})\\
+\quad &= \tilde{P}(\tilde{N}_{t_1} = k_1, \ldots, \tilde{N}_{t_n} = k_n)\text{.}
+\end{align*}
+Die Prozesse $(N_t)$ und $(\tilde{N}_t)$ besitzen also die selben endlichdimensionalen Randverteilungen, insbesondere gilt dies dann auch für $(W_n)$ und $(\tilde{W}_n)$, sowie für $(S_n)$ und $(\tilde{S}_n)$. Daher ist $(N_t)$ ein homogener Poissonprozess mit Rate $\lambda$.
+\end{beweis}
+
+\begin{korollar}[Starke Markoveigenschaft]\label{Nummer4.2.4}
+Sei $(N_t)_{t \geq 0}$ ein homogener Poissonprozess mit Rate $\lambda > 0$. Dann ist
+\begin{align*}
+\hat{N}_t &:= N_{s+t} - N_s
+\end{align*}
+mit $t \geq 0$ ein homogener Poissonprozess mit Rate $\lambda$, der von $\sigma(N_r : r \leq s)$ unabhängig ist.
+\end{korollar}
+
+Ein homogener Poissonprozess kann zum Zeitpunkt $s$ also unabhängig neugestartet werden.
+
+\begin{beweis}
+Wir sehen, dass $\hat{N}_0 = N_s - N_s = 0$ gilt. Für die dritte Eigenschaft gemäß Satz \ref{Nummer4.2.1} sehen wir
+\begin{align*}
+\hat{N}_{r+t} - \hat{N}_r &= N_{s+r+t} - N_s - N_{s+r} + N_s = N_{s+r+t} - N_{s+r} \sim \Pois(\lambda t)\text{.}
+\end{align*}
+Für die zweite Eigenschaft gilt $\hat{N}_{r+t} - \hat{N}_r = N_{s+r+t} - N_{s+r}$, die unabhängigen Zuwächse von $(N_t)$ garantieren dann die unabhängigen Zuwächse von $(\hat{N}_t)$. Mit Satz \ref{Nummer4.2.1} ist $(\hat{N}_t)$ also ein homogener Poissonprozess mit Rate $\lambda$. Die Unabhängigkeit von $\sigma(N_r : r \leq s)$ folgt aus Lemma \ref{Nummer4.2.3}.
+\end{beweis}

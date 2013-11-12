@@ -1,0 +1,73 @@
+\section{Optional Stopping Theorem}
+
+Sei $X$ ein Martingal und $\tau$ eine Stoppzeit. Die Kernaussage wird dann im Wesentlichen sein, dass $X^\tau$ ein Martingal ist.
+
+\begin{satz}[Optional Stopping Theorem (Doob)]\index{Doob!Optional Stopping Theorem}\index{Optional Stopping Theorem}\label{Nummer2.4.1}
+Sei $X = (X_n)_{n \geq 0}$ ein $\sF$-adaptierter stochastischer Prozess und $\tau$ eine endliche $\sF$-Stoppzeit. Dann gilt:
+\begin{enumerate}
+	\item\label{Nummer241A1} Ist $X$ ein (Super-/Sub-)Martingal, so ist auch $X^\tau$ ein (Super-/Sub-)Martingal.
+	\item\label{Nummer241A2} Ist $X$ ein Martingal, so gilt $\E X_{\tau \wedge n} = \E X_0$ für alle $n \geq 0$. Ist $\tau$ $P$-fast sicher beschränkt, so gilt ferner $\E X_\tau = \E X_0$.
+	\item\label{Nummer241A3} Aussage \ref{Nummer241A2} gilt auch analog für Super-/Sub-Martingale.
+\end{enumerate}
+\end{satz}
+
+\begin{beweis}
+Wir beweisen zunächst \ref{Nummer241A1}. Dazu definieren wir $H := (H_n)_{n \geq 1}$ durch $H_n := \ind_{\{\tau \geq n\}} = 1 - \ind_{\{\tau < n\}} \in \sF_{n-1}$, also ist $H$ vorhersagbar. Außerdem gilt $0 \leq H_n \leq 1$ für alle $n \geq 1$, also ist $H_n \cdot (X_n - X_{n-1}) \in \sL_1$. Mit Lemma \ref{Nummer2.1.9} folgt dann, dass $H.X$ ein Martingal ist. Wir müssen noch $H.X = X^\tau$ zeigen. Dazu wählen wir $n \geq 0$, dann gilt
+\begin{align*}
+(H.X)_n &= X_0 + \sum_{k=1}^n H_k(X_k - X_{k-1}) = X_0 + \sum_{k=1}^n \ind_{\{\tau \geq k\}} \cdot (X_k - X_{k-1})\\
+\quad &= X_0 + \sum_{k=1}^{\tau \wedge n} (X_k - X_{k-1}) = X_{\tau \wedge n} = X_n^\tau\text{.} 
+\end{align*}
+Für Super-/Sub-Martingale geht dies analog. Wir kommen nun zu \ref{Nummer241A2}. Da $X^\tau$ ein Martingal ist, folgt $\E X_{\tau \wedge n} = \E X_n^\tau = \E X_0^\tau = \E X_{\tau \wedge 0} = \E X_0$. Für den zweiten Teil der Aussage sei $\tau$ nun $P$-fast sicher beschränkt, dann gilt $\tau \wedge n \to \tau$ $P$-fast sicher für $n \to \infty$. Sei nun $N \in \N_0$ mit $\tau \leq N$, dann ist $h = \max_{k = 0, \ldots, N} |X_k| \in \sL_1$ und $|X_{\tau \wedge n}| \leq h$ für alle $n \geq 0$. Mit dem Satz zur majorisierten Konvergenz folgt dann $\E X_{\tau \wedge n} = \E X_0 \to \E X_\tau$, also gilt $\E X_\tau = \E X_0$. All dies lässt sich analog für Super-/Sub-Martingale zeigen.
+\end{beweis}
+
+\begin{beispiel}[Symmetrische Irrfahrt]\label{Nummer2.4.2}\index{Irrfahrt!symmetrische}
+Seien $(Y_i)_{i \geq 1}$ i.\,i.\,d. Zufallsvariablen mit $P(Y_i = 1) = P(Y_i = -1) = \frac12$ und $X_n := \sum_{i=1}^n Y_i$ für $n \geq 0$. Ferner seien $a < 0$ und $b > 0$. Dann betrachten wir die Stoppzeiten
+\begin{align*}
+\tau_a &:= \inf\{n \geq 0 : X_n = a\}\text{,}\\
+\tau_b &:= \inf\{n \geq 0 : X_n = b\}\text{,}\\
+\tau_{a,b} &:= \tau_a \wedge \tau_b = \tau_{(-\infty, a] \cup [b, \infty)}\text{.}
+\end{align*}
+Zunächst möchten wir dies als ein faires Wettspiel interpretieren. Spieler 1 hat das Kapital $-a > 0$, Spieler 2 das Kapital $b > 0$. Dann gibt $Y_i = 1$ an, dass Spieler 1 gewinnt und eine Geldeinheit von Spieler 2 erhält. Die Stoppzeit $\tau_{a,b}$ gibt dann die Spieldauer bis zum Bankrott einer der Spieler an. Die Menge $A = \{\tau_{a,b} = \tau_a\}$ beschreibt also das Ereignis, dass Spieler 1 verliert, dass der Prozess $X$ also zuerst in $a$ (und nicht in $b$) ankommt. Wir wollen nun $P(A)$ und die mittlere Spieldauer $\E \tau_{a,b}$ bestimmen. 
+
+Unser erstes Ziel ist es, $P(\tau < \infty) = 1$ für $\tau := \tau_{a,b}$ zu zeigen. Dies bedeutet, dass das Spiel $P$-fast sicher irgendwann endet. Dazu setzen wir $c := b-a$ und $A_k := \bigcap_{i=(k-1)c+1}^{kc} \{Y_i = 1\}$. Tritt $A_k$ ein, so ist das Spiel spätestens zum Zeitpunkt $kc$ beendet, da Spieler 2 pleite ist. Es gilt $A_k \subset \{\tau \leq kc\}$ und daraus folgt $\bigcup_{k=1}^n A_k \subset \{\tau \leq nc\}$. Ferner ist $(A_k)_k$ eine unabhängige Familie und es gilt $P(A_k) = \left(\frac12\right)^c$. Damit erhalten wir
+\begin{align*}
+P(\tau = \infty) &= \lim_{n \to \infty} P(\tau > nc) \leq \lim_{n \to \infty} P\left(\bigcap_{k=1}^n A_k^C\right) = \lim_{n \to \infty} \prod_{k=1}^n P(A_k^C) = \lim_{n \to \infty} \left(1 - \left(\frac12\right)^c\right)^n\\
+\quad &= 0\text{.}
+\end{align*} 
+Als nächstes wollen wir nun $P(A)$ bestimmen. Klar ist, dass $\tau_{a,b} \wedge n \to \tau_{a,b} =: \tau$ $P$-fast sicher für $n \to \infty$, $X_n^\tau = X_{\tau \wedge n} \to X_\tau$ $P$-fast sicher und $\norm{X_n^\tau}_\infty = \norm{X_{\tau \wedge n}}_\infty \leq \max\{|a|,|b|\}$ gilt. Mit dem Satz zur majorisierten Konvergenz folgt dann $\E X_{\tau \wedge n} \to \E X_\tau$. Satz \ref{Nummer2.4.1} sagt nun, dass $\E X_n^\tau = \E X_0^\tau = 0$ gilt und mit obiger Überlegung erhalten wir $\E X_\tau = 0$. Damit folgt
+\begin{align*}
+0 &= \E X_\tau = a P(\tau_{a,b} = \tau_a) + b P(\tau_{a,b} = \tau_b) = a P(A) + b (1 - P(A))\text{.}
+\end{align*}
+Durch Auflösen der Gleichung erhalten wir $P(A) = \frac{b}{b-a}$. 
+
+Das dritte Ziel ist die Berechnung der mittleren Spieldauer $\E \tau_{a,b}$. Da $X_n \in \sL_2$ für alle $n \geq 0$ gilt, existiert der quadratische Variationsprozess\footnote{Diesen haben wir in Korollar \ref{Nummer2.2.6} kennengelernt.} $\langle X \rangle$ und es gilt $\langle X \rangle_n = \sum_{i=1}^n \E Y_i^2 = n$ für alle $n \geq 0$. Nach Korollar \ref{Nummer2.2.6} ist $Z = X^2 - \langle X \rangle$ ein Martingal mit $Z_n = X_n^2 - n$. Mit Satz \ref{Nummer2.4.1} folgt nun
+\begin{align*}
+0 &= \E Z_0 = \E Z_n^\tau = \E (\underbrace{X_{\tau \wedge n}^2}_{\to X_\tau^2} - \underbrace{(\tau \wedge n)}_{\to \tau}) \to \E X_\tau^2 - \E\tau\text{,}
+\end{align*}
+woraus wir $0 = \E X_\tau^2 - \E\tau$ erhalten. Dann ist
+\begin{align*}
+\E \tau &= \E X_\tau^2 = a^2 P(A) + b^2 (1-P(A)) = -ab\text{.} \qedhere
+\end{align*}
+\end{beispiel}
+
+\begin{satz}[Optional Sampling Theorem I]\label{Nummer2.4.3}\index{Optional Sampling Theorem}
+Sei $X = (X_n)_{n \geq 0}$ ein $\sF$-Martingal und $\sigma \leq \tau$ seien $\sF$-Stoppzeiten. Ist $\tau$ beschränkt, so folgt
+\begin{align*}
+\E(X_\tau~|~\sF_{\sigma}) &= X_\sigma\text{.}
+\end{align*}
+\end{satz}
+
+Ist $(\tau_n)_{n \geq 0}$ eine aufsteigende Folge beschränkter Stoppzeiten, so ist $(X_{\tau_n})_{n \geq 0}$ ein $(\sF_{\tau_n})_{n \geq 0}$-Martingal. Dabei ist $(\sF_{\tau_n})_{n \geq 0}$ nach Lemma \ref{Nummer2.3.7} eine Filtration und $X_{\tau_n}$ ist nach Satz \ref{Nummer2.3.8} $\sF_{\tau_n}$-messbar. Die Martingaleigenschaft liefert dann Satz \ref{Nummer2.4.3}.
+
+\begin{beweis}
+Es gelte $P$-fast sicher $\tau \leq N$. Dann ist $X_\tau$ integrierbar, da $|X_\tau| \leq \max_{n \leq N} |X_n|$ und $X_n \in \sL_1$ gilt. Zunächst wollen wir $\E (X_N~|~\sF_\tau) = X_\tau$ $P$-fast sicher zeigen. Dazu sei $A \in \sF_\tau$, d.\,h. $A \cap \{\tau = k\} \in \sF_k$ für alle $k \geq 0$. Dann ist
+\begin{align*}
+\E (X_N \cdot \ind_A) &= \sum_{k=0}^N \E X_N\ind_A\ind_{\{\tau=k\}} = \sum_{k=0}^N \E X_N \ind_{A \cap \{\tau=k\}} = \sum_{k=0}^N \E(\ind_{A \cap \{\tau=k\}}\E(X_N~|~\sF_k))\\
+\quad &= \sum_{k=0}^N \E(\ind_{A \cap \{\tau=k\}} X_k) = \sum_{k=0}^N \E X_\tau \ind_A \ind_{\{\tau=k\}}\\
+\quad &= \E X_\tau \ind_A\text{.}
+\end{align*}
+Dadurch erhalten wir gerade die Gleichung, die wir beweisen wollten. Nun nutzen wir dies für den Beweis des Satzes. Es gilt $\sigma \leq \tau \leq N$ und mit Satz \ref{Nummer2.3.7} erhalten wir damit $\sF_\sigma \subset \sF_\tau$. Dann folgt
+\begin{align*}
+\E(X_\tau\mid\sF_\sigma) &= \E(\E(X_N\mid\sF_\tau)~|~\sF_\sigma) = \E(X_N\mid\sF_\sigma) = X_\sigma\text{.} \qedhere
+\end{align*}
+\end{beweis}

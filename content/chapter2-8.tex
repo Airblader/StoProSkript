@@ -1,0 +1,57 @@
+\section{Optional Sampling}
+
+Das Ziel dieses Abschnittes ist es, Optional Sampling für beliebige Stoppzeiten zu betreiben. Dies wird jedoch nicht für allgemeine, sondern für gleichmäßig integrierbare Martingale gelten.
+
+Sei dazu $(X_n)_{n \geq 0}$ ein gleichmäßig integrierbares Martingal. Dann existiert $X_\infty \in \sL_1$ mit $X_n \to X_\infty$ $P$-fast sicher und in $\sL_1$. Ferner ist $X_n = \E(X_\infty \mid \sF_n)$. Betrachte nun eine beliebige Stoppzeit $\tau\colon \Omega \to \overline{\N_0}$. Für $\omega \in \Omega$ mit $\tau(\omega) = \infty$ setzen wir $X_\tau(\omega) := X_\infty(\omega)$, ansonsten wie gewohnt als $X_\tau(\omega) := X_{\tau(\omega)}(\omega)$. Bis jetzt haben wir in Satz \ref{Nummer2.4.3} gesehen, dass wenn $\sigma \leq \tau$ Stoppzeiten sind und $\tau$ beschränkt ist, folgt, dass $\E(X_\tau \mid \sF_\sigma) = X_\sigma$ ist. Auf die Voraussetzung der Beschränktheit wollen wir nun verzichten:
+
+\begin{satz}[Optional Sampling Theorem II]\label{Nummer2.8.1}\index{Optional Sampling Theorem}
+Sei $(X_n)_{n \geq 0}$ ein gleichmäßig integrierbares Martingal und $\sigma \leq \tau$ Stoppzeiten. Dann gilt $X_\sigma, X_\tau \in \sL_1$ und
+\begin{align*}
+\E(X_\tau \mid \sF_\sigma) = X_\sigma\text{.}
+\end{align*}
+\end{satz}
+
+\begin{beweis}
+Zuerst wollen wir $X_\tau \in \sL_1$ zeigen. Da $(X_n)_{n \geq 0}$ gleichmäßig integrierbar ist, folgt mit Satz \ref{Nummer2.7.2}, dass $X_n = \E(X_\infty \mid \sF_n)$ für alle $n \geq 0$ gilt. Daraus folgt $|X_n| \leq \E(|X_\infty| \mid \sF_n)$. Für $n \geq 0$ erhalten wir so
+\begin{align*}
+\E |X_n| \ind_{\{\tau = n\}} &\leq \E \E(|X_\infty| \mid \sF_n)\ind_{\{\tau = n\}} = \E |X_\infty| \ind_{\{\tau = n\}}\text{.} \tag{*}
+\end{align*}
+Ferner gilt
+\begin{align*}
+|X_\tau|\ind_{\{\tau \leq n\}} &\nearrow |X_\tau| \ind_{\{\tau < \infty\}} \tag{**}
+\shortintertext{und}
+|X_\tau|\ind_{\{\tau \leq n\}} &= \left|\sum_{k=0}^n X_\tau \ind_{\{\tau = k\}}\right| \leq \sum_{k=0}^n |X_k| \ind_{\{\tau = k\}}\text{.} \tag{***}
+\end{align*}
+Mit dem Satz von Beppo Levi\footnote{Dieser findet sich im Anhang als Satz \ref{appendix:beppolevi1}.} folgt nun
+\begin{align*}
+\E |X_\tau| \ind_{\{\tau < \infty\}} &\stackrel{\text{(**)}}{=} \lim_{n \to \infty} \E |X_\tau| \ind_{\{\tau \leq n\}}\\
+\quad &\stackrel{\text{(***)}}{\leq} \sum_{k=0}^\infty \E |X_\tau| \ind_{\{\tau = k\}}\\
+\quad &\stackrel{\text{(*)}}{\leq} \sum_{k=0}^\infty \E |X_\infty| \ind_{\{\tau = k\}}\\
+\quad &= \E |X_\infty| \ind_{\{\tau < \infty\}}\\
+\quad &\leq \E |X_\infty| < \infty\text{.}
+\end{align*}
+Außerdem ist $\E |X_\tau| \ind_{\{\tau = \infty\}} \leq \E |X_\infty|$ und insgesamt erhalten wir $\E |X_\tau| \leq 2 \E|X_\infty| < \infty$, also gilt $X_\tau \in \sL_1$. Analog gilt dies natürlich auch für $X_\sigma \in \sL_1$. Im zweiten Schritt zeigen wir nun $\E(X_\tau \mid \sF_\sigma) = X_\tau$. Dazu verwenden wir Satz \ref{Nummer2.3.8}, der zeigte, dass $X_\tau$ auch $\sF_\sigma$-messbar ist. Der Satz zeigte dies nur für endliche Stoppzeiten, der Beweis ist nahezu wortwörtlich aber auch auf unsere Situation hier übertragbar. Wir wollen nun zunächst $\E(X_\infty \ind_A) = \E(X_\tau\ind_A)$ für alle $A \in \sF_\tau$ zeigen. Sei dazu $n \geq 0$, dann sind $n \geq \tau \wedge n$ endliche Stoppzeiten und mit Satz \ref{Nummer2.4.3} erhalten wir $\E(X_n \mid \sF_{\tau \wedge n}) = X_{\tau \wedge n}$. Daraus folgt
+\begin{align*}
+\E(X_\infty \mid \sF_{\tau \wedge n}) &= \E(\E(X_\infty \mid \sF_n) \mid \sF_{\tau \wedge n}) = X_{\tau \wedge n}\text{.} \tag{$\heartsuit$}
+\end{align*}
+Ferner gilt für $A \in \sF_\tau$ nun $A \cap \{\tau \leq n\} = A \cap \{\tau \leq \tau \wedge n\} \in \sF_{\tau \wedge n}$ und es folgt
+\begin{align*}
+\E X_\infty \ind_{A \cap \{\tau \leq n\}} &= \E(\E X_\infty \ind_{A \cap \{\tau \leq n\}} \mid \sF_{\tau \wedge n})\\
+\quad &= \E(\E(X_\infty \mid \sF_{\tau \wedge n}) \ind_{A \cap \{\tau \leq n\}})\\
+\quad &\stackrel{\heartsuit}{=} \E X_{\tau \wedge n} \ind_{A \cap \{\tau \leq n\}}\text{.} \tag{$\heartsuit\heartsuit$}
+\end{align*}
+Ohne Einschränkung sei $X_\infty \geq 0$, sonst zerlegen wir wie üblich $X_\infty = X_\infty^+ - X_\infty^-$ und führen das folgende Argument zweimal durch. Nun folgt $X_n = \E(X_\infty \mid \sF_n) \geq 0$ und $X_\tau \geq 0$. Mit dem Satz von Beppo Levi\footnote{Dieser findet sich im Anhang als Satz \ref{appendix:beppolevi1}.} und dem Satz von Lebesgue\footnote{Dieser findet sich im Anhang als Satz \ref{appendix:lebesgue}.} folgt wegen
+\begin{align*}
+X_\infty \ind_{A \cap \{\tau \leq n\}} &\longrightarrow X_\infty \ind_{A \cap \{\tau < \infty\}}
+\shortintertext{und}
+X_{\tau \wedge n} \ind_{A \cap \{\tau \leq n\}} &\longrightarrow X_\tau \ind_{A \cap \{\tau < \infty\}}
+\end{align*}
+daher mit Hilfe von ($\heartsuit\heartsuit$) die folgende Identität:
+\begin{align*}
+\underbrace{\E X_\infty \ind_{A \cap \{\tau \leq n\}}}_{\to \E X_\infty\ind_{A \cap \{\tau < \infty\}}} &= \underbrace{\E X_{\tau \wedge n} \ind_{A \cap \{\tau \leq n\}}}_{\to \E X_\tau \ind_{A \cap \{\tau < \infty\}}}\text{.}
+\end{align*}
+Nach Definition gilt außerdem $X_\tau\ind_{\{\tau = \infty\}} = X_\infty = X_\infty \ind_{\{\tau = \infty\}}$, wir erhalten damit also nun $X_\tau \ind_{A \cap \{\tau = \infty\}} = X_\infty \ind_{A \cap \{\tau = \infty\}}$ und insgesamt $\E X_\infty \ind_A = \E X_\tau \ind_A$. Dann folgt $\E(X_\infty \mid \sF_\tau) = X_\tau$ und damit
+\begin{align*}
+\E(X_\tau \mid \sF_\sigma) &= \E(\E(X_\infty \mid \sF_\tau) \mid \sF_\sigma) = \E(X_\infty \mid \sF_\sigma) = X_\sigma\text{.} \qedhere
+\end{align*}
+\end{beweis}

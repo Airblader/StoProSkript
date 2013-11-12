@@ -1,0 +1,92 @@
+\section{Endlichdimensionale Randverteilungen}
+
+In diesem Abschnitt wollen wir stochastische Prozesse konstruieren und Gleichheit für unterschiedliche Wahrscheinlichkeitsräume diskutieren. Hierfür benötigen wir jedoch die namensgebenden endlichen Randverteilungen.
+
+\begin{definition}[Randverteilung]\label{Nummer1.3.1}
+Sei $X = (X_t)_{t \in T}$ ein $\R$-wertiger stochastischer Prozess über dem Wahrscheinlichkeitsraum $(\Omega, \sA, P)$. Ferner seien $n \geq 1$ und $t_1, \ldots, t_n \in T$. Dann nennen wir $P_{X_{t_1}, \ldots, X_{t_n}}$, die durch
+\begin{align*}
+P_{X_{t_1}, \ldots, X_{t_n}}(A) &:= P\left(\left(X_{t_1}, \ldots, X_{t_n}\right) \in A\right) \qquad \text{für alle } A \in \sB^n
+\end{align*}
+definiert war, die \deftxt{Randverteilung}\index{Randverteilung} von $X$ bezüglich $t_1, \ldots, t_n$. Wir werden hierfür die kürzere Schreibweise $P_{t_1, \ldots, t_n}$ verwenden.
+\end{definition}
+
+\begin{satz}\label{Nummer1.3.2}
+Sei $X$ ein $\R$-wertiger stochastischer Prozess über $(\Omega, \sA, P)$. Dann erfüllen die Randverteilungen die folgenden Eigenschaften:
+\begin{enumerate}
+	\item\label{Nummer132A1} \deftxt{Permutationsinvarianz}\index{Permutationsinvarianz}, das heißt für jedes $n \geq 1$, jede Permutation $\pi\colon \{1, \ldots, n\} \to \{1, \ldots, n\}$ und alle $t_1, \ldots, t_n \in T$ gilt
+	\begin{align*}
+	P_{t_{\pi(1)}, \ldots, t_{\pi(n)}}(A) &= P_{t_1, \ldots, t_n}\left(\pi^{-1}(A)\right) \qquad \text{für alle } A \in \sB^n\text{,}
+	\end{align*}
+	wobei $\pi^{-1}(A) := \{(x_1, \ldots, x_n) : (x_{\pi(1)}, \ldots, x_{\pi(n)}) \in A\}$ ist.
+	\item\label{Nummer132A2} \deftxt{Konsistenz}\index{Konsistenz}, das heißt für alle $n \geq m \geq 1$ und alle $t_1, \ldots, t_n \in T$ gilt
+	\begin{align*}
+	P_{t_1, \ldots, t_m}(A) &= P_{t_1, \ldots, t_n}\left(A \times \R^{n-m}\right) \qquad \text{für alle } A \in \sB^m\text{.}
+	\end{align*}
+\end{enumerate}
+\end{satz}
+
+Die erste Eigenschaft besagt also, dass das gleichzeitige Permutieren der $t_i$ und $A$ keinen Effekt hat, während die zweite Eigenschaft ausdrückt, dass niederdimensionale Randverteilungen durch höherdimensionale Randverteilungen ausgedrückt werden können.
+
+\begin{beweis}
+Wir beweisen beide Eigenschaften getrennt:
+\begin{enumerate}
+	\item[\ref{Nummer132A1}] Es genügt, Mengen der Form $A = (-\infty, a]$ für $a = (a_1, \ldots, a_n) \in \R^n$ zu betrachten, da diese $\cap$-stabile Erzeugendensysteme sind (vgl. \cite[Korollar I.5.3]{WT}). Es gilt
+	\begin{align*}
+	\pi^{-1}(A) &= \left\{(x_1, \ldots, x_n) : x_{\pi(i)} \leq a_i \quad \forall_{i = 1, \ldots, n}\right\}\text{.}
+	\end{align*}
+	Daraus folgt dann
+	\begin{align*}
+	P_{t_{\pi(1)}, \ldots, t_{\pi(n)}}(A) &= P\left(X_{t_{\pi(i)}} \leq a_i \quad \forall_{i = 1, \ldots, n}\right)\\
+	\quad &= P_{t_1, \ldots, t_n}\left(\pi^{-1}(A)\right)\text{.}
+	\end{align*}
+	\item[\ref{Nummer132A2}] Diese Aussage folgt wegen
+	\begin{align*}
+	P_{t_1, \ldots, t_n}(A \times \R \times \ldots \times \R) &= P\left(X_{t_i} \in A \quad \forall_{i = 1, \ldots, m} \quad\text{und}\quad X_{t_i} \in \R \quad \forall_{i = m+1, \ldots, n}\right)\\
+	\quad &= P_{t_1, \ldots, t_m}(A)\text{.} \qedhere
+	\end{align*}
+\end{enumerate}
+\end{beweis}
+
+\begin{satz}[Existenzsatz von Kolmogorov]\label{Nummer1.3.3}\index{Existenzsatz (Kolmogorov)}
+Sei $T \neq \emptyset$ und $\sP = \left(P_{t_1, \ldots, t_n}\right)_{t_1, \ldots, t_n \in T}$ eine Familie von Wahrscheinlichkeitsmaßen, so dass $P_{t_1, \ldots, t_n}$ ein Wahrscheinlichkeitsmaß auf $\R^n$ ist. Ferner sei $\sP$ permutationsinvariant und konsistent. Dann gibt es einen $\R$-wertigen stochastischen Prozess $X = (X_t)_{t \in T}$, für welchen die Familie $\sP$ die Familie der endlichdimensionalen Randverteilungen ist, das heißt
+\begin{align*}
+P_{X_{t_1}, \ldots, X_{t_n}} &= P_{t_1, \ldots, t_n} \quad \text{für alle } n \geq 1 \text{ und } t_1, \ldots, t_n \in T\text{.}
+\end{align*}
+\end{satz}
+
+Permutationsinvariante, konsistente Familien definieren also einen stochastischen Prozess. Wir werden den Satz hier nicht beweisen, da der Beweis zu sehr in andere Fachgebiete reicht. Er findet sich in \cite[Korollar A.20]{MEINTRUP}.
+
+\begin{information}
+In der Literatur wird häufig $\sP = (P_I)_{I \subset T}$ mit endlichen $I$ betrachtet. Die Permutationsinvarianz ist hier gewissermaßen bereits eingebaut und wird daher nicht mehr extra erwähnt. 
+\end{information}
+
+\begin{definition}[Gleiche Randverteilung]\label{Nummer1.3.4}
+Seien $X = (X_t)_{t \in T}$ und $Y = (Y_t)_{t \in T}$ zwei $\R$-wertige stochastische Prozesse über $(\Omega, \sA, P)$ bzw. $(\Omega', \sA', P')$. Dann haben $X$ und $Y$ die \deftxt{gleichen Randverteilungen}\index{Randverteilung!gleiche} genau dann, wenn
+\begin{align*}
+P_{X_{t_1}, \ldots, X_{t_n}} &= P_{Y_{t_1}, \ldots, Y_{t_n}} \quad \text{für alle } n \geq 1 \text{ und } t_1, \ldots, t_n \in T
+\end{align*}
+gilt. Wir schreiben hierfür $X \stackrel{\mathrm{d}}{=} Y$.
+\end{definition}
+
+Wenn $X$ eine Version von $Y$ ist, so folgt insbesondere $X \stackrel{\mathrm d}{=} Y$. Wir überlassen den Beweis hierfür jedoch dem Leser. Der stochastische Prozess aus Satz \ref{Nummer1.3.3} ist bis auf "`$\stackrel{\mathrm d}{=}$"' eindeutig.
+
+\Needspace{4\baselineskip}\begin{definition}[Stationärer Prozess]\label{Nummer1.3.5}
+Ein $\R$-wertiger stochastischer Prozess $(X_t)_{t \in T}$ heißt \deftxt{stationär}\index{Stochastischer Prozess!stationärer} genau dann, wenn $T$ bezüglich $+$ abgeschlossen ist und für alle $n \geq 1$ und alle $t_1, \ldots, t_n, s \in T$ gilt:
+\begin{align*}
+P_{t_1 + s, \ldots, t_n + s} &= P_{t_1, \ldots, t_n}
+\end{align*}
+\end{definition}
+
+Randverteilungen ändern sich bei stationären stochastischen Prozessen also nicht mit der Zeit. 
+
+\begin{definition}[Zuwächse]\label{Nummer1.3.6}\index{Zuwachs}
+Ein $\R$-wertiger stochastischer Prozess $(X_t)_{t \in T}$ hat
+\begin{enumerate}
+	\item \deftxt{unabhängige Zuwächse}\index{Zuwachs!unabhängiger} genau dann, wenn für alle $n \geq 1$ und $t_0 < t_1 < \ldots < t_n$ die Zufallsvariablen $X_{t_1} - X_{t_0}, \ldots, X_{t_n} - X_{t_{n-1}}$ unabhängig sind.
+	\item \deftxt{stationäre Zuwächse}\index{Zuwachs!stationärer} genau dann, wenn $T$ bezüglich $+$ abgeschlossen ist und für alle $r, s, t \in T$ gilt:
+	\begin{align*}
+	X_{r+s+t} - X_{r+t} &\stackrel{\mathrm d}{=} X_{r+s} - X_r
+	\end{align*}
+	Das heißt der Zuwachs innerhalb der Zeit $s$ ändert sich nicht durch zeitliche Verschiebung.
+\end{enumerate}
+\end{definition}

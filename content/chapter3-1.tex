@@ -1,0 +1,142 @@
+\chapter{Markovketten}
+
+\begin{beschreibung}
+Markovketten sind stochastische Prozesse, deren Zukunft nur von der Gegenwart und nicht von der Vergangenheit abhängt. Erstmals wurden solche Prozesse 1906\,--\,1908 von Andrej Markov bei der Untersuchung von Verallgemeinerungen des starken Gesetzes der großen Zahlen betrachtet. Markovketten spielen in der Praxis eine große Rolle.
+\end{beschreibung}
+
+\section{Definitionen, Beispiele und einfache Eigenschaften}
+
+Im Folgenden sei $(X_n)_{n \geq 0}$ ein stochastischer Prozess mit Werten in einer höchsten abzählbaren Menge $S$. Auf $S$ betrachten wir die $\sigma$-Algebra $\Pot(S)$. Ferner sei $\sF$ die von $(X_n)_{n \geq 0}$ induzierte, natürliche Filtration. Wir erinnern uns daran, dass gilt:
+\begin{align*}
+P(X \in A \mid \sB) &= \E(\ind_A \circ X \mid \sB)
+\end{align*}
+
+\begin{definition}[Markovkette]\label{Nummer3.1.1}
+Ein stochastischer Prozess $(X_n)_{n \geq 0}$ heißt \deftxt{Markovkette}\index{Markovkette} genau dann, wenn für alle $A \subset S$ und alle $n \geq 0$ die Identität
+\begin{align*}
+P(X_{n+1} \in A \mid X_0, \ldots, X_n) &= P(X_{n+1} \in A \mid X_n)
+\end{align*}
+gilt. Das Bildmaß $P_{X_0}$ heißt dann \deftxt{Startverteilung}\index{Startverteilung}.
+\end{definition}
+
+\begin{information}
+Hierbei verwenden wir die übliche Schreibweise $P(A \mid X_n) := P(A \mid \sigma(X_n))$.
+\end{information}
+
+Die unmittelbare Zukunft von Markovketten hängt also lediglich von ihrem Zustand in der Gegenwart ab.
+
+\begin{lemma}\label{Nummer3.1.2}
+Die folgenden Aussagen sind äquivalent:
+\begin{enumerate}
+	\item\label{N312A1} Der Prozess $(X_n)_{n \geq 0}$ ist eine Markovkette.
+	\item\label{N312A2} Für alle $A \subset S$, $n \geq 0$ und $i_0, \ldots, i_n \in S$ gilt
+	\begin{align*}
+	P(X_{n+1} \in A \mid X_0 = i_0, \ldots, X_n = i_n) &= P(X_{n+1} \in A \mid X_n = i_n)\text{.}
+	\end{align*}
+\end{enumerate}
+\end{lemma}
+
+An dieser Stelle wollen wir die Konvention festlegen, dass wir immer, wenn wir von "`$P(\qquad \mid B)$ für alle $B$ mit der Eigenschaft \ldots"' sprechen, implizit meinen, dass dies für alle $B$ mit der Eigenschaft aus Lemma \ref{Nummer3.1.2} und $P(B) > 0$ gelten soll. Insbesondere gilt dies auch, wenn wir von "`für alle $i_0, \ldots, i_n \in S$ gilt \ldots"' sprechen.
+
+\begin{beweis}
+Wir setzen $B_j := \{X_j = i_j\}$ und $B := \bigcap_{j=0}^n B_j$. Nehmen wir $P(B) > 0$ an, so folgt $P(B_j) > 0$. Im Abschnitt \ref{sec:BedErw} haben wir bei der heuristischen Herangehensweise für bedingte Erwartungen gezeigt, dass $P$-fast sicher
+\begin{align*}
+P(X_{n+1} \in A \mid \sF_n)(\omega) &= P(X_{n+1} \in A \mid B) \qquad \text{für } \omega \in B
+\end{align*}
+gilt. Analog gilt
+\begin{align*}
+P(X_{n+1} \in A \mid X_n)(\omega) &= P(X_{n+1} \in A \mid B_n) \qquad \text{für } \omega \in B_n\text{.}
+\end{align*}
+Für \ref{N312A1} $\Rightarrow$ \ref{N312A2} gilt wegen $P(B) > 0$, dass es ein $\omega \in B$ mit den obigen Formeln geben muss. Für \ref{N312A2} $\Rightarrow$ \ref{N312A1} gilt, dass $(\{X_0 = i_0, \ldots, X_n = i_n\})_{i_0, \ldots, i_n \in S}$ eine abzählbare Partition von $\Omega$ ist. Auf jeder Partitionszelle $B$ mit $P(B) > 0$ gilt nach obigen Überlegungen und \ref{N312A2}
+\begin{align*}
+P(X_{n+1} \in A \mid \sF_n) &\stackrel{P\text{-f.s.}}{=} P(X_{n+1} \in A \mid B) \stackrel{\text{\ref{N312A2}}}{=} P(X_{n+1} \in A \mid B_n) \stackrel{B \subset B_n}{=} P(X_{n+1} \in A \mid X_n)\text{.}
+\end{align*}
+Vereinigen wir diese Partitionszellen, so erhalten wir die Behauptung.
+\end{beweis}
+
+\begin{korollar}\label{Nummer3.1.3}
+Es sei $(X_n)_{n \geq 0}$ eine Markovkette, dann gilt für alle $n \geq 0$ und $i_0, \ldots, i_n \in S$
+\begin{align*}
+P(X_0 = i_0, \ldots, X_n = i_n) &= P(X_0 = i_0) \cdot P(X_1 = i_1 \mid X_0 = i_0) \cdot \ldots \cdot P(X_n = i_n \mid X_{n-1} = i_{n-1})\text{.}
+\end{align*}
+\end{korollar}
+
+\begin{beweis}
+Mit Lemma \ref{Nummer3.1.2} gilt
+\begin{align*}
+P(X_0 = i_0, \ldots, X_n = i_n) &= P(X_n = i_n \mid X_{n-1} = i_{n-1}, \ldots, X_0 = i_0) \cdot P(X_{n-1} = i_{n-1}, \ldots, X_0 = i_0)\\
+\quad &= P(X_n = i_n \mid X_{n-1} = i_{n-1}) \cdot P(X_{n-1} = i_{n-1}, \ldots, X_0 = i_0)\text{.}
+\end{align*}
+Führt man dieses Argument induktiv fort, so erhalten wir die Aussage des Korollars.
+\end{beweis}
+
+Die Wahrscheinlichkeit des Verhaltens des Pfades bis zur Zeit $n$ ist also gleich dem Produkt der Startverteilung und den \deftxt{Übergangswahrscheinlichkeiten}\index{Übergangswahrscheinlichkeit} $P(X_{j+1} = i_{j+1} \mid X_j = i_j)$.
+
+\begin{satz}[Chapman-Kolmogorov]\label{Nummer3.1.4}\index{Chapman-Kolmogorov!Satz von}
+Sei $(X_n)_{n \geq 0}$ eine Markovkette und $k < m < n$, dann gilt für $i, j \in S$
+\begin{align*}
+P(X_n = j \mid X_k = i) &= \sum_{l \in S} P(X_n = j \mid X_m = l) \cdot P(X_m = l \mid X_k = i)\text{.}
+\end{align*}
+\end{satz}
+
+\begin{beweis}
+Es ist
+\begin{align*}
+P(X_n = j, X_k = i) &= \sum_{l \in S} P(X_n = j, X_m = l, X_k = i)\\
+\quad &= \sum_{l \in S} P(X_k = i, X_m = l) \cdot P(X_n = j \mid X_k = i, X_m = l)\\
+\quad &= \sum_{l \in S} P(X_k = i, X_m = l) \cdot P(X_n = j \mid X_m = l)\text{.}
+\end{align*}
+Teilt man durch $P(X_k = i)$, so erhält man die gewünschte Identität.
+\end{beweis}
+
+\begin{beispiel}[Summen unabhängiger Zufallsvariablen]\label{Nummer3.1.5}
+Seien  $X_0, Y_1, Y_2, \ldots$ unabhängige Zufallsvariablen mit Werten in $\Z^d$. Wir setzen 
+\begin{align*}
+X_n &= X_0 + \sum_{i=1}^n Y_i
+\end{align*}
+und erhalten dadurch die Markovkette $(X_n)_{n \geq 0}$. 
+\end{beispiel}
+
+\begin{beispiel}[Simples stochastisches Wettermodell]\label{Nummer3.1.6}
+Wir nehmen an, dass es drei Wetterzustände gibt:
+\begin{enumerate}
+	\item Ein verregnetes Wetter kodieren wir mit $1$.
+	\item Ist es bewölkt, so kodieren wir dies mit $2$.
+	\item Einen sonnigen Tag kodieren wir mit $3$.
+\end{enumerate}
+Ferner sei eine Matrix $(p_{i,j})_{i,j = 1}^3$ von Übergangswahrscheinlichkeiten "`$p_{i, j} = P(\text{Morgen } j \mid \text{Heute } i)$"' gegeben. Beispielsweise könnte diese Matrix in Los Alamos und Bremen wie in Abbildung \ref{fig:alamosbremen} gegeben sein.
+\begin{figure}[!htbp]
+\centering
+\begin{tabular}{c|ccc}
+\toprule
+& 1 & 2 & 3\\
+\midrule
+1 & $0.001$ & $0.0499$ & $0.95$\\
+2 & $0.001$ & $0.001$ & $0.998$\\
+3 & $0.001$ & $0.002$ & $0.997$\\
+\bottomrule
+\end{tabular}
+\hspace{2cm}
+\begin{tabular}{c|ccc}
+\toprule
+& 1 & 2 & 3\\
+\midrule
+1 & $0.95$ & $0.04$ & $0.01$\\
+2 & $0.8$ & $0.19$ & $0.01$\\
+3 & $0.8$ & $0.18$ & $0.02$\\
+\bottomrule
+\end{tabular}
+\caption[Übergangsmatrizen für ein Wettermodell]{Exemplarische Übergangsmatrizen des Wettermodells für Los Alamos (links) und Bremen (rechts).}\label{fig:alamosbremen}
+\end{figure}
+Dieses Beispiel wird in den Übungen ausführlich behandelt.
+\end{beispiel}
+
+\begin{beispiel}[Einfaches Warteschlangenmodell]\label{Nummer3.1.7}\index{Warteschlangenmodell}
+Seien $n = 0, 1, \ldots$ Zeitpunkte, zu denen ein Skilift einen Skifahrer mitnehmen kann. Zwischen den Zeitpunkten $n$ und $n+1$ kommen $Y_n$ neue Skifahrer an den Lift. Die Länge der Warteschlange am Lift sei $(X_n)_{n \geq 0}$, dann gilt $X_0 = 0$ und $X_n = \max\{0, X_{n-1} - 1\} + Y_{n-1}$. Sind die $Y_i$ unabhängig, so ist $(X_n)_{n \geq 0}$ eine Markovkette.
+\end{beispiel}
+
+\begin{beispiel}[Stepping Stone Model]\label{Nummer3.1.8}\index{Stepping Stone Model}
+Es seien $k \geq 2$ Farben und eine $(m \times m)$-Matrix $(a_{i,j})_{i,j=1}^m$ mit $a_{i,j} \in \{1, \ldots, k\}$ für alle $i$ und $j$ gegeben. Ist $S$ die Menge aller solchen Matrizen, so ist $|S| = k^{m^2}$, die Größe wächst also sehr schnell. Nun zum Übergang von $n$ nach $n+1$: Für $a_{i,j}^{(n)}$ wählen wir zufällig einen der acht Nachbarn, wobei das Quadrat als Torusoberfläche gedeutet wird. Diesen Nachbarn wollen wir $a_{\tilde{i}, \tilde{j}}^{(n)}$ nennen und setzen $a_{i,j}^{(n+1)} := a_{\tilde{i}, \tilde{j}}^{(n)}$. Dies führen wir für alle $i, j$ durch und erhalten so eine Markovkette. Jetzt kann man untersuchen, was für $n \to \infty$ passiert. 
+\end{beispiel}
+
+Dabei ist in den Beispielen \ref{Nummer3.1.6} und \ref{Nummer3.1.8} eigentlich unklar, ob es zu gegebenen Übergangswahrscheinlichkeiten wirklich eine Markovkette gibt. Dies wollen wir im nächsten Abschnitt aber zeigen.

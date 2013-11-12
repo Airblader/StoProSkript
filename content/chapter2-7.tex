@@ -1,0 +1,141 @@
+\section{Konvergenzs‰tze f¸r Martingale II}
+
+\begin{satz}[$\sL_1$-Martingalkonvergenz]\label{Nummer2.7.1}
+Es sei $(X_n)_{n \geq 0}$ ein gleichm‰ﬂig integrierbares Sub-Martingal, dann existiert ein $X_\infty \in \sL_1$ mit $X_n \to X_\infty$ $P$-fast sicher und in $\sL_1$.
+\end{satz}
+
+\begin{beweis}
+Da die Familie $(X_n)_{n \geq 0}$ gleichm‰ﬂig integrierbar ist, ist sie auch gleichm‰ﬂig beschr‰nkt in $\sL_1$ und es gilt $\sup_{n \geq 0} \E |X_n| < \infty$. Da $\E X_n^+ \leq \E X_n^+ + \E X_n^- = \E |X_n|$ gilt, folgt $\E X_n^+ < \infty$. Mit Satz \ref{Nummer2.5.2} folgt dann die Existenz einer Zufallsvariable $X_\infty \in \sL_1$ mit $X_n \to X_\infty$ $P$-fast sicher. Mit Satz \ref{Nummer2.6.7} folgt dann, dass diese Konvergenz auch in $\sL_1$ gilt.
+\end{beweis}
+
+Es gilt zu beachten, dass $X_\infty$ auch bez¸glich $\sF_\infty := \sigma\left(\bigcup_{n \geq 0} \sF_n\right)$ messbar ist.
+
+\begin{satz}[Charakterisierung gleichm‰ﬂig integrierbarer Martingale]\label{Nummer2.7.2}
+Sei $(X_n)_{n \geq 0}$ ein Martingal. Dann sind die folgenden Aussagen ‰quivalent:
+\begin{enumerate}
+	\item\label{N272A1} $(X_n)_{n \geq 0}$ ist gleichm‰ﬂig integrierbar.
+	\item\label{N272A2} Es existiert eine $\sF_\infty$-messbare Zufallsvariable $X_\infty \in \sL_1$ mit $X_n = \E(X_\infty \mid \sF_n)$ f¸r $n \geq 0$.
+	\item\label{N272A3} $(X_n)_{n \geq 0}$ konvergiert in $\sL_1$ gegen eine Zufallsvariable $X_\infty$.
+\end{enumerate}
+\end{satz}
+
+\begin{beweis}
+Mit Satz \ref{Nummer2.7.1} folgt \ref{N272A1} $\Rightarrow$ \ref{N272A3}. F¸r \ref{N272A3} $\Rightarrow$ \ref{N272A2} gilt wegen $X_n \to X_\infty$ in $\sL_1$, dass $X_\infty \in \sL_1$ gilt und diese Zufallsvariable auch $\sF_\infty$-messbar ist. Zu zeigen ist also noch die angegebene Identit‰t. Sei dazu $A \in \sF_n$, f¸r $m \geq n$ folgt wegen $\E (X_m \mid \sF_n) = X_n$ dann
+\begin{align*}
+\E X_n \ind_A &= \E(\E(X_m \mid \sF_n) \ind_A) = \E \E(X_m \ind_A \mid \sF_n) = \E X_m\ind_A\text{.}
+\end{align*}
+Damit folgt 
+\begin{align*}
+|\E X_n\ind_A - \E X_\infty\ind_A| &= |\E X_m\ind_A - \E X_\infty\ind_A| \leq \E |X_m - X_\infty| \to 0\text{.}
+\end{align*}
+Nun wollen wir noch \ref{N272A2} $\Rightarrow$ \ref{N272A1}, diese Richtung haben wir jedoch bereits in Satz \ref{Nummer2.6.4} bewiesen.
+\end{beweis}
+
+\begin{satz}[$\sL_1$-Konvergenz $\Rightarrow$ $P$-fast sichere Konvergenz]\label{Nummer2.7.3}
+Sei $(X_n)_{n \geq 0}$ ein Sub-Martingal und $X_\infty \in \sL_1$ mit $X_n \to X_\infty$ in $\sL_1$. Dann gilt $X_n \to X_\infty$ $P$-fast sicher und $X_n \leq \E(X_\infty \mid \sF_n)$ f¸r alle $n \geq 0$. Wird insbesondere ein Martingal vorausgesetzt, so gilt nach Satz \ref{Nummer2.7.2} sogar Gleichheit.
+\end{satz}
+
+\begin{beweis}
+Aus der $\sL_1$-Konvergenz folgt $\sup_{n \geq 0} \E|X_n| < \infty$ und damit auch $\sup_{n \geq 0} \E X_n^+ < \infty$. Mit Satz \ref{Nummer2.5.2} folgt dann die Existenz von $X \in \sL_1$ mit $X_n \to X$ $P$-fast sicher. Dass tats‰chlich $X = X_\infty$ gilt, ist klar. F¸r den Beweis der Absch‰tzung sei nun $\delta > 0$ und $m \geq n \geq 0$. Mit dem Satz von Markov gilt dann
+\begin{align*}
+P(\E(X_\infty \mid \sF_n) - X_n < -\delta) &\leq P(\E(X_\infty \mid \sF_n) - \E(X_m \mid \sF_n) < -\delta)\\
+\quad &\leq \frac{\E|\E(X_\infty - X_m \mid \sF_n)|}{\delta}\\
+\quad &\leq \frac{\norm{X_\infty - X_m}}{\delta} \stackrel{m \to \infty}{\longrightarrow} 0\text{.}
+\end{align*}
+F¸r $\delta \to 0$ erhalten wir dann die behauptete Absch‰tzung.
+\end{beweis}
+
+\begin{satz}[Projektionsmartingale]\label{Nummer2.7.4}
+Sei $X \in \sL_1$ und $X_n := \E(X \mid \sF_n)$ f¸r $n \geq 0$. Dann gilt $\lim\limits_{n \to \infty} X_n = \E(X \mid \sF_\infty)$. In unser ¸blichen Notation bedeutet dies also $X_\infty = \E(X \mid \sF_\infty)$.
+\end{satz}
+
+\begin{beweis}
+Wir wissen aus Satz \ref{Nummer2.6.4}, dass $(X_n)_{n \geq 0}$ gleichm‰ﬂig integrierbar ist. Dann existiert nach Satz \ref{Nummer2.7.1} eine $\sF_\infty$-messbare Zufallsvariable $X_\infty \in \sL_1$ mit $X_n \to X_\infty$ in $\sL_1$. Aus Satz \ref{Nummer2.7.3} wissen wir dann, dass diese Konvergenz auch $P$-fast sicher gilt. Betrachte nun die Maﬂe $\mu(A) := \int_A X~\dd P$ und $\mu_\infty(A) := \int_A X_\infty~\dd P$ auf $\sF_\infty$. Wir wollen nun $\mu = \mu_\infty$ zeigen, denn daraus folgt unmittelbar die gew¸nschte Identit‰t. F¸r $A \in \sF_n$ gilt mit Satz \ref{Nummer2.7.2} nun $\E(X_\infty \mid \sF_n) = X_n = \E(X \mid \sF_n)$. Daraus folgt $\mu = \mu_\infty$ auf $\sF_n$ f¸r alle $n \geq 0$. Da $\bigcup_{n \geq 0} \sF_N$ ein $\cap$-stabiles Erzeugendensystem von $\sF_\infty = \sigma\left(\bigcup_{n \geq 0} \sF_n\right)$ bildet, folgt damit $\mu = \mu_\infty$ auf $\sF_\infty$. 
+\end{beweis}
+
+Als n‰chstes betrachten wir ein in $\sL_p$ gleichm‰ﬂig beschr‰nktes Martingal $(X_n)_{n \geq 0}$. Dann gilt $X_n \to X_\infty$ in $\sL_1$ und $P$-fast sicher. Wir wollen uns mit der Frage besch‰ftigen, ob auch Konvergenz in $\sL_p$ vorliegt.
+
+Sei $(X_n)_{n \geq 0}$ ein stochstischer Prozess, dann schreiben wir
+\begin{align*}
+X_n^* &:= \sup_{k \leq n} X_k
+\shortintertext{und}
+|X|_n^* &:= \sup_{k \leq n} |X_k|\text{.}
+\end{align*}
+Wir formulieren nun folgendes Lemma, das im Wesentlichen eine Versch‰rfung der Ungleichung von Markov darstellt und ¸berlassen den Beweis zur ‹bung:
+
+\begin{lemma}\label{Nummer2.7.5}
+Ist $(X_n)_{n \geq 0}$ ein Sub-Martingal und $\lambda > 0$, so folgt 
+\begin{align*}
+\lambda P(X_n^* \geq \lambda) &\leq \E X_n\ind_{\{X_n^* \geq \lambda\}}\text{.}
+\end{align*}
+\end{lemma}
+
+\begin{lemma}\label{Nummer2.7.6}
+Seien $X, Y \geq 0$ Zufallsvariablen mit
+\begin{align*}
+\lambda P(X \geq Y) &\leq \E Y\ind_{\{X \geq \lambda\}} \tag{*}
+\end{align*}
+f¸r alle $\lambda > 0$. Dann gilt f¸r $p > 1$ und $p' := \frac{p}{p-1}$ die Absch‰tzung
+\begin{align*}
+\norm{X}_p &\leq p'\norm{Y}_p\text{.}
+\end{align*}
+\end{lemma}
+
+\begin{beweis}
+Ohne Einschr‰nkung sei $Y \in \sL_p$. Im ersten Fall sei auch $X \in \sL_p$. Dann gilt
+\begin{align*}
+\norm{X}_p^p &= \E X^p = \E \left(\int_0^X pt^{p-1}~\dd t\right) = \E \left(\int_0^\infty pt^{p-1} \ind_{\{X \geq t\}}~\dd t\right)
+\intertext{und mit dem Satz von Fubini-Tonelli erhalten wir}
+\quad &= \int_0^\infty pt^{p-1} \E \ind_{\{X \geq t\}}~\dd t\\
+\quad &\leq \int_0^\infty pt^{p-2} \E Y \ind_{\{X \geq t\}}~\dd t
+\intertext{und durch erneute Anwendung des Satzes von Fubini-Tonelli}
+\quad &= \E Y \int_0^\infty pt^{p-2}\ind_{\{X \geq t\}}~\dd t = \E Y \int_0^X pt^{p-2}~\dd t = p' \E YX^{p-1}\text{.}
+\intertext{Mittels der Ungleichung von Hˆlder gilt nun}
+\quad &\leq p'\norm{Y}_p \norm{X^{p-1}}_{p'} = p' \norm{Y}_p \norm{X}_p^{p-1}\text{.}
+\end{align*}
+Teilen wir durch $\norm{X}_p^{p-1}$, so erhalten wir die gew¸nschte Aussage. 
+
+Im zweiten Fall sei nun $X \geq 0$ allgemein. Dann betrachten wir $X_n := X \wedge n \in \sL_p$ f¸r $n \geq 1$. Wir wollen zeigen, dass $X_n$ die Absch‰tzung (*) erf¸llt. F¸r $\lambda \leq n$ gilt $X_n \geq \lambda \Leftrightarrow X \wedge n \geq \lambda \Leftrightarrow X \geq \lambda$. Daher folgt $\{X_n \geq \lambda\} = \{X \geq \lambda\}$ und (*) gilt f¸r $X_n$. F¸r $\lambda > n$ gilt $\{X_n \geq \lambda\} = \emptyset$ und daher gilt auch hier (*) f¸r $X_N$. Damit folgt aus dem ersten Fall
+\begin{align*}
+\norm{X_n}_p &\leq p'\norm{Y}_p\text{.}
+\end{align*}
+Da $X_n \nearrow X$ gilt, folgt die gew¸nschte Absch‰tzung mit dem Satz von Beppo Levi\footnote{Dieser findet sich im Anhang als Satz \ref{appendix:beppolevi1}.}.
+\end{beweis}
+
+\Needspace{8\baselineskip}\begin{satz}[Doobsche Ungleichung]\label{Nummer2.7.7}\index{Doob!Ungleichung von}
+Sei $(X_n)_{n \geq 0}$ ein Martingal oder ein nicht-negatives Sub-Martingal. Dann gilt:
+\begin{enumerate}
+	\item F¸r $p \geq 1$, $\lambda > 0$ und $n \geq 0$ gilt
+	\begin{align*}
+	\lambda^p P(|X|_n^* \geq \lambda) &\leq \E |X_n|^p\text{.}
+	\end{align*}
+	\item F¸r $p > 1$ und $n \geq 0$ gilt
+	\begin{align*}
+	\norm{X_n}_p &\leq \norm{|X|_n^*}_p \leq p'\norm{X_n}_p\text{.}
+	\end{align*}
+\end{enumerate}
+\end{satz}
+
+Wir wollen zun‰chst eine kurze Fassung des Satzes angeben:
+\begin{enumerate}
+	\item $X_n \in \sL_p \Longrightarrow |X|_n^* \in \sL_{p, \infty}$.
+	\item $|X|_n^* \in \sL_p \Longleftrightarrow X_n \in \sL_p$.
+\end{enumerate}
+
+\begin{beweis}
+Betrachten wir zun‰chst den Fall, dass $X$ ein Martingal ist. Mit Satz \ref{Nummer2.2.2} folgt dann, dass $(|X_n|^p)_{n \geq 0}$ ein Sub-Martingal ist. Der Beweis dieses Satzes funktioniert vˆllig analog aber auch f¸r nicht-negative Sub-Martingale. Mit Lemma \ref{Nummer2.7.5} folgt dann die Behauptung. 
+
+Im zweiten Fall ist die erste Ungleichung trivial, die zweite Ungleichung folgt aus Lemma \ref{Nummer2.7.5} und \ref{Nummer2.7.6}.
+\end{beweis}
+
+\begin{satz}[$\sL_p$-Konvergenz f¸r Martingale]\label{Nummer2.7.8}
+Sei $(X_n)_{n \geq 0}$ ein Martingal, das f¸r $p > 1$ gleichm‰ﬂig $\sL_p$-beschr‰nkt ist. Dann existiert $X_\infty \in \sL_p$ mit $X_n \to X_\infty$ $P$-fast sicher und in $\sL_p$. 
+\end{satz}
+
+\begin{beweis}
+Mit Korollar \ref{Nummer2.6.11} wissen wir, dass $(X_n)$ gleichm‰ﬂig integrierbar ist. Satz \ref{Nummer2.7.2} und Satz \ref{Nummer2.7.3} liefern dann die Existenz von $X_\infty \in \sL_1$ mit $X_n \to X_\infty$ $P$-fast sicher und in $\sL_1$. Satz \ref{Nummer2.7.7} zeigt dann
+\begin{align*}
+\norm{|X|_n^*}_p &\leq p'\norm{X_n}_p < p'k < \infty
+\end{align*}
+f¸r alle $n \geq 0$ und geeignetes $k$. F¸r $X^* := \sup_{n \geq 0} |X_n|$ gilt $|X|_n^* \nearrow X^*$ und mit dem Satz von Beppo Levi\footnote{Dieser findet sich im Anhang als Satz \ref{appendix:beppolevi1}.} folgt dann $\norm{X^*}_p \leq p'k$. Dies bedeutet aber gerade $(X^*)^p \in \sL_1$. Dann gilt $|X_n - X_\infty| \leq 2X^* \in \sL_p$, also $X_\infty \in \sL_p$. Ferner gilt $|X_n - X_\infty|^p \leq 2^p (X^*)^p \in \sL_1$ und daher $|X_n - X_\infty|^p \to 0$ $P$-fast sicher. Mit dem Satz zur majorisierten Konvergenz folgt dann $\E |X_n - X_\infty|^p \to 0$.
+\end{beweis}

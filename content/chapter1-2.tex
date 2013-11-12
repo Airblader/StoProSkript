@@ -1,0 +1,87 @@
+\section{Einfache Eigenschaften}
+
+Wir wollen zunächst einige einfache Eigenschaften stochastischer Prozesse untersuchen. Die erste Eigenschaft bezieht sich auf die Gleichheit stochastischer Prozesse, dazu seien $X = (X_t)_{t \in T}$ und $Y = (Y_t)_{t \in T}$ zwei $\sX$-wertige stochastische Prozesse über dem gleichen Wahrscheinlichkeitsraum $(\Omega, \sA, P)$. Als Abbildungen $\Omega \times T \to \sX$ würden wir Gleichheit durch $X_t(\omega) = Y_t(\omega)$ für alle $t \in T$ und alle $\omega \in \Omega$ definieren. Da wir mit stochastischen Prozessen nach Lemma \ref{Nummer1.1.4} jedoch auch Zufallsvariablen vorliegen haben, wollen wir auch andere Begriffe für die Unterscheidbarkeit einführen.
+
+\begin{definition}[Unterscheidbarkeit]\label{Nummer1.2.1}
+Die wie eben definierten stochastischen Prozesse $X$ und $Y$ heißen \deftxt{nicht unterscheidbar}\index{Unterscheidbarkeit} genau dann, wenn für $P$-fast alle $\omega \in \Omega$ und für alle $t \in T$ die Gleichheit $X_t(\omega) = Y_t(\omega)$ gilt. Dies ist genau dann der Fall, wenn $P(\{\omega: X(\omega) = Y(\omega)\}) = 1$ gilt.\\
+Die Prozesse sind also nicht unterscheidbar, wenn fast alle Pfade gleich sind.
+\end{definition}
+
+Die Aussage ist also, dass Prozesse nicht unterscheidbar sind, wenn es eine von $t$ unabhängige Nullmenge gibt, außerhalb welcher die Pfade übereinstimmen. Wir wollen jetzt gewissermaßen die Reihenfolge der Quantoren vertauschen und zulassen, dass diese Nullmenge von $t$ abhängt.
+
+\begin{definition}[Version]\label{Nummer1.2.2}
+Seien $X$ und $Y$ wieder wie eben definiert. Dann heißt $X$ \deftxt{Version}\index{Version} von $Y$ (und $Y$ Version von $X$) genau dann, wenn
+\begin{align*}
+P(\{\omega: X_t(\omega) = Y_t(\omega)\}) &= 1 \qquad \text{für alle } t \in T
+\end{align*}
+gilt, das heißt wir fordern Gleichheit nur noch punktweise für $t \in T$.
+\end{definition}
+
+\begin{lemma}\label{Nummer1.2.3}
+Seien $X$ und $Y$ die zwei obigen stochastischen Prozesse. Dann gilt:
+\begin{enumerate}
+	\item\label{Nummer123A1} $X$ und $Y$ sind nicht unterscheidbar impliziert, dass $X$ eine Version von $Y$ ist.
+	\item\label{Nummer123A2} Ist $X$ eine Version von $Y$ und $T$ abzählbar, so sind $X$ und $Y$ nicht unterscheidbar.
+\end{enumerate}
+\end{lemma}
+
+\begin{beweis}
+Der Beweis wird in den Übungen geführt.
+\end{beweis}
+
+Wir wollen uns nun noch davon überzeugen, dass diese beiden Begriffe im Allgemeinen wirklich verschieden sind. Die dahinterstehende Idee wird sein, dass eine überabzählbare Vereinigung von Nullmengen im Allgemeinen keine Nullmenge mehr ist.
+
+\begin{beispiel}\label{Nummer1.2.4}
+Im Allgemeinen gilt die Umkehrung von \ref{Nummer123A1} aus Lemma \ref{Nummer1.2.3} nicht. Wir setzen $T := [0,1]$, $\Omega := [0,1]$ und $P$ sei die Gleichverteilung. Ferner sei $X_t(\omega) := 0$ für alle $t \in T$ und $\omega \in \Omega$, sowie $Y_t(\omega) = \begin{cases}0 & \text{für } t \neq \omega\\ 1 & \text{für } t = \omega\end{cases}$. Dann gilt für $t \in [0,1]$
+\begin{align*}
+P(\{\omega: X_t(\omega) \neq Y_t(\omega)\}) &= P(\{t\}) = 0\text{,}
+\end{align*}
+also ist $X$ eine Version von $Y$. Außerdem gilt für jedes $\omega \in \Omega$
+\begin{align*}
+(t \mapsto X_t(\omega)) = X(\omega) &\neq Y(\omega) = (t \mapsto Y_t(\omega))\text{,}
+\end{align*}
+also sind $X$ und $Y$ unterscheidbar.
+\end{beispiel}
+
+\begin{definition}[Stetigkeit]\label{Nummer1.2.5}
+Sei $X = (X_t)_{t \in T}$ ein zeitkontinuierlicher stochastischer Prozess. Dann heißt $X$ links-/rechts- bzw. stetig genau dann, wenn $P$-fast alle Pfade (links-/rechts-)stetig sind, das heißt für $P$-fast alle $\omega \in \Omega$ ist die Abbildung $X(\omega)\colon T \to \R$ (links/rechts-)stetig.
+\end{definition}
+
+Ist $X$ (links-/rechts-)stetig, so folgt, dass ein nicht unterscheidbarer stochastischer Prozess $Y$ existiert, für welchen \emph{alle} Pfade (links-/rechts-)stetig sind. Dazu übernimmt man in $Y$ einfach die stetigen Pfade und ersetzt nicht-stetige $X(\omega)$ durch die Nullfunktion. Nach Voraussetzung geschieht dies nur auf einer Nullmenge, womit $X$ und $Y$ nicht unterscheidbar sind.
+
+Stetige stochastische Prozesse sind Zufallsvariablen, deren Bild fast sicher im Raum $C(T)$ der stetigen Funktionen über $T$ liegt. Wie eben gesehen, finden wir damit einen nicht unterscheidbaren Prozess, dessen Bild komplett in diesem Raum liegt. 
+
+\begin{satz}\label{Nummer1.2.6}
+Seien $X$, $Y$ (links-/rechts-)stetige stochastische Prozesse und $Y$ eine Version von $X$. Dann sind $X$ und $Y$ nicht unterscheidbar.
+\end{satz}
+
+Jeder stochastische Prozess hat also bis auf Ununterscheidbarkeit höchstens eine stetige Version.
+
+\begin{beweis}
+Ohne Einschränkung seien $X$ und $Y$ stetige Prozesse und $T = \R$. Für stetige Funktionen $f, g\colon \R \to \R$ gilt die Äquivalenz
+\begin{align*}
+f = g ~&\Leftrightarrow~ f(x) = g(x) \forall_{x \in \Q}\text{,}
+\end{align*}
+es genügt also $P\left(\left\{\omega : X_t(\omega) = Y_t(\omega) \forall_{t \in \Q}\right\}\right) = 1$ zu zeigen. Dies folgt jedoch bereits aus Lemma \ref{Nummer1.2.3} \ref{Nummer123A2} für $T' = \Q$.
+\end{beweis}
+
+\begin{satz}\label{Nummer1.2.7}
+Sei $X = (X_t)_{t \in T}$ ein $\N_0$-wertiger und zeitkontinuierlicher stochastischer Prozess. Dann sind folgende Aussagen äquivalent:
+\begin{enumerate}
+	\item\label{Nummer127A1} $X$ ist rechtsstetig.
+	\item\label{Nummer127A2} Für $P$-fast alle $\omega \in \Omega$ und alle $t \in T$ existiert ein $\e > 0$ mit $X_s(\omega) = X_t(\omega)$ für alle $s \in [t, t + \e) \cap T$.
+\end{enumerate}
+\end{satz}
+
+Ändert sich also für einen rechtsstetigen Prozess die Trajektorie, so verbleibt sie danach für eine gewisse Zeit in diesem Zustand.
+
+\begin{beweis}
+Für die Richtung \ref{Nummer127A1} $\Rightarrow$ \ref{Nummer127A2} sei $\omega \in \Omega$ mit $X(\omega)$ rechtsstetig und $t \in T$. Wegen der rechtsseitigen Stetigkeit existiert ein $\e > 0$ mit $\left|X_t(\omega) - X_s(\omega)\right| < \frac12$ für alle $s \in [t, t+\e)$ und wegen $X_t(\omega) \in \N_0$ und $X_s(\omega) \in \N_0$ folgt daher $X_t(\omega) = X_s(\omega)$. Die andere Richtung des Satzes ist trivial.
+\end{beweis}
+
+Wir geben an dieser Stelle eine Klassifikation der Pfade für obige ($\N_0$-wertige) stochastische Prozesse:
+\begin{enumerate}
+	\item Der Pfad hat nur endlich viele Sprungstellen.
+	\item Der Pfad hat unendlich viele Sprungstellen, aber nur endlich viele in jedem beschränkten Zeitintervall.
+	\item Der Pfad hat unendlich viele Sprungstellen in (mindestens) einem beschränkten Zeitintervall.
+\end{enumerate}

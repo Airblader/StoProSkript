@@ -1,0 +1,82 @@
+\section{Anwendungen}\label{sec:anwendungen}
+
+Martingale können auf vielen verschiedenen Gebieten eingesetzt werden, zum Beispiel:
+\begin{enumerate}
+	\item Beweis der Gesetze der großen Zahlen.
+	\item Beweis des Satzes von Radon-Nikodym (vgl. \cite[Satz 11.17]{KLENKE}).
+	\item Viele Anwendungen aus der Praxis, die nicht theoretischer Natur sind.
+	\item Andere Fragen auf dem Gebiet der stochastischen Prozesse.
+\end{enumerate}
+In diesem Abschnitt wollen wir nun ein paar Beispielanwendungen der Martingaltheorie diskutieren.
+
+\minisec{Verzweigungsprozesse}
+
+Unser Ziel ist die Modellierung der Größe einer Population ohne Sex. Dazu bezeichne $X_{n, i}$ die Anzahl der Nachkommen des $i$-ten Individuums in der $n$-ten Generation. Ferner setzen wir $Z_0 := 1$ und $Z_{n+1} := \sum_{i=1}^{Z_n} X_{n,i}$, diese Größe beschreibt dann die Anzahl der Individuen in der $(n+1)$-ten Generation. Man nennt dies einen \deftxt{Galton-Watson-Prozess}\index{Galton-Watson-Prozess}, falls gilt:
+\begin{enumerate}
+	\item Die $(X_{n,i})$ sind i.\,i.\,d. -- das heißt also, dass Fruchtbarkeit nicht vererbt wird.
+	\item Es gilt $P(X_{1,1} = k) = p_k$ mit $\sum_{k=0}^\infty p_k = 1$.
+	\item Es gilt $M := \E X_{1,1} < \infty$ und $\sigma^2 := \Var X_{1,1} < \infty$.
+	\item Es ist $\sF_n := \sigma\{X_{k,i} : k < n\text{, } i \in \N\}$, dann ist $Z_n$ $\sF_n$-messbar und $(Z_n)_{n \geq 0}$ ist $(\sF_n)_{n \geq 0}$-adaptiert.
+\end{enumerate}
+Wir setzen nun $W_n := M^{-n}Z_n$. Die Idee ist es hierbei, dass bei konstanter Nachkommenzahl $M$ exakt $Z_n = M^n$ gelten würde und der Faktor $M^{-n}$ den Prozess daher normiert. Wir fragen uns nun, wie sich $Z_n$ in Abhängigkeit von $M$ verhält. Ist $Z_n(\omega) = 0$ für ein $n \in \N$, so gilt $Z_m(\omega) = 0$ für alle $m \geq n$, da eine einmal ausgestorbene Population nicht mehr wachsen kann. Außerdem ist $Z_n(\omega) = 0$ genau dann, wenn $W_n(\omega) = 0$ ist.
+
+\begin{lemma}\label{Nummer2.9.1}
+$W$ ist ein Martingal und es gilt $\E Z_n = M^n$.
+\end{lemma}
+
+\begin{beweis}
+Für $n \geq 0$ gilt 
+\begin{align*}
+\E(W_{n+1} \mid \sF_n) &= M^{-(n+1)} \E\left(\sum_{i=1}^{Z_n} X_{n,i} \mid \sF_n\right) = M^{-(n+1)} \E\left(\sum_{k=1}^\infty \ind_{\{Z_n = k\}} \sum_{i=1}^{Z_n} X_{n,i} \mid \sF_n\right)\\
+\quad &= M^{-(n+1)} \sum_{k=1}^\infty \E\left(\ind_{\{Z_n = k\}} \sum_{i=1}^k X_{n,i} \mid \sF_n\right) = M^{-(n+1)} \sum_{k=1}^\infty \ind_{\{Z_n=k\}} \E\left(\sum_{i=1}^k X_{n,i} \mid \sF_n\right)\\
+\quad &= M^{-(n+1)} \sum_{k=1}^\infty \ind_{\{Z_n = k\}} \cdot k \cdot M\\
+\quad &= M^{-n}Z_n = W_n\text{.}
+\end{align*}
+Dabei wurde verwendet, dass $X_{n,i}$ von $\F_n$ unabhängig ist. Nun folgt insbesondere
+\begin{align*}
+M^{-n} \E Z_n &= \E W_n = \E W_0 = \E Z_0 = 1\text{.} \qedhere
+\end{align*}
+\end{beweis}
+
+\begin{satz}\label{Nummer2.9.2}
+Es existiert $W_\infty := \lim\limits_{n \to \infty} W_n$ $P$-fast sicher. Falls $\Var X_{1,1} \in (0, \infty)$ gilt (also keine konstante Nachkommenschaft vorliegt), folgt aus $M \leq 1$, dass $\E W_\infty = 0$ ist und für $M > 1$ folgt, dass $\E W_\infty = 1$ ist. 
+\end{satz}
+
+Mit anderen Worten sagt der zweite Teil des Satzes aus, dass die Population genau dann nicht ausstirbt, wenn $M > 1$ ist.
+
+\begin{beweis}
+Da $W_n \geq 0$ für alle $n \geq 0$ gilt, folgt mit Korollar \ref{Nummer2.5.3}, dass $W_\infty = \lim_{n \to \infty} W_n$ existiert. Wir betrachten nun zunächst $M < 1$, dann ist $\E Z_n = M^n \to 0$ und wegen $Z_n \geq 0$ folgt $Z_n \to 0$ in $\sL_1$. Mit der Markov-Ungleichung erhalten wir dann $P(Z_n > 0) = P\left(Z_n > \frac12\right) \to 0$. Damit folgt wegen $\{Z_n = 0\} \subset \{Z_m = 0\}$ für $m \geq n$
+\begin{align*}
+P\left(\bigcup_{n=1}^\infty \{Z_n = 0\}\right) &= \lim_{n \to \infty} P(Z_n = 0) = 1\text{.}
+\end{align*}
+Sei nun $\omega \in \bigcup_{n=1}^\infty \{Z_n = 0\}$. Dann existiert ein $n$, so dass für alle $m \geq n$ mit $0 = Z_m(\omega)$ folgt, dass $0 = W_m(\omega)$ ist. Also ist $W_\infty(\omega) = 0$ $P$-fast sicher und damit $W_\infty = 0$ $P$-fast sicher.
+
+Wir betrachten nun den Fall $M=1$, dann ist $Z=W$ und damit $W_n(\omega) \in \N$ für alle $\omega$ und $n$. Diese Eigenschaft gilt dann $P$-fast sicher auch für $W_\infty$. Für $k \geq 0$ setzen wir $A_k := \{W_\infty = k\}$. Wir wollen zeigen, dass $P(A_k) = 0$ für alle $k \geq 1$ gilt, da dann $P(A_0) = 1$ folgt. Dazu führen wir einen Widerspruchsbeweis und nehmen an, dass ein $k \geq 1$ mit $P(A_k) > 0$ existiert. Ferner setzen wir $B_n := \bigcap_{i=1}^k \{X_{n,i} = 0\}$. Da $\E X_{1,1} = 1$ und $\Var X_{1,1} > 0$ gilt, folgt $P(X_{1,1} = 0) =: \nu > 0$. Da die $X_i$ unabhängig sind, folgt nun $P(B_n) = \nu^k > 0$. Wir erhalten $\sum_{n=1}^\infty P(B_n) = \infty$ und mit dem Satz von Borel-Cantelli\footnote{Dieser findet sich im Anhang als Satz \ref{appendix:borelcantelli2}.} damit, dass $P(\limsup B_n) = 1$ gilt. Dann folgt $P(A_k \cap \limsup B_n) > 0$ und ferner ist $Z_n = W_n \to W_\infty$ $P$-fast sicher, daher folgt
+\begin{align*}
+P(\{\lim Z_n = W_\infty\} \cap A_k \cap \limsup B_n) &> 0\text{.}
+\end{align*}
+Dann existiert also $\omega \in \Omega$ mit $Z_n(\omega) \to W_\infty(\omega)$, $\omega \in A_k$ und $\omega \in \limsup B_n$. Nun folgt aber, dass es ein $n_0 \in \N$ gibt, so dass $Z_n(\omega) = k$ für alle $n \geq n_0$ gilt. Aus der Definition der $Z_n$ wissen wir dann, dass $k = \sum_{i=1}^k X_{n,i}(\omega)$ für alle $n \geq n_0$ und
+\begin{align*}
+\omega &\in \limsup B_n = \bigcap_{l \geq 1} \bigcup_{m \geq l} \bigcap_{i=1}^k \{X_{m,i} = 0\} \subset \bigcup_{m \geq n_0} \bigcap_{i=1}^k \{X_{m,i} = 0\}
+\end{align*} 
+gilt, das heißt es existiert $m \geq n_0$ mit $X_{m,i}(\omega) = 0$ für alle $m \geq n_0$ und $i = 1, \ldots, k$. Dann folgt aber
+\begin{align*}
+k &= \sum_{i=1}^k X_{m,i}(\omega) = 0\text{,}
+\end{align*}
+was im Widerspruch zu unserer Voraussetzung steht.
+
+Wir kommen nun zum letzten Fall und betrachten $M > 1$. Es gilt $\E Z_{n-1} = M^{n-1}$ und die Familie $Z_{n-1}, X_{n-1,1}, X_{n-1, 2}, \ldots$ ist unabhängig. Wie man leicht zeigen kann, gilt
+\begin{align*}
+\Var Z_n &= \Var \sum_{i=1}^{Z_{n-1}} X_{n-1, i} = (\E X_{1,1})^2 \Var Z_{n-1} + \E Z_{n-1} \Var X_{1,1}\\
+\quad &= M^2 \Var Z_{n-1} + M^{n-1}\sigma^2\text{.}
+\end{align*} 
+Ferner kann man durch Nachrechnen zeigen, dass
+\begin{align*}
+\Var W_n &= M^{-2n} \Var Z_n = \Var W_{n-1} + M^{-(n+1)}\sigma^2
+\end{align*}
+gilt. Außerdem ist $\Var W_0 = \Var Z_0 = 0$ und mittels vollständiger Induktion kann man
+\begin{align*}
+\Var W_n &= \sigma^2\sum_{k=2}^{n+1} M^{-k} \leq \sigma^2 \frac{M}{M-1} < \infty
+\end{align*}
+für alle $n \geq 1$ zeigen. Insgesamt erhalten wir damit, dass $(W_n)_{n \geq 0}$ gleichmäßig $\sL_2$-beschränkt ist. Dann folgt, dass $W_n \to W_\infty$ in $\sL_2$ und damit auch in $\sL_1$ gilt. Wir erhalten nun $1 = \E Z_0 = \E W_0 = \E(\E(W_\infty \mid \sF_0)) = \E W_\infty$.
+\end{beweis}

@@ -1,0 +1,302 @@
+\section{Bedingte Erwartungen}\label{sec:BedErw}
+
+Dieses Kapitel ist von \emph{zentraler} Wichtigkeit für alles, was wir machen werden. Wir verweisen an dieser Stelle daher explizit auf \cite[Kapitel 8]{MEINTRUP} und \cite{KLENKE}.
+
+Bisher hatten wir bedingte Wahrscheinlichkeiten durch $P(B~|~A) := \frac{P(A \cap B)}{P(A)}$ definiert, sofern $P(A) > 0$ gilt. Die Interpretation war, dass $P(B~|~A)$ die Wahrscheinlichkeit für $B$ beschreibt, falls $A$ eintritt. Dies wollen wir auf zwei Weisen verallgemeinern:
+\begin{enumerate}
+	\item Es soll $P(A) = 0$ erlaubt sein.
+	\item Es soll mehr als ein Ereignis $A$ erlaubt sein.
+\end{enumerate}
+Der Hintergrund hierfür ist folgender: Sind $X$ und $Y$ zwei $\R$-wertige Zufallsvariablen, so wollen wir Fragen beantworten wie zum Beispiel:
+\begin{enumerate}
+	\item Wie groß ist die Wahrscheinlichkeit von $Y \in B$, falls $X(\omega)$ eintritt? Die Wahrscheinlichkeiten solcher Elementarereignisse verschwinden sehr oft, weshalb wir die erste Verallgemeinerung benötigen.
+	\item Wie groß ist die Wahrscheinlichkeit von $Y \in B$, falls für $\omega \in \Omega$ und jedes $A \in \sB = \sigma(X)$ bekannt ist, ob $X(\omega) \in A$ gilt?
+\end{enumerate}
+Wir wählen die "`heuristische"' Herangehensweise. Es sei $(\Omega, \sA, P)$ ein Wahrscheinlichkeitsraum, $Y \in \sL_1(P)$, $A \in \sA$ mit $P(A) > 0$ und $X\colon \Omega \to \R$ messbar. Wir setzen nun
+\begin{align*}
+\E(Y~|~A) &:= \frac{\E(Y \cdot \ind_A)}{P(A)} \tag{*}
+\end{align*}
+und verallgemeinern dadurch $P(B~|~A)$, denn es gilt
+\begin{align*}
+\E(\ind_B ~|~ A)  &= \frac{\E(\ind_B \cdot \ind_A)}{P(A)} = \frac{\E(\ind_{A \cap B})}{P(A)} = \frac{P(A \cap B)}{P(A)}\\
+									&= P(B~|~A)\text{.}
+\end{align*}
+Nun betrachten wir für $x \in \R$ die Menge $A_x := \{\omega: X(\omega) = x\}$. Dafür nehmen wir an, dass $X$ diskret verteilt ist, das heißt, es existieren höchstens abzählbar viele $x \in X$ mit $P(A_x) > 0$ und $\sum_{x \in X} P(A_x) = 1$. Nun definieren wir $g\colon \R \to \R$ vermöge
+\begin{align*}
+g(x) &:= \begin{cases}\E(Y~|~A_x) & \text{für } P(A_x) > 0\\ 0 & \text{sonst}\end{cases}
+\end{align*}
+und darauf aufbauend $Z := g \circ X$, wir erhalten also das Diagramm in \ref{bedErwKonst}.
+\begin{figure}[!htb]
+\centering
+\begin{tikzpicture}
+\node (Omega) at (0, 2) {$\Omega$};
+\node (R1)		at (4, 2) {$\R$};
+\node (R2)		at (2, 0) {$\R$};
+\draw[->, semithick] (Omega) -- node[above]{$Z$} 				(R1);
+\draw[->, semithick] (Omega) -- node[below left]{$X$}		(R2);
+\draw[->, semithick] (R2)		 -- node[below right]{$g$}	(R1);
+\end{tikzpicture}
+\caption[Konstruktion der bedingten Erwartung]{Darstellung der Beziehung zwischen den Räumen und Abbildungen.}\label{bedErwKonst}
+\end{figure}
+Damit folgt nun, dass $Z$ $\sigma(X)$-messbar ist und überdies gilt für alle $B \in \sigma(X)$:
+\begin{align*}
+\E(Z \cdot \ind_B) &= \int_B Z~\dd P = \int_B Y~\dd P = \E(Y \cdot \ind_B)\text{.}
+\end{align*}
+Also ist $Z$ eine $\sigma(X)$-messbare Zufallsvariable, die sich bezüglich Integration von $Y$ über $\sigma(X)$ nicht unterscheidet.
+
+\begin{beweis}
+Wir müssen zunächst zeigen, dass $Z$ tatsächlich $\sigma(X)$-messbar ist. Dazu betrachten wir
+\begin{align*}
+Z^{-1}(\sB) &= (g \circ X)^{-1}(\sB) = X^{-1}(g^{-1}(\sB)) \subset X^{-1}(\sB) = \sigma(X)\text{,}
+\end{align*}
+wobei die Inklusion gilt, da $g$ messbar ist. Für die Eigenschaft bezüglich der Integration sei zunächst $B \in \sigma(X)$, dann existiert ein $A \in \sB$ mit $B = X^{-1}(A)$. Nun erhalten wir mit Hilfe des Transformationssatzes
+\begin{align*}
+\int_B Z~\dd P &= \int g \circ X \cdot \ind_A \circ X~\dd P = \int g \cdot \ind_A~\dd P_X = \sum_{x \in A} g(x)P(A_x)\\
+\shortintertext{Wegen $E(Y~|~A_x) \cdot P(A_x) = \E(Y \cdot \ind_{A_x})$ erhalten wir}
+						   &= \sum_{x \in A, P(A_x)>0} \E(Y \cdot \ind_{A_x}) = \E\left(Y \sum_{x \in A, P(A_x)>0} \ind_{A_x}\right)\\
+\shortintertext{Da $\bigcup_{x \in A} \{\omega : X(\omega) = x\} = B$ gilt, folgt}
+							 &= \E(Y \cdot \ind_B)\text{.} \qedhere
+\end{align*}
+\end{beweis}
+Im Weiteren werden wir $Z$ mit dem eben Gesehenem definieren bzw. konstruieren und so die zweite Frage beantworten, während uns die Faktorisierung $Z = g \circ X$ die erste Frage beantworten wird.
+
+\begin{definition}[Bedingte Erwartung]\label{Nummer1.5.1}
+Es sei $(\Omega, \sA, P)$ ein Wahrscheinlichkeitsraum, $Y \in \sL_1(P)$ und $\sB \subset \sA$ eine $\sigma$-Algebra. Dann heißt eine Zufallsvariable $Z\colon\Omega \to \R$ \deftxt{bedingte Erwartung von $Y$ unter $\sB$}\index{bedingte Erwartung}, falls gilt:
+\begin{enumerate}
+	\item $Z$ ist $\sB$-messbar.
+	\item Für alle $B \in \sB$ gilt
+	\begin{align*}
+	\E(Y \cdot \ind_B) &= \E(Z \cdot \ind_B)\text{.}
+	\end{align*}
+\end{enumerate}
+\end{definition}
+
+Ist $\sB = \sigma(X)$ für eine Zufallsvariable $X\colon \Omega \to \R$, so sind die beiden Eigenschaften der heuristischen Herangehensweise erfüllt. Zunächst müssen wir uns jedoch fragen, ob es solche Objekte überhaupt gibt und ob sie eindeutig sind.
+
+\begin{satz}[Existenz und Eindeutigkeit]\label{Nummer1.5.2}
+Es sei $(\Omega, \sA, P)$ ein Wahrscheinlichkeitsraum, $Y \in \sL_1(P)$ und $\sB \subset \sA$ eine $\sigma$-Algebra. Dann gilt:
+\begin{enumerate}
+	\item Es existiert eine bedingte Erwartung $Z$ von $Y$ unter $\sB$.
+	\item Sind $Z$ und $Z'$ zwei bedingte Erwartungen von $Y$ unter $\sB$, so gilt $P$-fast sicher $Z = Z'$.
+\end{enumerate}
+\end{satz}
+
+Bevor wir dies beweisen, wollen wir die Notation $\E(Y~|~\sB) := Z$ einführen. Wir nennen $Z$ \deftxt{Version}\index{Version} der bedingten Erwartung. Falls $\sB = \sigma(X)$ für eine Zufallsvariable $X\colon \Omega \to \R$ gilt, so schreiben wir $\E(Y~|~X) := \E(Y~|~\sigma(X))$. Es gilt zu beachten, dass $\E(\E(Y~|~\sB)\cdot\ind_B) = \E(Y \cdot \ind_B)$ für alle $B \in \sB$ gilt.
+
+\begin{beweis}
+Wir beweisen zunächst die Existenz und betrachten den Fall, dass $Y \geq 0$ gilt. Dann definieren wir $\nu\colon \sB \to [0, \infty)$ durch $\nu(B) := \int_B Y~\dd P$ für $B \in \sB$. Dies ist ein endliches Maß. Ferner ist $P\big|_\sB\colon \sB \to [0,1]$ ein Wahrscheinlichkeitsmaß auf $\sB$ und es gilt: aus $P\big|_\sB(B) = 0$ folgt $\nu(B) = 0$. Also ist $\nu \ll P\big|_\sB$. Der Satz von Radon-Nikodym (vgl. \cite[Satz I.12.1]{WT}) gibt uns dann eine Dichte $Z\colon \Omega \to \R$ von $\nu$ bezüglich $P\big|_\sB$. Diese ist nach Konstruktion sogar $\sB$-messbar und für $B \in \sB$ gilt:
+\begin{align*}
+\int_B Z~\dd P &= \int_B \underbrace{Z~\dd P\big|_\sB}_{= \nu} = \nu(B) = \int_B Y~\dd P
+\end{align*}
+Im zweiten Fall sei $Y = Y^+ - Y^-$ mit $Y^+ := \max\{0, Y\} \geq 0$ und $Y^- := \max\{0, -Y\} \geq 0$. Mit Hilfe des ersten Falls erhalten wir $Z^+, Z^- \geq 0$ und setzen nun $Z := Z^+ - Z^-$.
+
+Wir kommen nun zur Eindeutigkeit. Es seien $Z$ und $Z'$ zwei bedingte Erwartungen von $Y$ unter $\sB$. Dann gilt $\int_B Z~\dd P = \int_B Z'~\dd P$ für alle $B \in \sB$. Wir betrachten im Speziellen die Menge $B := \{Z > Z'\}$, die offenbar messbar ist. Für $B$ gilt nun
+\begin{align*}
+0 &= \int_B \underbrace{Z - Z'}_{\geq 0}~\dd P\text{,}
+\end{align*}
+woraus wir $P(B) = 0$ und damit $P$-fast sicher $Z \leq Z'$ erhalten. Eine symmetrische Betrachtung durch Vertauschen der Rollen von $Z$ und $Z'$ liefert schließlich $P$-fast sicher $Z = Z'$.
+\end{beweis}
+
+\begin{satz}[Elementare Eigenschaften]\label{Nummer1.5.3}
+Es sei $(\Omega, \sA, P)$ ein Wahrscheinlichkeitsraum, $X, Y \in \sL_1(P)$ und $\sB \subset \sA$ eine $\sigma$-Algebra. Dann gelten die folgenden Eigenschaften:
+\begin{enumerate}
+	\item\label{Nummer153A1} $\displaystyle \E(\E(X~|~\sB)) = \E X$.
+	\item\label{Nummer153A2} Ist $X$ überdies $\sB$-messbar, so gilt $P$-fast sicher $\E(X~|~\sB) = X$.
+	\item\label{Nummer153A3} Für $\alpha, \beta \in \R$ gilt $P$-fast sicher
+	\begin{align*}
+	\E(\alpha X + \beta Y ~|~ \sB) &= \alpha \E(X~|~\sB) + \beta \E(Y~|~\sB)\text{.}
+	\end{align*}
+	\item\label{Nummer153A4} Gilt $P$-fast sicher $X \leq Y$, so gilt auch $P$-fast sicher $\E(X~|~\sB) \leq \E(Y~|~\sB)$.
+\end{enumerate}
+\end{satz}
+
+Insbesondere gilt unter den Voraussetzungen im Satz also auch $|\E(X~|~\sB)| \leq \E(|X| ~|~ \sB)$.
+
+\begin{beweis}
+Wir werden einige der Eigenschaften beweisen und die anderen dem Leser überlassen:
+\begin{enumerate}
+	\item Für $B := \Omega \in \sB$ und $Y' := \E(X~|~\sB)$ folgt $P$-fast sicher $\E Y' = \E (Y' \cdot \ind_B) = \E (X \cdot \ind_B) = \E X$.
+	\item Dies folgt aus der Definition der bedingten Erwartung (Definition \ref{Nummer1.5.1}) und der Eindeutigkeit (Satz \ref{Nummer1.5.2}), denn dann ist $\E(X~|~\sB) = \E(\E(X~|~\sB) \cdot \ind_B) = \E (X \cdot \ind_B)$ für alle $B \in \sB$.
+	\item Dieser Beweis wird dem Leser überlassen.
+	\item Es genügt wegen \ref{Nummer153A3} zu zeigen, dass aus $X \geq 0$ folgt, dass $\E(X~|~\sB) \geq 0$ gilt. Dies wurde jedoch bereits im Beweis von Satz \ref{Nummer1.5.2} im ersten Fall des Existenzbeweises gezeigt. \qedhere
+\end{enumerate}
+\end{beweis}
+
+Wir wollen nun noch zeigen, dass die aus der Wahrscheinlichkeitstheorie bekannten Konvergenzsätze im Wesentlichen auch für bedingte Erwartungen gelten.
+
+\begin{satz}[Konvergenzsätze]\label{Nummer1.5.4}\index{bedingte Erwartung!Konvergenzsätze}
+Es sei $(\Omega, \sA, P)$ ein Wahrscheinlichkeitsraum, $X, X_n \in \sL_1(P)$ für alle $n \geq 1$ und $\sB \subset \sA$ eine $\sigma$-Algebra. Dann gelten die folgenden Sätze:
+\begin{enumerate}
+	\item \deftxt{Satz von der monotonen Konvergenz}: Ist $P$-fast sicher $0 \leq X_n \nearrow X$, so gilt auch $\E(X_n~|~\sB) \nearrow \E(X~|~\sB)$.
+	\item \deftxt{Satz von der dominierten Konvergenz}: Ist $Y \in \sL_1(P)$ mit $|X_n| \leq Y$ für alle $n \geq 1$ und $X_n \to X$ $P$-fast sicher, so folgt $P$-fast sicher auch $\E(X_n~|~\sB) \to \E(X~|~\sB)$. 
+\end{enumerate}
+\end{satz}
+
+\begin{beweis}
+Der Beweis beider Sätze erfolgt getrennt:
+\begin{enumerate}
+	\item Der "`normale"' Satz von Beppo Levi (vgl. Satz \ref{appendix:beppolevi1} im Anhang) liefert uns $\E(X - X_n) \to 0$. Aus Satz \ref{Nummer1.5.3} folgt dann
+	\begin{align*}
+	\E |\E(X~|~\sB) - \E(X_n~|~\sB)| &\stackrel{\text{\ref{Nummer153A4}}}{=} \E(\E(X~|~\sB) - \E(X_n~|~\sB)) \stackrel{\text{\ref{Nummer153A1}, \ref{Nummer153A3}}}{=} \E(X - X_n) \to 0\text{.} 
+	\end{align*}
+	Damit konvergiert $\E(X_n~|~\sB) - \E(X~|~\sB)$ in $\sL_1(P)$ gegen $0$. Aus der Wahrscheinlichkeitstheorie wissen wir mit \cite[Satz II.7.4]{WT}, dass dann $\E(X_n~|~\sB) - \E(X~|~\sB) \to 0$ stochastisch gilt. Aus der Wahrscheinlichkeitstheorie wissen wir, dass es dann eine Teilfolge mit $\E(X_{n_k}~|~\B) - \E(X~|~\sB) \to 0$ $P$-fast sicher gibt. Da die Folge $\E(X_{n_k}~|~\sB)$ monoton steigend ist, folgt aber auch die $P$-fast sichere Konvergenz der Gesamtfolge.
+	\item Wir definieren zunächst $Z_n := \sup_{k \geq n} |X_k - X|$, dann gilt $P$-fast sicher $Z_n \searrow 0$ und $|X_n - X| \leq Z_n$. Ferner erhalten wir
+	\begin{align*}
+	|\E(X_n~|~\sB) - \E(X~|~\sB)| &= |\E(X_n - X~|~\sB)| \leq \E(|X_n - X| ~|~ \sB) \leq \E(Z_n ~|~ \sB)\text{.}
+	\end{align*}
+	Daher werden wir nun zeigen, dass $\E(Z_n~|~\sB) \to 0$ gilt. Dazu erinnern wir uns, dass $P$-fast sicher $Z_n \searrow 0$ gilt. Daraus folgt, dass auch $\E(Z_n~|~\sB) \searrow$ gilt und wir setzen $U := \lim \E(Z_n~|~\sB)$. Klar ist, dass $U \geq 0$ gilt. Um $U = 0$ zu zeigen genügt es daher, $\E U = 0$ zu beweisen. Da $|X_n| \leq Y$ gilt, folgt auch $|X| \leq Y$ und damit $|X_n - X| \leq 2Y$. Nun erhalten wir $0 \leq Z_n \leq 2Y$ und der (normale) Satz von der dominierten Konvergenz\footnote{Dieser findet sich im Anhang als Satz \ref{appendix:lebesgue}.} liefert uns dann $\E Z_n \to 0$. Damit gilt $0 \leq \E U \leq \E(\E(Z_n~|~\sB)) = \E Z_n \to 0$. 
+\end{enumerate}
+\end{beweis}
+
+\begin{satz}[Ungleichung von Jensen]\label{Nummer1.5.5}\index{Jensen!Ungleichung von}
+Es sei $(\Omega, \sA, P)$ ein Wahrscheinlichkeitsraum, $I \subset \R$ ein Intervall, $X\colon \Omega \to I$ eine $P$-integrierbare Abbildung, $\phi\colon I \to \R$ konvex und $\sB \subset \sA$ eine $\sigma$-Algebra. Dann ist $P$-fast sicher $\E(X~|~\sB) \in I$ und gilt zusätzlich $\phi \circ X \in \sL_1(P)$, so folgt
+\begin{align*}
+\phi(\E(X~|~\sB)) &\leq \E(\phi \circ X~|~\sB)\text{.}
+\end{align*}
+Insbesondere gilt $\phi(\E X) \leq \E (\phi \circ X)$, falls $\phi \circ X \in \sL_1(P)$ ist. 
+\end{satz}
+
+Die Ungleichung von Jensen ist also gewissermaßen eine Verallgemeinerung des Konvexitätsbegriffes auf nicht-abzählbare Mengen bzw. Wahrscheinlichkeitsmaße.
+
+\begin{beweis}
+Wir setzen zunächst $U := \{v\colon I \to \R ~|~ v\text{ ist affin linear und } v \leq \phi\}$. Dann gilt $\phi(x) = \sup_{v \in U} v(x)$ für alle $x \in I$. Ferner folgt $P$-fast sicher $\E(X~|~\sB) \in I$ aus $x \in I$ und der Monotonie. Außerdem ist nun $\phi(X) = \sup_{v \in U} v(X)$. Für $v_0 \in U$ gilt dann
+\begin{align*}
+v_0(\E(X~|~\sB)) &= \E(v_0 \circ X~|~\sB) \leq \E\left(\sup_{v \in U} v(X)~|~\sB\right) = \E(\phi \circ X~|~\B) 
+\end{align*}  
+und wir erhalten schließlich
+\begin{align*}
+\phi(\E(X~|~\sB)) &= \sup_{v \in U} v(\E(X~|~\sB)) \leq \E(\phi \circ X~|~\sB)\text{.} \qedhere
+\end{align*}
+\end{beweis}
+
+\Needspace{5\baselineskip}\begin{korollar}[$\sL_p$-Zugehörigkeit]\label{Nummer1.5.6}
+Es sei $(\Omega, \sA, P)$ ein Wahrscheinlichkeitsraum, $p \geq 1$ und $X \in \sL_p(P)$, sowie $\sB \subset \sA$ eine $\sigma$-Algebra. Dann gilt $\E(X~|~\sB) \in \sL_p(P)$ und
+\begin{align*}
+\norm{\E(X~|~\sB)}_{\sL_p(P)} &\leq \norm{X}_{\sL_p(P)}\text{.}
+\end{align*}
+\end{korollar}
+
+Der Beweis ist eher einfach und wird daher zur Übung überlassen.
+
+\begin{satz}[Einfluss von $\sB$ auf die bedingte Erwartung]\label{Nummer1.5.7}
+Es sei $(\Omega, \sA, P)$ ein Wahrscheinlichkeitsraum und $X \in \sL_1(P)$, dann gelten die folgenden Eigenschaften:
+\begin{enumerate}
+	\item Für $\sB = \{\emptyset, \Omega\}$ gilt $\E(X~|~\sB) = \E X$.
+	\item Sind $\sC \subset \sB \subset \sA$ jeweils $\sigma$-Algebren, so gilt $\E(\E(X~|~\sB)~|~\sC) = \E(X~|~\sC)$. Insbesondere gilt $\E(\E(X~|~\sB)) = \E(X~|~\sB)$. 
+	\item Sei $\sB \subset \sA$ eine $\sigma$-Algebra und $\sB$ und $\sigma(X)$ seien unabhängig, dann gilt $\E(X~|~\sB) = \E X$.
+\end{enumerate}
+\end{satz}
+
+Auch dieser Beweis wird zur Übung überlassen.
+
+\begin{satz}[Produkte]\label{Nummer1.5.8}
+Es sei $(\Omega, \sA, P)$ ein Wahrscheinlichkeitsraum, $\sB \subset \sA$ eine $\sigma$-Algebra, $Y \in \sL_1(P)$ und $X\colon \Omega \to \R$ eine $\sB$-messbare Abbildung mit $X \circ Y \in \sL_1(P)$. Dann gilt
+\begin{align*}
+\E(XY~|~\sB) &= X \cdot \E(Y~|~\sB)\text{.}
+\end{align*}
+\end{satz}
+
+Da $X$ messbar ist, gilt $\E(X~|~\sB) = X$ und die Gleichung lässt sich nun auch als $\E(XY~|~\sB) = \E(X~|~\B)\E(Y~|~\sB)$ schreiben.
+
+\begin{beweis}
+Der Beweis gliedert sich in die selben vier Schritte, die wir auch bei der Konstruktion für Integrale in \cite{WT} durchlaufen haben.
+\begin{enumerate}
+	\item Es sei $X = \ind_A$ für $A \in \sB$. Dann ist $X \cdot \E(Y~|~\sB)$ $\sB$-messbar und $P$-integrierbar. Für $B \in \sB$ folgt dann
+	\begin{align*}
+	\E(X \cdot \E(Y~|~\sB) \cdot \ind_B) &= \E(\E(X~|~\sB) \cdot \ind_{A \cap B}) = \E(Y \cdot \ind_{A \cap B}) = \E(XY \cdot \ind_B)\text{.}
+	\end{align*}
+	\item Nun sei $X$ eine Treppenfunktion, dann folgt die Behauptung aus der Linearität der bedingten Erwartung (vgl. Satz \ref{Nummer1.5.3}).
+	\item Es sei $X \geq 0$ messbar, dann existieren Treppenfunktionen $X_n \nearrow X$. Wir zerlegen $Y = Y^+ - Y^-$ wie gewohnt und erhalten $X_nY^+ \nearrow XY^+$ und $X_nY^- \nearrow XY^-$. Mit der monotonen Konvergenz aus Satz \ref{Nummer1.5.4} und der Linearität erhalten wir dann die Behauptung.
+	\item Nun sei $X$ messbar und wir zerlegen $X = X^+ - X^-$ wie gewohnt. Mit der Linearität und den vorherigen Schritten folgt die Behauptung. \qedhere
+\end{enumerate}
+\end{beweis}
+
+\begin{satz}[Bestapproximation]\label{Nummer1.5.9}\index{Bestapproximation}
+Es sei $(\Omega, \sA, P)$ ein Wahrscheinlichkeitsraum, $B \subset \sA$ eine $\sigma$-Algebra und $X \in \sL_2(P)$. Dann nimmt die Abbildung $\sL_2(P\big|_\sB) \to \R$ vermöge $Y \mapsto \norm{X-Y}_{\sL_2(P|_\sB)}^2  = \E(X-Y)^2$ ihr einziges Minimum in $Y^* = \E(X~|~\sB)$ an.
+\end{satz}
+
+\begin{beweis}
+Es sei $Y \in \sL_2(P\big|_\sB)$, nach Satz \ref{Nummer1.5.8} gilt dann $\E(XY~|~\sB) = Y \E(X~|~\sB) = Y \cdot Y^*$. Daraus folgt $\E(XY) = \E(\E(XY~|~\sB)) = \E(Y \cdot Y^*)$ und für $Y = Y^* \in \sL_2(P\big|_\sB)$ gilt dann $\E(XY)  =\E(Y^*)^2$. Dies ergibt
+\begin{align*}
+\E(X - Y)^2 - \E(X-Y^*)^2 &= -2\E(XY) + \E Y^2 + \underbrace{2\E(XY^*) - \E(Y^*)^2}_{= \E(Y^*)^2} = \E Y^2 - 2\E YY^* + \E(Y^*)^2\\
+													&= \E(Y-Y^*)^2 \geq 0\text{.}
+\end{align*}
+Daraus können wir nun $\E(X-Y^*)^2 \leq \E(X-Y)^2$ folgern, wobei Gleichheit genau für $\E(Y-Y^*)^2 = 0$ gilt, was wiederum genau für $Y = Y^*$ $P$-fast sicher der Fall ist.
+\end{beweis}
+
+\begin{korollar}[$\sL_2$-Projektionseigenschaften]\label{Nummer1.5.10}
+Es sei $(\Omega, \sA, P)$ ein Wahrscheinlichkeitsraum und $\sB \subset \sA$ eine $\sigma$-Algebra. Dann ist $\E(\cdot~|~\sB)\colon \sL_2(P) \to \sL_2(P)$ eine orthogonale Projektion auf $\sL_2(P\big|_\sB)$, das heißt es gilt
+\begin{enumerate}
+	\item $\E(\E(\cdot~|~\B)~|~\sB) = \E(\cdot~|~\sB)$.
+	\item $\ker \E(\cdot~|~\sB) = \sL_2^\bot(P\big|_\sB) = (\im \E(\cdot~|~\sB))^\bot$, wobei $\sL_2^\bot(P\big|_\sB) = \{Y \in \sL_2(P) : \E(YZ) = 0 \quad \forall Z \in \sL_2(P\big|_\sB)\}$ gilt.
+\end{enumerate}
+\end{korollar}
+
+Eigentlich sollte dies mit $L_2$ statt $\sL_2$ formuliert werden, dafür haben wir bisher jedoch zu wenig Theorie. Dabei ist $\sL_2(P) = \{f\colon X \to \R \text{ messbar mit } \norm{f}_2^2 := \int |f|^2~\dd P < \infty\}$, allerdings ist $\norm{\cdot}_2^2$ keine Norm, sondern nur eine Seminorm, da es $f\colon X \to \R$ messbar mit $f \neq 0$ gibt, so dass $\norm{f}_2^2 = 0$ ist. Daher definiert man $f \sim g :\Leftrightarrow f = g$ $P$-fast sicher und faktorisiert solche Funktionen dann mittels $L_2(P) := \sL_2(P)/\sim$ heraus, dieser Raum besteht also eigentlich aus Funktionenklassen. Dieser Unterschied wird in der Praxis jedoch häufig ignoriert.
+
+\begin{beweis}
+Die Aussage kann aus Satz \ref{Nummer1.5.9} gefolgert werden, wir werden dies hier jedoch elementarer beweisen. Die erste Aussage folgt aus Satz \ref{Nummer1.5.7}, wir widmen uns nun also dem zweiten Teil. Nach Satz \ref{Nummer1.5.3} gilt $\im \E(\cdot~|~\sB) = \sL_2(P\big|_\sB)$. Wir zeigen nun die Inklusion "`$\subset$"': Sei $Y \in \ker \E(\cdot~|~\sB)$, das heißt $\E(Y~|~\sB) = 0$ und $Z \in \sL_2(P\big|_\sB)$, dann gilt
+\begin{align*}
+\E(YZ) &= \E(\E(YZ~|~\sB)) \stackrel{\text{\ref{Nummer1.5.8}}}{=} \E(Z \cdot \E(Y~|~\sB)) = 0\text{.}
+\end{align*}
+Für die andere Inklusion "`$\supset$"' sei $Y \in \sL_2^\bot(P\big|_\sB)$, das heißt $Y \in \sL_2(P)$ und $\E(YZ) = 0$ für alle $Z \in \sL_2(P\big|_\sB)$. Wir wollen zeigen, dass $\E(Y~|~\sB) = 0$ gilt. Dazu setzen wir $Z := \E(Y~|~\sB) \in \sL_2(P\big|_\sB)$ und es folgt
+\begin{align*}
+0 &= \E(YZ) = \E(\E(YZ~|~\sB)) \stackrel{\text{\ref{Nummer1.5.8}}}{=} \E(Z \cdot \E(Y~|~\sB)) = \E Z^2\text{,}
+\end{align*}
+also gilt $P$-fast sicher $Z = 0$.
+\end{beweis}
+
+Wir wollen nun einige verschiedene Interpretationen anführen und diskutieren:
+\begin{enumerate}
+	\item Die $\sB$-Messbarkeit von $Y$ bedeutet, dass nur Informationen, die durch $\sB$ ausdrückbar sind, zur Konstruktion von $Y$ verwendet werden können. Präzisiert wird dies durch das Approximationslemma aus der Wahrscheinlichkeitstheorie (vgl. \cite{WT}).
+	\item Die bedingte Erwartung $\E(X~|~\sB)$ vereinfacht $X$ in dem Sinne, dass alle nicht durch $\sB$ ausdrückbaren Informationen weggelassen werden. Präzise bedeutet dies, dass $\ker \E(\cdot~|~\sB) = \sL_2^\bot(P\big|_\sB)$ weggelassen wird, wobei dieser Raum orthogonal zu den erlaubten Funktionen steht.
+	\item Die bedingte Erwartung $\E(X~|~\sB)$ ist die beste Approximation für $X$ innerhalb aller Funktionen, die nur $\sB$ als Information zur Verfügung haben. Haben wir also $\sB$, so ist $\E(X~|~\sB)$ also die beste Prognose von $X$. Präziser haben wir dies in Satz \ref{Nummer1.5.9} diskutiert.
+\end{enumerate}
+
+Im letzten Punkt haben wir davon gesprochen, was passiert, wenn wir $\sB$ "`haben"', sind jedoch nicht darauf eingegangen, was dies genau bedeutet. Es seien $A, B \in \Omega$ messbar und $\omega \in \Omega$ eine zufällige Beobachtung, dann ist $P(A)$ die Wahrscheinlichkeit für $\omega \in A$ und $P(A~|~B)$ die Wahrscheinlichkeit für $\omega \in A$, falls wir zusätzlich wissen, dass $\omega \in B$ gilt. Analog gibt uns $P(A~|~B^c)$ die Wahrscheinlichkeit für $\omega \in A$, falls wir $\omega \notin B$ wissen. Damit ist
+\begin{align*}
+\omega \mapsto \begin{cases}P(A~|~B) & \text{falls } \omega \in B\\ P(A~|~B^c) & \text{falls } \omega \notin B\end{cases}
+\end{align*}
+die Wahrscheinlichkeit für $\omega \in A$, falls wir über $\omega \in B$ Bescheid wissen. Dies kann auf $\sigma$-Algebren $\sA$ mit $P(A) > 0$ für alle $\emptyset \neq A \in \sA$ verallgemeinert werden (vgl. die Konstruktion zu Beginn des Kapitels). Dies führte zu Messbarkeit und einer Gleichung, beides zusammen machte die Konstruktion dann eindeutig. Für die Verallgemeinerung haben wir die Messbarkeit und die Gleichung zur Definition erhoben. In diesem Sinne ist die bedingte Wahrscheinlichkeit $P(A~|~\sB)(\omega) = \E(\ind_A~|~\sB)(\omega)$ die Wahrscheinlichkeit von $\omega \in A$, falls wir $\omega \in B$ für alle $B \in \sB$ entscheiden können.
+
+An dieser Stelle wollen wir betonen, dass $P(\cdot~|~\sB)(\omega)$ im Allgemeinen \emph{kein} Wahrscheinlichkeitsmaß ist, denn für jedes $A \in \sA$ arbeiten wir mit Versionen und es im Allgemeinen zuviele $A$ gibt um diese zusammenzuführen.
+
+\begin{lemma}[Faktorisierungslemma]\label{Nummer1.5.11}\index{Faktorisierungslemma}
+Es sei $(\Omega, \sA, P)$ ein Wahrscheinlichkeitsraum, $(\Omega', \sA')$ ein Messraum, $X\colon \Omega \to \Omega'$ messbar und $Y\colon \Omega \to \R$. Dann sind folgende Aussagen äquivalent:
+\begin{enumerate}
+	\item\label{Nummer1511A1} $Y$ ist $\sigma(X)$-messbar.
+	\item\label{Nummer1511A2} Es existiert eine messbare Abbildung $g\colon \Omega' \to \R$, so dass das folgende Diagramm kommutiert:
+	\begin{center}
+	\begin{tikzpicture}
+\node (Omega) at (0, 2) {$\Omega$};
+\node (R1)		at (4, 2) {$\R$};
+\node (R2)		at (2, 0) {$(\Omega', \sA')$};
+\draw[->, semithick] (Omega) -- node[above]{$Y$} 				(R1);
+\draw[->, semithick] (Omega) -- node[below left]{$X$}		(R2);
+\draw[->, semithick] (R2)		 -- node[below right]{$g$}	(R1);
+\end{tikzpicture}
+	\end{center}
+\end{enumerate}
+Ist $X$ surjektiv, so folgt ferner, dass $g$ eindeutig ist.
+\end{lemma}
+
+\begin{beweis}
+Die Richtung von \ref{Nummer1511A2} nach \ref{Nummer1511A1} ist trivial. Für die andere Richtung führen wir wieder aufeinanderfolgende Schritte aus. Im ersten Schritt sei $Y = \ind_A$, dann ist $A \in \sigma(X)$, da $Y$ nach Voraussetzung $\sigma(X)$-messbar ist. Dann existiert ein $A' \in \sA'$ mit $A = X^{-1}(A')$ und wir setzen $g := \ind_{A'}$. Für den zweiten Schritt sei $Y = \sum_{i=1}^n \alpha_i \ind_{A_i}$ und wir setzen $g := \sum_{i=1}^n \alpha_i\ind_{A_i'}$, wobei wie im ersten Schritt $X^{-1}(A_i') = A_i$ setzen.
+
+Im dritten Schritt sei $Y \geq 0$, dann existiert eine Folge $Y_n \nearrow Y$ von Treppenfunktionen und mit Hilfe des zweiten Schritts existiert entsprechend eine Folge $g_n$ mit $Y_n = g_n \circ X$. Da die Konstruktion im zweiten Schritt monoton ist, folgt $g_n \nearrow g := \lim g_n$. Im letzten Schritt zerlegen wir schließlich wie gewohnt $Y = Y^+ - Y^-$ und erhalten so den Rest der Aussage.
+
+Zu zeigen bleibt nun noch die Eindeutigkeit, wenn $X$ surjektiv ist. Sind $\omega_1, \omega_2 \in \Omega$ mit $X(\omega_1) = X(\omega_2)$, so gilt auch $Y(\omega_1) = g(X(\omega_1)) = g(X(\omega_2)) = Y(\omega_2)$. Sei nun $x \in \Omega'$, dann existiert ein $\omega \in \Omega$ mit $X(\omega) = x$. Dann erhalten wir $g(x) = g(X(\omega)) = Y(\omega)$ und $g$ ist eindeutig, wobei $Y(\omega)$ nach unseren Vorüberlegungen von der speziellen Wahl des $\omega$ unabhängig ist.
+\end{beweis}
+
+Wir wollen diese Ergebnisse nun wieder interpretieren. Dazu sei $A, B \in \sA$ und $X := \ind_B$, sowie $\sB := \sigma(X)$. Dann ist $\sB = \{\emptyset, B, B^c, \Omega\}$ und nach Lemma \ref{Nummer1.5.11} gilt $P(A~|~\ind_B) = P(A~|~\sB) = \E(\ind_A~|~\sB) = g \circ \ind_B$. Für $\omega \in B$ folgt dann
+\begin{align*}
+P(B)P(A~|~\ind_B)(\omega) &= P(B)g(1) = \int g(1) \ind_B~\dd P = \int g \circ \ind_B~\dd P = \int_B \E(\ind_A~|~B)~\dd P = \int_B \ind_A~\dd P\\
+													&= P(A \cap B)\text{.}
+\end{align*}
+Ist nun $P(B) > 0$, so folgt $P(A~|~\ind_B)(\omega) = P(A~|~B)$ für alle $\omega \in B$, aber wir wissen bereits, dass die linke Seite auch für $P(B)=0$ definiert ist.
+
+\begin{definition}[Faktorisierter bedingter Erwartungswert]\label{Nummer1.5.12}
+Es sei $(\Omega, \sA, P)$ ein Wahrscheinlichkeitsraum, $(\Omega', \sA')$ ein Messraum, $Y \in \sL_1(P)$ und $X\colon \Omega \to \Omega'$ messbar und surjektiv. Dann ist $\E(Y~|~X)$ $\sigma(X)$-messbar und mit Lemma \ref{Nummer1.5.11} existiert genau ein $g\colon \Omega' \to \R$ mit $\E(Y~|~X) = g \circ X$. Für $x \in \Omega'$ schreiben wir dann $\E(Y~|~X = x) := g(x)$ und nennen $\E(Y~|~X = \cdot)$ den \deftxt{faktorisierten bedingten Erwartungswert}\index{bedingte Erwartung!faktorisierte}. Analog ist $P(A~|~X = x) = \E(\ind_A~|~X = x)$.
+\end{definition}
+
+Für $A \in \sA$ ist $P(A~|~X = \cdot)$ nur bis auf $P_X$-Nullmengen eindeutig, da $\E(Y~|~X)$ nur bis auf $P$-Nullmengen bestimmt ist. Für eine weitere Ausführung verweisen wir auf \cite[Kap. 8.3, S. 182]{KLENKE}.

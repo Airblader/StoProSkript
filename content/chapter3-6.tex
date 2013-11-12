@@ -1,0 +1,186 @@
+\section{Grenzverhalten}
+
+Wenn wir wissen, dass $i \in S$ transient ist, so folgt mit Satz \ref{Nummer3.4.5}, dass $p_{ii}^{(n)} \to 0$ gilt. Was gilt jedoch im Allgemeinen? Dazu betrachten wir
+\begin{align*}
+\P &:= \begin{pmatrix}0 & 1\\ 1 & 0\end{pmatrix}\text{,}
+\end{align*}
+dann gilt $\P^2 = E_2$, wobei $E_n$ die Einheitsmatrix ist. Wir erhalten also
+\begin{align*}
+\P^n &= \begin{cases}\P & \text{falls $n$ ungerade}\\ E_2 & \text{sonst}\end{cases}\text{.}
+\end{align*}
+Dann konvergiert $p_{ii}^{(n)}$ jedoch nicht. Ein solches periodisches Verhalten wollen wir also ausschließen.
+
+\begin{definition}[Periodizität]\label{Nummer3.6.1}
+Sei $(X_n)_{n \geq 0}$ eine homogene Markovkette und $i \in S$.
+\begin{enumerate}
+	\item Die \deftxt{Periode}\index{Periode} von $i$ ist der größte gemeinsame Teiler von 
+	\begin{align*}
+	J_i &:= \left\{n \geq 1 : p_{ii}^{(n)} > 0\right\}\text{.}
+	\end{align*}
+	\item Der Zustand $i$ heißt \deftxt{aperiodisch}\index{Zustand!aperiodischer}, falls er die Periode $1$ hat.
+\end{enumerate}
+\end{definition}
+
+Betrachten wir nochmal das obige Beispiel. Da $J_1 = J_2 = 2\N$ gilt, haben $i = 1$ und $i = 2$ jeweils die Periode $2$.
+
+Beachte, dass $p_{ii}^{(n)} > 0$ genau dann gilt, wenn man in \emph{genau} $n$ Schritten von $i$ nach $i$ gelangen kann. In Abbildung \ref{fig:markovperiode} sehen wir einen gängigen Denkfehler für die Periode eines Zustandes.
+\begin{figure}[!htbp]
+\centering
+\begin{tikzpicture}
+\node[shape=circle,draw, minimum size = 1cm] (N1) at (0, 3) {1};
+\node[shape=circle,draw, minimum size = 1cm] (N3) at (3, 0) {3};
+\node[shape=circle,draw, minimum size = 1cm] (N2) at (6, 3) {2};
+\draw[->, semithick] (N1.north east) -- (N2.north west);
+\draw[->, semithick] (N1.south east) -- (N3.north west);
+\draw[->, semithick] (N2.west) 			 -- (N1.east);
+\draw[->, semithick] (N2.south) 		 -- (N3.east);
+\draw[->, semithick] (N3.west) 			 -- (N1.south);
+\draw[->, semithick] (N3.north east) -- (N2.south west);
+\end{tikzpicture}
+\caption[Periodizität in Markovketten]{Von jedem Zustand $i$ gelangt man in sowohl zwei als auch drei Schritten von $i$ nach $i$, die Periode ist daher $1$.}\label{fig:markovperiode}
+\end{figure}
+
+\begin{lemma}\label{Nummer3.6.2}
+Sei $A \subset \N$ mit $\ggT(A) = 1$ und $A$ sei abgeschlossen bezüglich der Addition. Dann existiert ein $n_0$, so dass $n \in A$ für alle $n \geq n_0$ gilt.
+\end{lemma}
+
+\begin{beweis}
+Da die Aussage rein zahlentheoretischer Natur ist, wollen wir sie hier nicht beweisen und verweisen stattdessen auf \cite[Lemma 9.41]{MEINTRUP}.
+\end{beweis}
+
+\Needspace{6\baselineskip}\begin{lemma}\label{Nummer3.6.3}
+Sei $(X_n)_{n \geq 0}$ eine homogene Markovkette und $i \in S$. Dann sind folgende Aussagen äquivalent:
+\begin{enumerate}
+	\item\label{N363A1} Der Zustand $i$ ist aperiodisch.
+	\item\label{N363A2} Es existiert ein $n_0$, so dass $p_{ii}^{(n)} > 0$ für alle $n \geq n_0$ gilt.
+\end{enumerate}
+\end{lemma}
+
+\begin{beweis}
+Für \ref{N363A1} $\Rightarrow$ \ref{N363A2} setzen wir $A := \{n \geq 0 : p_{ii}^{(n)} > 0\}$. Da $i$ aperiodisch ist, gilt $\ggT(A) = 1$. Für $n, m \in A$ gilt ferner $p_{ii}^{(n+m)} \geq p_{ii}^{(n)}p_{ii}^{(m)} > 0$ und daher $n+m \in A$. Mit Lemma \ref{Nummer3.6.2} folgt dann die Aussage.
+
+Für \ref{N363A2} $\Rightarrow$ \ref{N363A1} sei $d = \ggT(A)$. Nach Voraussetzung existiert ein $n_0$ mit der entsprechenden Eigenschaft. Also gilt $d \mid n_0$ und $d \mid n_0 + 1$. Dann teilt $d$ aber auch $(n_0+1) - n_0 = 1$ und wir erhalten $d=1$.
+\end{beweis}
+
+\begin{satz}\label{Nummer3.6.4}
+Ist $(X_n)_{n \geq 0}$ eine homogene Markovkette, $i \in S$ aperiodisch und $A \subset S$ die Kommunikationsklasse von $i$, so existiert ein $n_0$, so dass $p_{jk}^{(n)} > 0$ für alle $j, k \in A$ und alle $n \geq n_0$ gilt.
+
+Setzen wir $j = k$, so folgt insbesondere, dass $j$ aperiodisch ist.
+\end{satz}
+
+\begin{beweis}
+Es seien $j, k \in A$. Dann existieren $l, m \geq 0$ mit $p_{ji}^{(l)} > 0$ und $p_{ij}^{(k)} > 0$. Mit Lemma \ref{Nummer3.6.3} existiert dann ein $n_0$, so dass $p_{ii}^{(n)} > 0$ für alle $n \geq n_0$ gilt. Damit erhalten wir
+\begin{align*}
+p_{jk}^{(l + n + m)} &\geq p_{ji}^{(l)}p_{ii}^{(n)}p_{ik}^{(m)} > 0\text{.} \qedhere
+\end{align*}
+\end{beweis}
+
+\begin{definition}[Kopplung]\label{Nummer3.6.5}
+Es seien $(X_n)_{n \geq 0}$ und $(Y_n)_{n \geq 0}$ stochastische Prozesse über $(\Omega, \sA, P)$ mit Zustandsraum $\sX$. Dann sind $(X_n)$ und $(Y_n)$ ein \deftxt{Kopplungspaar}\index{Kopplung}, falls eine $P$-fast sicher endliche Stoppzeit $\tau$ existiert, so dass für alle $n \geq 0$ und $\omega \in \Omega$ gilt:
+\begin{align*}
+n \geq \tau(\omega) &\Longrightarrow X_n(\omega) = Y_n(\omega)\text{.}
+\end{align*}
+Wir nennen $\tau$ in diesem Fall \deftxt{Kopplungszeit}\index{Kopplungszeit}.
+\end{definition}
+
+Aneinander gekoppelte stochastische Prozesse sind nach der Zeit $\tau$ also gleich.
+
+\begin{satz}[Konvergenz von Kopplungen]\label{Nummer3.6.6}
+Es sei $\tau$ die Kopplungszeit zum Kopplungspaar $(X_n)$ und $(Y_n)$. Für eine messbare Menge $A \subset \sX$ gilt dann
+\begin{align*}
+\lim_{n \to \infty} \left(P(X_n \in A) - P(Y_n \in A)\right) &= 0\text{.}
+\end{align*}
+\end{satz}
+
+Beachte: Der Grenzwert $\lim P(X_n \in A)$ selbst existiert im Allgemeinen nicht.
+
+\begin{beweis}
+Wir betrachten
+\begin{align*}
+\vert P(X_n \in A) - P(Y_n \in A) \vert &\leq \vert P(X_n \in A, \tau \leq n) - P(Y_n \in A, \tau \leq n) \vert\\
+\quad &\hspace{3em}+ \vert P(X_n \in A, \tau > n) - P(Y_n \in A, \tau > n) \vert\\
+\quad &\leq 2P(\tau > n)\\
+\quad &\to 0\text{.} \qedhere
+\end{align*}
+\end{beweis}
+
+\minisec{Konstruktion von Produkt-Markovketten}
+
+Es seien $(X_n)_{n \geq 0}$ und $(Y_n)_{n \geq 0}$ unabhängige, homogene Markovketten bezüglich $(\alpha, \P)$ und $(\beta, \P)$, sie unterscheiden sich also nur in ihrer Startverteilung. Es sei $Z_n := (X_n, Y_n) \in S \times S$, dann kann man leicht zeigen, dass $(Z_n)_{n \geq 0}$ eine homogene Markovkete auf $S \times S$ mit Startverteilung $\alpha \otimes \beta$ und der Übergangsmatrix $\overline{\P}$ vermöge
+\begin{align*}
+\overline{p}_{(i_0, j_0), (i_1, j_1)} &= p_{i_0, i_1} p_{j_0, j_1}
+\end{align*}
+bildet.
+
+\begin{satz}\label{Nummer3.6.7}
+Es seien $(X_n)_{n \geq 0}$, $(Y_n)_{n \geq 0}$ und $(Z_n)_{n \geq 0}$ wie eben definiert. Ist $(Z_n)_{n \geq 0}$ irreduzibel und rekurrent, so gelten die folgenden Aussagen:
+\begin{enumerate}
+	\item\label{N367A1} Die Stoppzeit $\tau_{i_0} := \inf\{n \geq 1 : X_n = Y_n = i_0\}$ für $i_0 \in S$ ist $P$-fast sicher endlich.
+	\item\label{N367A2} Es sei
+	\begin{align*}
+	W_n &:= \begin{cases} X_n & \text{falls } n \leq \tau_{i_0}\\ Y_n & \text{falls } n > \tau_{i_0}\end{cases}\text{.}
+	\end{align*}
+	Dann ist $W_n$ eine homogene Markovkette mit Startverteilung $\alpha$ bezüglich $\P$.
+	\item\label{N367A3} Für alle $A \subset S$ gilt
+	\begin{align*}
+	P(X_n \in A) - P(Y_n \in A) &\to 0\text{.}
+	\end{align*}
+\end{enumerate}
+\end{satz}
+
+\begin{beweis}
+Für den Beweis von \ref{N367A1} betrachten wir die Rückkehrzeit $\tau = \tau_{i_0}$ von $(Z_n)$ zum Zustand $(i_0, i_0)$. Da $(Z_n)$ rekurrent ist, gilt $P$-fast sicher $\tau < \infty$.
+
+Die Aussage \ref{N367A2} werden wir hier nicht beweisen. Wir verweisen stattdessen auf \cite[S. 258]{MEINTRUP}.
+
+Für \ref{N367A3} beachten wir, dass $(Y_n)$ und $(W_n)$ für $\tau_{i_0}$ ein Kopplungspaar sind. Nach \ref{N367A2} sind $(W_n)$ und $(X_n)$ identisch verteilt, da beide Markovketten bezüglich $(\alpha, \P)$ sind. Dann wenden wir Satz \ref{Nummer3.6.6} an.
+\end{beweis}
+
+\begin{satz}[Konvergenz homogener Markovketten]\label{Nummer3.6.8}
+Es sei $(X_n)_{n \geq 0}$ eine irreduzible, homogene Markovkette mit stationärer Verteilung $\pi$. Dann gilt
+\begin{align*}
+P(X_n = j) &\stackrel{n \to \infty}{\longrightarrow} \pi(j)
+\end{align*}
+für alle $j \in S$.
+
+Ist $\alpha = \delta_{\{i\}}$, so gilt insbesondere $p_{ij}^{(n)} \to \pi(j)$ für alle $i, j \in S$.
+\end{satz}
+
+\begin{beweis}
+Es sei $(\alpha, \P)$ die Konfiguration von $(X_n)_{n \geq 0}$ und $(Y_n)_{n \geq 0}$ eine von $(X_n)_{n \geq 0}$ unabhängige, homogene Markovkette mit der Konfiguration $(\pi, \P)$. Wir wollen zeigen, dass $Z_n := (X_n, Y_n)$ irreduzibel und rekurrent ist, um Satz \ref{Nummer3.6.7} anzuwenden. Für die Irreduzibilität seien $(i_0, j_0), (i_1, j_1) \in S \times S$, dann folgt mit Lemma \ref{Nummer3.6.3}, dass ein $r \geq 0$ mit $p_{i_1,i_1}^{(r)} > 0$ und $p_{j_1, j_1}^{(r)} > 0$ existiert. Mit Lemma \ref{Nummer3.6.3} folgt dann $p_{i_0,i_1}^{(n)}p_{j_0,j_1}^{(n)} > 0$ für alle $n \geq 0$. Damit erhalten wir
+\begin{align*}
+\overline{p}_{(i_0, j_0),(i_1, j_1)}^{(n+r)} &= p_{i_0, i_1}^{(r)}p_{j_0, j_1}^{(r)} > 0\text{,}
+\end{align*}
+also ist $Z_n$ irreduzibel. Für die Rekurrenz kann man leicht zeigen, dass $\pi \otimes \pi$ eine stationäre Verteilung von $(X_n, Y_n)$ ist. Nach Korollar \ref{Nummer3.5.6} ist $(Z_n)$ also rekurrent. Mit Satz \ref{Nummer3.6.7} erhalten wir
+\begin{align*}
+P(X_n = j) - \pi(j) &= P(X_n = j) - P(Y_n = j) \longrightarrow 0\text{.} \qedhere
+\end{align*}
+\end{beweis}
+
+Für endliche Zustandsräume $S$ lässt sich der Beweis auch elementarer führen. Hierfür verweisen wir auf die Literatur.
+
+Es sei $(X_n)_{n \geq 0}$ irreduzibel und aperiodisch. Dann wollen wir folgende Eigenschaften festhalten:
+\begin{enumerate}
+	\item Ist $(X_n)$ zusätzlich transient, so gilt
+	\begin{align*}
+	\sum_n p_{ij}^{(n)} &\leq \frac{1}{p_{ji}^{(r)}} \sum_n p_{ij}^{(n)}p_{ji}^{(r)} \leq \frac{1}{p_{ji}^{(r)}} \sum_n p_{ii}^{(n+r)} < \infty\text{.}
+	\end{align*}
+	Also gilt $p_{ij}^{(n)} \to 0$.
+	\item Ist $(X_n)_{n \geq 0}$ positiv rekurrent, so existiert nach Korollar \ref{Nummer3.5.6} eine stationäre Verteilung $\pi$ mit $\pi(j) > 0$ für alle $j \in S$. Nach Satz \ref{Nummer3.6.8} gilt dann $p_{ij}^{(n)} \to \pi(j)$ und $\sum_n p_{ij}^{(n)} = \infty$.
+	\item Den dritten Fall halten wir in Satz \ref{Nummer3.6.9} fest.
+\end{enumerate}
+
+\begin{satz}\label{Nummer3.6.9}
+Sei $(X_n)_{n \geq 0}$ eine irreduzible, aperiodische und rekurrente, aber nicht positiv rekurrente, homogene Markovkette. Für alle $i, j \in S$ gilt dann
+\begin{align*}
+p_{ij}^{(n)} &\longrightarrow 0
+\end{align*}
+und
+\begin{align*}
+\sum_n p_{ij}^{(n)} &= \infty\text{.}
+\end{align*}
+\end{satz}
+
+\begin{beweis}
+Der Beweis findet sich in \cite[Satz 9.48]{MEINTRUP} und wird hier nicht geführt.
+\end{beweis}

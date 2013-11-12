@@ -1,0 +1,99 @@
+\section{Homogene Markovketten}
+
+Bisher kann die Übergangswahrscheinlichkeit $P(X_{n+1} \in A \mid X_n = i)$ noch von $n$ abhängen. Diese Abhängigkeit wollen wir bei homogenen Markovketten verbieten.
+
+\begin{definition}[Homogene Markovkette]\label{Nummer3.2.1}
+Eine Markovkette $(X_n)_{n \geq 0}$ heißt \deftxt{homogen}\index{Markovkette!homogene} genau dann, wenn $P(X_{n+1} = j \mid X_n = i) = P(X_1 = j \mid X_0 = i)$ für alle $n \geq 0$ und alle $i, j \in S$ gilt. In diesem Fall setzen wir die Übergangswahrscheinlichkeit\index{Übergangswahrscheinlichkeit} $p_{i,j} := P(X_1 = j \mid X_0 = i)$ und $\alpha_i := P(X_0 = i)$. Dann ist $\P := (p_{i,j})_{i,j \in S}$ die \deftxt{Übergangsmatrix}\index{Übergangsmatrix} und $\alpha := (\alpha_i)_{i \in S}$ die \deftxt{Startverteilung}\index{Startverteilung}.
+\end{definition}
+
+Homogene Markovketten lassen sich gut mit Graphen veranschaulichen. Ein Beispiel wird in Abbildung \ref{fig:markov} gegeben. Pfeile bedeuten hierbei echt positive Übergangswahrscheinlichkeiten.
+
+\begin{figure}[!htbp]
+\centering
+\begin{tikzpicture}
+\node[shape=circle,draw, minimum size = 1cm] (N1) at (0, 4) {1};
+\node[shape=circle,draw, minimum size = 1cm] (N4) at (0, 0) {4};
+\node[shape=circle,draw, minimum size = 1cm] (N5) at (3, 3) {5};
+\node[shape=circle,draw, minimum size = 1cm] (N3) at (6, 4) {3};
+\node[shape=circle,draw, minimum size = 1cm] (N2) at (9, 3) {2};
+\node[shape=circle,draw, minimum size = 1cm] (N6) at (6, 0) {6};
+\draw[->, semithick] (N1.south) -- (N4.north);
+\draw[->, semithick] (N4.west) .. controls +(left:1.5cm) and +(down:1.5cm) .. (N4.south);
+\draw[->, semithick] (N4) -- (N5);
+\draw[->, semithick] (N5) -- (N1);
+\draw[->, semithick] (N5.north east) to[out=30, in=180] (N3.west);
+\draw[->, semithick] (N3.south west) to[out=210, in=0] (N5.east);
+\draw[->, semithick] (N3.east) to[out=0, in=150] (N2.north west);
+\draw[->, semithick] (N2.west) to[out=180, in=-30] (N3.south east);
+\draw[->, semithick] (N2) -- (N6);
+\draw[->, semithick] (N6.west) .. controls +(left:1.5cm) and +(down:1.5cm) .. (N6.south);
+\end{tikzpicture}
+\caption[Darstellung einer homogenen Markovkette]{Darstellung einer homogenen Markovkette. Das Vorhandensein eines Pfeiles symbolisiert eine positive Übergangswahrscheinlichkeit.}\label{fig:markov}
+\end{figure}
+
+\begin{lemma}[Stochastische Matrix]\label{Nummer3.2.2}
+Ist $(X_n)_{n \geq 0}$ eine homogene Markovkette, so ist $\P = (p_{i,j})_{i,j \in S}$ eine \deftxt{stochastische Matrix}\index{Matrix!stochastische}, das heißt es gilt
+\begin{enumerate}
+	\item $p_{i,j} \geq 0$ für alle $i, j \in S$.
+	\item $\displaystyle \sum_{j \in S} p_{i,j} = 1$ für alle $i \in S$.
+\end{enumerate}
+\end{lemma}
+
+\begin{lemma}[Chapman-Kolmogorov II]\label{Nummer3.2.3}\index{Chapman-Kolmogorov!Satz von (II)}
+Ist $(X_n)_{n \geq 0}$ eine homogene Markovkette mit der Übergangsmatrix $\P$ und der Startverteilung $\alpha$, so gilt
+\begin{align*}
+P(X_{n+m} = j \mid X_n = i) &= p_{i,j}^{(m)}\text{,}
+\end{align*}
+wobei $\P^m = (p_{i,j}^{(m)})_{i, j \in S}$ die $m$-te Potenz von $\P$ ist. Insbesondere ist $p_{i,j}^{(1)} = p_{i,j}$ und
+\begin{align*}
+p_{i,j}^{(m+1)} &= \sum_{l \in S} p_{i, l}^{(m)}p_{l,j}^{(1)}\text{.}
+\end{align*}
+Ferner gilt
+\begin{align*}
+P(X_m = j) &= (\P^m \alpha)_j = \sum_{i \in S} \alpha_i p_{i,j}^{(m)}\text{.} 
+\end{align*}
+\end{lemma}
+
+\begin{beweis}
+Wir führen eine Induktion über $m$ für $n = 0$ durch. Dies genügt, da die Markovkette homogen ist. Für $m=1$ ist die Aussage offensichtlich, dann ist
+\begin{align*}
+P(X_{m+1} = j \mid X_0 = i) &= \sum_{l \in S} P(X_{m+1} = j \mid X_m = l)P(X_m = l \mid X_0 = i)\\
+\quad &= \sum_{l \in S} p_{l,j}p_{i,l}^{(m)}\text{.}
+\end{align*}
+Ferner gilt mit der Formel von der totalen Wahrscheinlichkeit\footnote{Diese findet sich im Anhang unter Satz \ref{appendix:totwkeit}.}
+\begin{align*}
+P(X_m = j) &= \sum_{i \in S} P(X_m = j \mid X_0 = i)P(X_0 = i) = \sum_{i \in S} p_{i,j}^{(m)}\alpha_i\text{.} \qedhere
+\end{align*}
+\end{beweis}
+
+Wahrscheinlichkeiten von homogenen Markovketten lassen sich also durch Matrixmultiplikationen berechnen. Für nicht-homogene Markovketten wird diese Potenz zu einem Produkt verschiedener Matrizen. Bis jetzt haben wir also homogene Markovketten vorgegeben und gewinnen daraus $\P$ und $\alpha$. Wir wollen uns nun fragen, ob wir umgekehrt aus gegebenen $\P$ und $\alpha$ auch eine Markovketten erhalten. Dies bejahen wir in folgendem Satz:
+
+\begin{satz}\label{Nummer3.2.4}
+Ist $\P$ eine stochastische Matrix über $S$ und $\alpha = (\alpha_i)_{i \in S}$ mit $\alpha_i \geq 0$ für alle $i \in S$ und $\sum_{i \in S} \alpha_i = 1$, so existiert eine $S$-wertige Markovkette $(X_n)_{n \geq 0}$ mit $P(X_1 = j \mid X_0 = i) = p_{i,j}$ für alle $i, j \in S$ und $P(X_0 = i) = \alpha_i$ für alle $i \in S$.
+\end{satz}
+
+\begin{beweis}
+Der Beweis wird hier nicht geführt, findet sich aber in \cite[Satz A.11]{MEINTRUP}.
+\end{beweis}
+
+Insbesondere existieren also die Markovketten aus Beispiel \ref{Nummer3.1.6} und Beispiel \ref{Nummer3.1.8}.
+
+\begin{beispiel}[Eindimensionale Irrfahrt]\label{Nummer3.2.5}\index{Irrfahrt!eindimensionale}
+Es sei $(Y_n)_{n \geq 0}$ mit $P(Y_n = 1) =: p > 0$, $P(Y_n = -1) = 1-p =: q > 0$ und $(Y_n)_{n \geq 0}$ sei unabhängig. Dann setzen wir $X_n := \sum_{i=0}^n Y_i$. In Beispiel \ref{Nummer3.1.5} haben wir bereits gesehen, dass dies eine Markovkette ist. Außerdem kann man leicht sehen, dass sie homogen ist. Für $i \in \Z$ gilt
+\begin{align*}
+p_{i, i+1} &= P(X_{n+1} = i+1 \mid X_n = i) = p
+\shortintertext{und}
+p_{i, i-1} &= P(X_{n+1} = i-1 \mid X_n = i) = 1-p\text{.}
+\end{align*}
+Damit ist also $p_{i,j} = 0$ für $i \in S$ und $j \notin\{i \pm 1\}$. Außerdem ist $\alpha_1 = p$, $\alpha_{-1} = 1-p$ und $\alpha_j = 0$ für alle anderen $j$. 
+
+Eine Variante ist die Irrfahrt mit absorbierendem Rand, dann ist $S = \{-1, \ldots, N\}$. Es gilt $p_{i, i+1} = p$ und $p_{i, i-1} = 1-p$, falls $-1 < i < N$ ist, sowie $p_{-1, -1} = 1$ und $p_{N, N} = 1$. 
+\end{beispiel}
+
+\begin{beispiel}[Galton-Watson-Prozess]\label{Nummer3.2.6}\index{Galton-Watson-Prozess}
+Der im Abschnitt \ref{sec:anwendungen} betrachtete Galton-Watson-Prozess ist ebenfalls eine homogene Markovkette.
+\end{beispiel}
+
+\begin{definition}[Absorbierender Zustand]\label{Nummer3.2.7}
+Ein Zustand $i \in S$ heißt \deftxt{absorbierend}\index{Zustand!absorbierender} genau dann, wenn $p_{i,i} = 1$ gilt.
+\end{definition}

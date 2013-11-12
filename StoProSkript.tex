@@ -1,0 +1,99 @@
+\input{inc/settings/settings}				% document specific settings
+
+\documentclass[a4paper, 						% paper size
+							 12pt, 								% font size
+							 BCOR = \usrBCOR,			% binding correction
+							 DIV=15, 							% used for typearea calculation
+							 headsepline,					% add head line to border calculation
+							 twoside, 						% two-sided document
+							 footnotes = multiple,% visually separate two consecutive footnotes
+							 toc = index,					% add index to table of contents
+							 numbers = auto,			% automatic placing of end dot in numbering
+							 pagesize							% used for flexibility
+							]{scrbook}						% KOMA book class
+							
+\input{inc/settings/preamble}				% general settings and packages
+\input{inc/settings/abbreviations}	% predefined macros
+\input{inc/settings/environments}		% predefined environments
+\input{inc/settings/hyphenation}		% custom hyphenation rules
+
+%\includeonly{}											% while writing your book, compile only what you need
+
+\begin{document}
+\raggedbottom
+\ifthenelse{\equal{\usrmatter}{1}}
+	{\frontmatter}{}
+\include{inc/titlepage}
+\newpage
+\include{inc/copyright}
+\newpage
+\tableofcontents
+\include{inc/preface}
+\ifthenelse{\equal{\usrmatter}{1}}
+	{\mainmatter}{}
+\ifthenelse{\equal{\useThumbs}{1}}
+	{\ihead[\putchapterthumb]{\putchapterthumb}}{}
+	
+% ================================
+% include your document parts here
+% only use section-wise documents since include inserts new pages!
+\include{content/chapter1-1}
+	\include{content/chapter1-2}
+	\include{content/chapter1-3}
+	\include{content/chapter1-4}
+	\include{content/chapter1-5}
+\include{content/chapter2-1}
+	\include{content/chapter2-2}
+	\include{content/chapter2-3}
+	\include{content/chapter2-4}
+	\include{content/chapter2-5}
+	\include{content/chapter2-6}
+	\include{content/chapter2-7}
+	\include{content/chapter2-8}
+	\include{content/chapter2-9}
+\include{content/chapter3-1}
+	\include{content/chapter3-2}
+	\include{content/chapter3-3}
+	\include{content/chapter3-4}
+	\include{content/chapter3-5}
+	\include{content/chapter3-6}
+\include{content/chapter4-1}
+	\include{content/chapter4-2}
+	\include{content/chapter4-3}
+	\include{content/chapter4-4}
+\include{content/chapter5-1}
+	\include{content/chapter5-2}
+	\include{content/chapter5-3}
+	\include{content/chapter5-4}
+	\include{content/chapter5-5}
+% ================================
+
+% Verschiebung:
+% 3.2.4 -> 3.2.5 und folgende
+% 3.4.12 -> ...?
+% 5.1.2 -> 5.1.3 aufpassen!
+
+\ifthenelse{\equal{\useThumbs}{1}}
+	{\ihead[]{}}{}
+\ifthenelse{\equal{\useIndex}{1}}{
+\cleardoublepage
+\cleardoublepage\begin{thebibliography}{WT}
+\bibitem[Kallenberg01]{KALL} O. Kallenberg, \emph{Foundations of Modern Probability}, Springer, 2001
+\bibitem[Klenke06]{KLENKE} A. Klenke, \emph{Wahrscheinlichkeitstheorie}, Springer, 2006
+\bibitem[Krylov02]{KRYLOV} N. V. Krylov, \emph{Introduction to the Theory of Random Processes}, AMS: Graduate Studies in Mathematics, 2002
+\bibitem[Meintrup04]{MEINTRUP} D. Meintrup und S. Schäffler, \emph{Stochastik -- Theorie und Anwendungen}, Springer, 2004
+\bibitem[WTSkript11]{WT} I. Steinwart, \emph{Wahrscheinlichkeitstheorie}, Mitschrieb der Vorlesung "`Wahrscheinlichkeitstheorie"' von Ingo Bürk, Wintersemester 2010/2011
+\bibitem[Kestelman60]{KESTELMAN} Kestelman, \emph{Modern Theory of Integration}, 1960
+\bibitem[Graves56]{GRAVES} Graves, \emph{The Theory of Functions of Real Variables}, 1956 
+\end{thebibliography}
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{\listfigurename}
+\listoffigures
+\cleardoublepage
+\appendix
+\include{inc/appendix}
+\cleardoublepage
+\renewcommand{\indexname}{Stichwortverzeichnis}
+\printindex}{}
+\end{document}

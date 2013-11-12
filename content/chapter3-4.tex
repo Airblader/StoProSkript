@@ -1,0 +1,301 @@
+\section{Klassifikation von Zuständen}
+
+Wir wollen nun ein Beispiel diskutieren, um verschiedene Arten von Zuständen kennenzulernen. Dazu betrachten wir die homogene Markovkette, die in Abbildung \ref{fig:markov2} dargestellt wird. Wir sehen, dass wir von Zustand 3 aus in jeden anderen Zustand gelangen können, dieser die Kette aber in zwei Gebiete aufteilt, zwischen denen man nie wieder wechseln kann. Zwischen Zustand 1 und Zustand 2 können wir beliebig oft wechseln und zwischen den Zustanden 4, 5 und 6 gibt es eine Art "`Kreisverkehr"'.
+
+\begin{figure}[!htbp]
+\centering
+\begin{tikzpicture}
+\node[shape=circle,draw, minimum size = 1cm] (N1) at (0, 4) {1};
+\node[shape=circle,draw, minimum size = 1cm] (N2) at (0, 0) {2};
+\node[shape=circle,draw, minimum size = 1cm] (N3) at (3, 4) {3};
+\node[shape=circle,draw, minimum size = 1cm] (N4) at (6, 4) {4};
+\node[shape=circle,draw, minimum size = 1cm] (N5) at (4.5, 0) {5};
+\node[shape=circle,draw, minimum size = 1cm] (N6) at (7.5, 0) {6};
+\draw[->, semithick] (N1.south west) to[out=240, in=120] (N2.north west);
+\draw[->, semithick] (N2.north east) to[out=60, in=-60] (N1.south east);
+\draw[->, semithick] (N3) -- (N1);
+\draw[->, semithick] (N3) -- (N4);
+\draw[->, semithick] (N4) -- (N5);
+\draw[->, semithick] (N5) -- (N6);
+\draw[->, semithick] (N6) -- (N4);
+\end{tikzpicture}
+\caption[Beispiel einer Markovkette mit verschiedenen Typen von Zuständen]{Beispiel einer Markovkette mit verschiedenen Typen von Zuständen.}\label{fig:markov2}
+\end{figure}
+
+\begin{definition}[Erreichbarkeit, Kommunizierend]\label{Nummer3.4.1}
+Sei $(X_n)_{n \geq 0}$ eine homogene Markovkette mit Übergangsmatrix $\P$ und Startverteilung $\alpha$. Für $i, j \in S$ sagen wir,
+\begin{enumerate}
+	\item dass $j$ von $i$ aus \deftxt{erreichbar}\index{Zustand!erreichbarer} ist und schreiben $i \to j$ genau dann, wenn ein $m \geq 0$ mit $p_{i,j}^{(m)} > 0$ existiert.
+	\item dass $i$ und $j$ \deftxt{kommunizieren}\index{Zustand!kommunizierender} und schreiben $i \leftrightarrow j$ genau dann, wenn $i \to j$ und $j \to i$ gilt.
+\end{enumerate}
+\end{definition}
+
+Wir erinnern uns daran, dass wir $p_{ij}^{(0)} = \delta_{ij}$ definiert haben und daher $i \leftrightarrow j$ für alle $i \in S$ gilt. Ferner ist $i \to j$ genau dann, wenn es einen Pfad von $i$ nach $j$ gibt. Dies ist im Wesentlichen die Aussage von Chapman-Kolmogorov (vergleiche Satz \ref{Nummer3.1.4}). Die Äquivalenzrelation "`$\leftrightarrow$"' beschreibt die sog. \emph{starken Zusammenhangskomponenten} des Graphen, wenn man die Kanten $(i,i)$ hinzufügt. Die zugehörigen Äquivalenzklassen heißen \deftxt{Kommunikationsklassen}\index{Kommunikationsklasse}. Im Beispiel aus Abbildung \ref{fig:markov2} wären dies $\{1,2\}$, $\{3\}$ und $\{4,5,6\}$.
+
+Ist $C$ eine Kommunikationsklasse und sind $i, j \in C$, so existiert ein Pfad in $C$, der von $i$ nach $j$ führt. Für den Beweis nehmen wir an, dass es $i, j \in C$ gibt, so dass jeder Pfad von $i$ nach $j$ durch ein $l \in S \setminus C$ verläuft. Solch einen Pfad mit $l \notin C$ wollen wir nun fixieren, dann gilt $i \to l$ und $l \to j \to i$. Damit gilt aber $i \leftrightarrow l$ und daher $l \in C$, was einen Widerspruch darstellt.
+
+Unser nächstes Ziel ist die Beschreibung von Zustandsmengen, aus denen wir nicht wieder herauskommen können. Dazu führen wir den folgenden Begriff ein:
+
+\begin{definition}[Abgeschlossene Menge]\label{Nummer3.4.2}
+Es sei $(X_n)_{n \geq 0}$ eine homogene Markovkette mit Übergangsmatrix $\P$ und Startverteilung $\alpha$. Eine Menge $A \subset S$ heißt \deftxt{abgeschlossen}\index{Abgeschlossene Menge} genau dann, wenn gilt
+\begin{align*}
+\sum_{j \in A} p_{ij} &= 1 \qquad \text{für alle } i \in A\text{.}
+\end{align*}
+\end{definition}
+
+Mit anderen Worten existiert also kein $j \notin A$ mit $p_{ij} > 0$. Im Beispiel aus Abbildung \ref{fig:markov2} wären $\{1,2\}$, $\{4,5,6\}$ oder auch $\{1,2,4,5,6\}$ und $S$ selbst abgeschlossene Mengen.
+
+\begin{definition}[Irreduzibilität]\label{Nummer3.4.3}
+Es sei $(X_n)_{n \geq 0}$ eine homogene Markovkette. Eine Menge $A \subset S$ heißt \deftxt{irreduzibel}\index{Irreduzibilität} genau dann, wenn $i \leftrightarrow j$ für alle $i, j \in A$ gilt. Ferner nennen wir die Markovkette $(X_n)$ selbst \deftxt{irreduzibel}\index{Markovkette!irreduzible} genau dann, wenn $S$ irreduzibel ist.
+\end{definition}
+
+Aus der Irreduzibilität folgt im Allgemeinen nicht die Abgeschlossenheit. Dazu kann man Zustand 3 in Abbildung \ref{fig:markov2} betrachten. Ist $S$ irreduzibel, so ist eine Kommunikationsklasse namensgebend. Die größte irreduzible Menge, die ein $i \in S$ enthält, ist dessen Kommunikationsklasse. Im Allgemeinen sind Kommunikationsklassen aber nicht abgeschlossen.
+
+Wir sind nun an der Wahrscheinlichkeit dafür interessiert, dass man in endlicher Zeit von $i$ nach $j$ gelangen kann. Die Wahrscheinlichkeit, nach genau $m$ Schritten von $i$ nach $j$ zu gelangen, haben wir mit $p_{ij}^{(m)}$ bezeichnet. 
+
+Für $j \in S$ definieren wir die \deftxt{Rückkehrzeit}\index{Rückkehrzeit}
+\begin{align*}
+\tau_j &:= \inf\{n \geq 1 : X_n = j\}\text{.}
+\end{align*}
+Für diese Stoppzeit gilt $\tau_j \geq 1$, insbesondere gilt also $X_0(\omega) = j \not\Rightarrow \tau_j(\omega) = 0$. Für $i, j \in S$ setzen wir nun
+\begin{align*}
+\rho_{i,j} &:= P(\tau_j < \infty \mid X_0 = i)\text{.}
+\end{align*}
+Daher beschreibt $\rho_{i,j}$ gerade die Wahrscheinlichkeit dafür, in endlicher Zeit zu $j$ zu gelangen, wenn man in $i$ startet. Insbesondere ist $\rho_{i,i}$ gerade die Rückkehrwahrscheinlichkeit. Gelangen wir sicher in endlicher Zeit von $i$ nach $i$, ist also $\rho_{i,i} = 1$, so liegt aufgrund der starken Markoveigenschaft die Vermutung nahe, dass $i$ unendlich oft besucht wird. Wir werden sehen, dass $i$ nur endlich oft besucht wird, wenn $\rho_{i,i} < 1$ ist.
+
+\begin{definition}[Transienz, Rekurrenz]\label{Nummer3.4.4}
+Es sei $(X_n)_{n \geq 0}$ eine homogene Markovkette. Ein Zustand $i \in S$ heißt dann
+\begin{enumerate}
+	\item \deftxt{transient}\index{Transienz} genau dann, wenn $\rho_{i,i} < 1$ ist.
+	\item \deftxt{rekurrent}\index{Rekurrenz} genau dann, wenn $\rho_{i,i} = 1$ ist.
+	\item \deftxt{positiv rekurrent}\index{Rekurrenz!positive} genau dann, wenn der Zustand rekurrent ist und zusätzlich $\E(\tau_i \mid X_0 = i) < \infty$ gilt.
+	\item \deftxt{nullrekurrent}\index{Rekurrenz!Null-} genau dann, wenn der Zustand rekurrent ist und $\E(\tau_i \mid X_0 = i) = \infty$ gilt.
+\end{enumerate}
+\end{definition}
+
+Jeder Zustand $i \in S$ ist offenbar entweder transient oder rekurrent. Außerdem ist jeder rekurrente Zustand entweder positiv rekurrent oder nullrekurrent. Für $i \in S$ setzen wir nun
+\begin{align*}
+N_i &:= \sum_{n=0}^\infty \ind_{\{X_n = i\}}
+\end{align*}
+für die Anzahl der Besuche in $i$. Dann gilt $\E(N_i \mid X_0 = i) = \sum_{n=0}^\infty P(X_n=i \mid X_0=i) = \sum_{n=0}^\infty p_{ii}^{(n)}$ für die erwarteten Besuche in $i$. Ferner betrachten wir die Wahrscheinlichkeit dafür, dass $X_n = i$ unendlich oft eintritt. Diese ist gegeben durch
+\begin{align*}
+P(N_i = \infty \mid X_0=i) &= P(\limsup \{X_n = i\} \mid X_0=i)\text{.}
+\end{align*} 
+Wir erwarten nun, dass diese Größen für transiente und (positive bzw. null-)rekurrente Zustände unterschiedlich sind.
+
+\begin{satz}\label{Nummer3.4.5}
+Sei $(X_n)_{n \geq 0}$ eine homogene Markovkette und $i \in S$.
+\begin{enumerate}
+	\item Ist $i$ rekurrent, so gilt $P(N_i = \infty \mid X_0 = i) = 1$ und $\E(N_i \mid X_0=i) = \sum_{n=0}^\infty p_{ii}^{(n)} = \infty$.
+	\item Ist $i$ transient, so gilt $P(N_i = \infty \mid X_0 = i) = 0$ und $\E(N_i \mid X_0=i) = \sum_{n=0}^\infty p_{ii}^{(n)} = \frac{1}{1-\rho_{i,i}} < \infty$.
+\end{enumerate}
+\end{satz}
+
+\begin{beweis}
+Wir betrachten die letzte Besuchszeit, die gegeben ist durch
+\begin{align*}
+L_i\colon \Omega &\to \overline{\N_0}\text{,}\\
+L_i(\omega) &:= \sup\{n \geq 0 : X_n(\omega) = i\}\text{.}
+\end{align*}
+Es gilt zu beachten, dass $L_i$ keine Stoppzeit definiert, da die Zukunft $X_m(\omega) \neq i$ für $m > n$ beschrieben wird. Ist $X_0(\omega) = i$, so folgt $\{n \geq 0 : X_n(\omega) = i\} \neq \emptyset$ und $L_i(\omega) \geq 0$. Als Vorbemerkung führen wir folgende Rechnung an: 
+\begin{align*}
+P(A \cap C \mid B) &= \frac{P(A \cap C \cap B)}{P(B)} = \frac{P(A \cap C \cap B)}{P(B \cap C)} \cdot \frac{P(B \cap C)}{P(B)} = P(A \mid B \cap C) \cdot P(C \mid B)\text{.}
+\end{align*}
+Damit erhalten wir für $n \geq 0$
+\begin{align*}
+P(L_i = n \mid X_0 = i) &\stackrel{\hphantom{\text{\ref{Nummer3.3.3}}}}{=} P(X_n = i \text{ und } X_m \neq i\,\forall_{m > n} \mid X_0 = i)\\
+\quad &\stackrel{\hphantom{\text{\ref{Nummer3.3.3}}}}{=} P(X_m \neq i\,\forall_{m > n} \mid X_n = i \text{ und } X_0 = i) \cdot P(X_n = i \mid X_0 = i)\\
+\quad &\stackrel{\text{\ref{Nummer3.3.3}}}{=} P(X_m \neq i\,\forall_{m > 0} \mid X_0 = i) \cdot P(X_n = i \mid X_0 = i)\\
+\quad &\stackrel{\hphantom{\text{\ref{Nummer3.3.3}}}}{=} (1-\rho_{i,i})p_{ii}^{(n)}\text{.} \tag{*}
+\end{align*}
+Summieren wir über diesen Ausdruck, so erhalten wir
+\begin{align*}
+P(L_i < \infty \mid X_0 = i) &= (1-\rho_{i,i}) \sum_{n=0}^\infty p_{ii}^{(n)}\\
+\quad &= (1 - \rho_{i,i}) \E(N_i \mid X_0 = i)\text{.}
+\end{align*}
+Ferner besucht $(X_n)$ den Zustand $i$ genau dann unendlich oft, wenn $L_i = \infty$ ist. Damit folgt
+\begin{align*}
+P(L_i < \infty \mid X_0 = i) &= 1 - P(N_i = \infty \mid X_0 = i)\text{.} \tag{**}
+\end{align*}
+Setzen wir dies zusammen, so erhalten wir
+\begin{align*}
+(1-\rho_{i,i}) \E(N_i \mid X_0 = i) &= 1 - P(N_i = \infty \mid X_0 = i)\text{.} \tag{***}
+\end{align*}
+Ist $i$ rekursiv, so gilt per Definition $\rho_{i,i} = 1$. Wegen (*) folgt damit $P(L_i = n \mid X_0 = i) = 0$ für alle $n \geq 0$ und damit $P(L_i < \infty \mid X_0 = i) = 0$. Aus (**) folgt dann, dass $P(N_i = \infty \mid X_0 = i) = 1$ gilt. Mit dem Lemma von Borel-Cantelli\footnote{Dieses findet sich im Anhang unter Lemma \ref{appendix:borelcantelli2}.} folgt dann
+\begin{align*}
+\E(N_i \mid X_0 = i) &= \sum_{n=1}^\infty P(X_n = i \mid X_0 = i) = \infty\text{.}
+\end{align*}
+Ist $i$ hingegen transient, so gilt $\rho_{i,i} < 1$ und mit (***) folgt daher
+\begin{align*}
+\E(N_i \mid X_0 = i) &= \frac{1 - P(N_i = \infty \mid X_0 = i)}{1 - \rho_{i,i}} < \infty\text{.}
+\end{align*}
+Mit dem Lemma von Borel-Cantelli folgt dann wiederum $P(N_i = \infty \mid X_0 = i) = 0$ und mit (***) schließlich
+\begin{align*}
+\E(N_i \mid X_0 = i) &= \frac{1}{1 - \rho_{i,i}}\text{.} \qedhere
+\end{align*}
+\end{beweis}
+
+\begin{satz}[Abhängigkeit von Kommunikationsklassen]\label{Nummer3.4.6}
+Es sei $(X_n)_{n \geq 0}$ eine homogene Markovkette und $i, j \in S$ mit $i \leftrightarrow j$. Dann gilt:
+\begin{enumerate}
+	\item $i$ ist rekurrent genau dann, wenn $j$ rekurrent ist.
+	\item $i$ ist transient genau dann, wenn $j$ transient ist.
+\end{enumerate}
+\end{satz}
+
+\begin{beweis}
+Da jeder Zustand entweder transient oder rekurrent ist, müssen wir lediglich die erste Aussage beweisen. Da diese zudem symmetrisch in $i$ und $j$ ist, genügt es, nur eine Implikation zu beweisen. Sei daher $i$ transient. Dann folgt wegen der kommunizierenden Eigenschaft, dass es $k, m \geq 0$ mit $p_{ij}^{(k)} > 0$ und $p_{ji}^{(m)} > 0$ gibt. Dann gilt mit dem Satz von Chapman-Kolmogorov aber $p_{ii}^{(k+l+m)} \geq p_{ij}^{(k)}p_{jj}^{(l)}p_{ji}^{(m)}$ für alle $l \geq 0$. Summieren wir über $l$, so erhalten wir
+\begin{align*}
+\sum_{l=0}^\infty p_{jj}^{(l)} &\leq \frac{1}{p_{ij}^{(k)}p_{ji}^{(m)}}\sum_{l=0}^\infty p_{ii}^{(k+l+m)} < \infty\text{,}
+\end{align*}
+da $i$ nach Voraussetzung transient war. Damit ist $j$ nicht rekurrent und daher transient.
+\end{beweis}
+
+Satz \ref{Nummer3.4.6} garantiert die Wohldefiniertheit der folgenden Sprechweise: Wir sagen, dass eine Kommunikationsklasse $A$ \deftxt{rekurrent}\index{Rekurrenz} bzw. \deftxt{transient}\index{Transienz} heißt, wenn es einen rekurrenten bzw. transienten Zustand $i \in A$ gibt, da dies dann auch für alle anderen Zustände in $A$ gilt.
+
+\begin{satz}[Abgeschlossenheit von Kommunikationsklassen]\label{Nummer3.4.7}
+Es sei $(X_n)_{n \geq 0}$ eine homogene Markovkette und $R \subset S$ eine rekurrente Kommunikationsklasse. Dann ist $R$ abgeschlossen im Sinne von Definition \ref{Nummer3.4.2}.
+\end{satz}
+
+\begin{beweis}
+Wir nehmen an, dass $R$ nicht abgeschlossen ist. Dann existieren $i \in R$, $j \notin R$ und $m \geq 0$ mit $P(X_m = j \mid X_0 = i) > 0$. Da $R$ eine Kommunikationsklasse ist, in der $j$ nicht enthalten ist, gilt außerdem $P(X_n = i \text{ und } X_m = j \mid X_0 = i) = 0$ für alle $n > m$. Dann folgt auch $P(X_n = i \text{ unendlich oft und } X_m = j \mid X_0 = i) = 0$. Wir erhalten
+\begin{align*}
+P(X_n = i \text{ $\infty$-oft} \mid X_0 = i) &\leq P(X_n = i \text{ $\infty$-oft und } X_m = j \mid X_0 = i) + P(X_m \neq j \mid X_0 = i)\\
+\quad &\leq 0 + (1 - P(X_m = j))\\
+\quad &< 1\text{.}
+\end{align*}
+Mit Satz \ref{Nummer3.4.5} folgt dann, dass $i$ nicht rekurrent ist. Nach Satz \ref{Nummer3.4.6} stellt dies jedoch einen Widerspruch dar.
+\end{beweis}
+
+\begin{satz}[Zerlegung des Zustandsraumes]\label{Nummer3.4.8}
+Es sei $(X_n)_{n \geq 0}$ eine homogene Markovkette. Dann lässt sich der Zustandsraum zerlegen in
+\begin{align*}
+S &= T \cup \bigcup_{l \in L} R_l\text{,}
+\end{align*}
+wobei $T$ die Menge der transienten Zustände, $L$ eine höchstens abzählbare Indexmenge und $R_l$ für jedes $l \in L$ eine irreduzibele, abgeschlossene und rekurrente Kommunikationsklasse ist.
+\end{satz}
+
+\begin{figure}[!htbp]
+\centering
+\begin{tikzpicture}
+\node[shape=circle,draw, minimum size = 1cm] (N1) at (0, 4) {1};
+\node[shape=circle,draw, minimum size = 1cm] (N2) at (0, 0) {2};
+\node[shape=circle,draw, minimum size = 1cm] (N3) at (3, 4) {3};
+\node[shape=circle,draw, minimum size = 1cm] (N4) at (6, 4) {4};
+\node[shape=circle,draw, minimum size = 1cm] (N5) at (4.5, 0) {5};
+\node[shape=circle,draw, minimum size = 1cm] (N6) at (7.5, 0) {6};
+\draw[->, semithick] (N1.south west) to[out=240, in=120] (N2.north west);
+\draw[->, semithick] (N2.north east) to[out=60, in=-60] (N1.south east);
+\draw[->, semithick] (N3) -- (N1);
+\draw[->, semithick] (N3) -- (N4);
+\draw[->, semithick] (N4) -- (N5);
+\draw[->, semithick] (N5) -- (N6);
+\draw[->, semithick] (N6) -- (N4);
+
+\draw[red, thick, dashed] (0, 5) to[out=180, in=180] (0,-1) node[below] {$R_1$} to[out=0, in=0] (0,5);
+\draw[red, thick, dashed] (3, 5) to[out=180, in=180] (3,3) node[below] {$T$} to[out=0, in=0] (3,5);
+\draw[red, thick, dashed] (6, 5) to[out=180, in=150] (4.2,-0.8) node[below] {$R_2$} to[out=-30, in=210] (7.8,-0.8) to[out=30, in=0] (6,5);
+\end{tikzpicture}
+\caption[Zerlegung einer Markovkette in transiente und rekurrente Teile]{Zerlegung des Beispiels aus Abbildung \ref{fig:markov2} gemäß Satz \ref{Nummer3.4.8}.}\label{fig:markov3}
+\end{figure}
+
+\begin{beweis}
+Seien $(C_k)_{k \in K}$ die Kommunikationsklassen, dann ist $S = \bigcup_{k \in K} C_k$ eine paarweise disjunkte Vereinigung, wobei $K$ höchstens abzählbar ist, da auch $S$ höchstens abzählbar ist. Wir setzen nun $T$ als die Vereinigung über die transienten $C_k$. Dann gilt
+\begin{align*}
+S &= T \quad \cup \bigcup_{\substack{k \in K\\C_k\text{ rekurrent}}} \hspace{-1.5em}C_k\text{.}
+\end{align*}
+Mit Satz \ref{Nummer3.4.7} ist jede rekurrente Kommunikationsklasse aber auch abgeschlossen. Da Kommunikationsklassen zudem nach Definition irreduzibel sind, folgt die Behauptung.
+\end{beweis}
+
+Eine Menge $A \subset S$ ist abgeschlossen, wenn kein Pfad $A$ verlässt und irreduzibel, wenn es für jedes $i \in A$ einen Pfad zu jedem $j \in A$ gibt. Ist $A$ endlich, abgeschlossen und irreduzibel, so würden wir erwarten, dass jeder Zustand häufig besucht wird.
+
+\begin{satz}[Rekurrenz endlicher, irreduzibler Markovketten]\label{Nummer3.4.9}
+Sei $(X_n)_{n \geq 0}$ eine homogene Markovkette und $A \subset S$ endlich, abgeschlossen und irreduzibel. Dann ist $A$ positiv rekurrent.
+\end{satz}
+
+Insbesondere sind also auch endliche, irreduzible und abgeschlossene Markovketten bereits positiv rekurrent.
+
+\begin{beweis}
+Es sei $i \in A$, dann gilt $i \leftrightarrow j$ für alle $j \in A$ und daher existiert für alle $j \in A$ ein $k_j$ mit $P(\tau_i \leq k_j \mid X_0 = j) > 0$. Da $A$ endlich ist, können wir das Maximum $k := \max\{k_j : j \in A\} < \infty$ wählen. Nun sei
+\begin{align*}
+\e &:= P(\tau_i \leq k \mid X_0 = j) > 0\text{.} \tag{*}
+\end{align*}
+Wir wollen zeigen, dass $P(\tau_i > nk \mid X_0 = j) = (1-\e)^n$ ist und führen hierfür eine vollständige Induktion durch. Der Induktionsanfang ist bereits in (*) gegeben. Für den Induktionsschritt beachten wir nun, dass $\tau_i \leq k$ genau dann gilt, wenn $X_{\tau_i \wedge k} = i$ ist. Dann gilt
+\begin{align*}
+P(\tau_i > (n+1)k \mid X_0 = j) &= P(X_{\tau_i \wedge (n+1)k} \neq i \mid X_0 = j)\\
+\quad &= \sum_{i \neq l \in A} P(X_{\tau_i \wedge (n+1)k} \neq i, X_{\tau_i \wedge nk} = l \mid X_0 = j)\\
+\quad &= \sum_{i \neq l \in A} P(X_{\tau_i \wedge (n+1)k} \neq i \mid X_{\tau_i \wedge nk} = l, X_0 = j)P(X_{\tau_i \wedge nk} = l \mid X_0 = j)\text{.}
+\intertext{Wir wenden auf den ersten Faktor die starke Markoveigenschaft und (*) an und erhalten}
+\quad &= (1-\e) \sum_{i \neq l \in A} P(X_{\tau_i \wedge nk} = l \mid X_0 = j)\\
+\quad &= (1-\e) (1-\e)^n\\
+\quad &= (1-\e)^{n+1}\text{.}
+\end{align*}
+Mit einem Satz aus der Wahrscheinlichkeitstheorie und dem Integral-Vergleichskriterium folgt dann
+\begin{align*}
+\E(\tau_i \mid X_0 = i) &= \int_0^\infty P(\tau_i \geq t \mid X_0 = i)~\dd t = \sum_{n=0}^\infty P(\tau_i > n \mid X_0 = i)\\
+\quad &\leq k\sum_{n=0}^\infty P(\tau_i > nk \mid X_0 = i)\\
+\quad &< \infty\text{.} \qedhere
+\end{align*}
+\end{beweis}
+
+\begin{korollar}\label{Nummer3.4.10}
+Sei $(X_n)_{n \geq 0}$ eine homogene Markovkette und $A \subset S$ eine endliche Kommunikationsklasse. Dann sind die folgenden Aussagen äquivalent:
+\begin{enumerate}
+	\item\label{N3410A1} $A$ ist abgeschlossen.
+	\item\label{N3410A2} $A$ ist rekurrent.
+	\item\label{N3410A3} $A$ ist positiv rekurrent.
+\end{enumerate}
+\end{korollar}
+
+\begin{beweis}
+Für \ref{N3410A1} $\Rightarrow$ \ref{N3410A3} folgt, nach Satz \ref{Nummer3.4.9}, dass $A$ irreduzibel ist, da $A$ nach Voraussetzung eine Kommunikationsklasse ist. Der Schritt \ref{N3410A3} $\Rightarrow$ \ref{N3410A2} ist offensichtlich und \ref{N3410A2} $\Rightarrow$ \ref{N3410A1} folgt schließlich aus Satz \ref{Nummer3.4.7}.
+\end{beweis}
+
+Wir können zusammenfassend also sagen, dass wir endliche Kommunikationsklassen bezüglich der Rekurrenz gut verstehen. Die nächste Frage wäre also, wie es mit unendlichen Kommunikationsklassen aussieht. Hier lassen sich solche Aussagen nicht treffen, wie wir im folgenden Beispiel sehen werden.
+
+\begin{beispiel}[Irrfahrt auf $\Z$]\label{Nummer3.4.11}
+Sei $(Y_n)_{n \geq 0}$ i.\,i.\,d. mit $P(Y_n = 1) =: p \in (0,1)$ und $P(Y_n = -1) = 1-p$. Dann setzen wir $X_n := \sum_{i=0}^n Y_n$ und in Beispiel \ref{Nummer3.2.5} haben wir bereits gesehen, dass dies eine homogene Markovkette mit $p_{i,i+1} = p$ und $p_{i, i-1} = 1-p$ für $i \in \Z$ und $p_{i,j} = 0$ sonst ist. Dass $(X_n)$ irreduzibel ist, ist klar, da $i \leftrightarrow i+1$ für alle Zustände $i \in \Z$ gilt. Außerdem gilt $X_n = 0$ $P$-fast sicher und es genügt, die Rekurrenz in $i = 0$ zu untersuchen. Man kann sich leicht überlegen, dass $p_{0,0}^{(2n+1)} = 0$ für alle $n \geq 0$ gilt. 
+
+Wie sieht es für eine gerade Anzahl von Schritten aus? Gelangen wir von $0$ nach $0$ in $2n$ Schritten, so müssen wir genau $n$ Schritte in eine und $n$ Schritte in die andere Richtung machen. Die Wahrscheinlichkeit von einer solchen Folge von Schritten beträgt $p^n(1-p)^n$ und es gibt $\binom{2n}{n}$ verschiedene solcher Folgen. Damit erhalten wir
+\begin{align*}
+p_{0,0}^{(2n)} &= \binom{2n}{n} p^n (1-p)^n\text{.}
+\end{align*}
+Mit Satz \ref{Nummer3.4.5} reicht es, die Reihe $\sum_{n=0}^\infty p_{0,0}^{(2n)}$ zu untersuchen. Dazu verwenden wir die Stirling-Formel\footnote{Siehe \cite[Satz 1.8.6]{WT}.}, die im Wesentlichen $n! \sim \sqrt{2\pi n} \left(\frac{n}{e}\right)^n$ besagt. Damit erhalten wir
+\begin{align*}
+\binom{2n}{n} = \frac{(2n)!}{(n!)^2} &\sim \frac{4^n}{\sqrt{\pi n}}\text{.}
+\end{align*}
+Im ersten Fall sei $p = 1-p$, dann ist $4^n p^n (1-p)^n = 1$ und wir erhalten
+\begin{align*}
+\sum_{n = 0}^\infty p_{0,0}^{(2n)} &\geq c \sum_{n=0}^\infty \frac{1}{\sqrt{\pi n}} = \infty\text{,}
+\end{align*}
+also ist die Irrfahrt rekurrent. Im zweiten Fall sei $p \neq 1-p$, dann gilt $4^n (1-p)^n = a^n$ für ein $a \in (0,1)$. Dann ist die Reihe konvergent und die Irrfahrt daher transient.
+\end{beispiel}
+
+Man kann zeigen, dass die symmetrische Irrfahrt in $\Z^d$ genau dann rekurrent ist, wenn $d \leq 2$ ist. Anschaulich gesprochen bewegt man sich stets um die $0$ herum. Für Details verweisen wir auf \cite[S. 248]{MEINTRUP}.
+
+Satz \ref{Nummer3.4.6} hatte für einen rekurrenten Zustand $i$ mit $i \leftrightarrow j$ gezeigt, dass dann auch $j$ rekurrent ist. Dies wollen wir nun verallgemeinern.
+
+\begin{satz}[Allgemeine Erreichbarkeitswahrscheinlichkeiten]\label{Nummer3.4.12}
+Sei $(X_n)_{n \geq 0}$ eine homogene Markovkette und $i \in S$ ein rekurrenter Zustand. Für $j \in S$ betrachten wir
+\begin{align*}
+\rho_{i,j} &:= P(\tau_j < \infty \mid X_0 = i)\text{.}
+\end{align*}
+Gilt $i \rightarrow j$, so ist auch $j$ rekurrent und es gilt $\rho_{i,j} = \rho_{j,i} = 1$.
+\end{satz}
+
+\begin{beweis}
+Es sei also $i \rightarrow j$. Dann existieren paarweise verschiedene $i_0, \ldots, i_k$ mit $i_0 = i$, $i_k = j$ und $P(X_1 = i_1, \ldots, X_k = i_k \mid X_0 = i) > 0$, insbesondere gilt also $p_{i,j}^{(k)} > 0$. Nun folgt
+\begin{align*}
+0 = 1 - \rho_{i,i} &= P(\tau_i = \infty \mid X_0 = i)\\
+\quad &\geq P(X_1 = i_1, \ldots, X_k = i_k, \tau_i = \infty \mid X_0 = i)\\
+\quad &= P(X_1 = i_1, \ldots, X_k = i_k \mid X_0 = i)P(\tau_i = \infty \mid X_l = i_l \text{ für } l = 0, \ldots, k)
+\intertext{und mit der Markoveigenschaft erhalten wir}
+\quad &= P(X_1 = i_1, \ldots, X_k = i_k \mid X_0 = i)P(\tau_i = \infty \mid X_0 = i_k)\\
+\quad &= \underbrace{P(X_1 = i_1, \ldots, X_k = i_k \mid X_0 = i)}_{> 0} (1 - \rho_{j,i})\text{.}
+\end{align*}
+Damit folgt $1-\rho_{j,i} = 0$ und daher $\rho_{j,i} = 1$. Daher existiert ein $l \geq 1$ mit $p_{j,i}^{(l)} > 0$ und für $n \geq 0$ folgt mit der Chapman-Kolmogorov-Gleichung $p_{j,j}^{(l + n + k)} \geq p_{j,i}^{(l)}p_{i,i}^{(n)}p_{i,j}^{(k)}$. Dann gilt
+\begin{align*}
+\E(N_j \mid X_0 = j) &\stackrel{\text{\ref{Nummer3.4.5}}}{=} \sum_{n=0}^\infty p_{j,j}^{(n)} \geq \sum_{n=0}^\infty p_{j,i}^{(l)}p_{i,i}^{(n)}p_{i,j}^{(k)} = p_{j,i}^{(l)}p_{i,j}^{(k)} \sum_{n=0}^\infty p_{i,i}^{(n)} = \infty\text{,} 
+\end{align*}
+da $i$ rekurrent ist. Wieder mit Satz \ref{Nummer3.4.5} folgt also, dass auch $j$ rekurrent ist. Vertauschen wir die Rollen von $i$ und $j$, so folgt der Rest. 
+\end{beweis}
